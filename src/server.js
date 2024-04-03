@@ -7,33 +7,23 @@ const routes = require('./routes');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+// Configuración del motor de plantillas EJS
 app.set('views', path.join(__dirname, '..', 'views', 'templates', 'theme001'));
 app.set('view engine', 'ejs');
 
+// Middleware de compresión de respuesta
 app.use(compression());
 
-const cache = new Map();
+// Habilitar la caché de vistas en Express
+app.set('view cache', true);
 
-app.use((req, res, next) => {
-  const key = req.originalUrl || req.url;
-  const cachedContent = cache.get(key);
-  if (cachedContent) {
-    res.send(cachedContent);
-    return;
-  }
-  res.sendResponse = res.send;
-  res.send = (body) => {
-    cache.set(key, body);
-    res.sendResponse(body);
-  };
-  next();
-});
-
-
+// Rutas
 app.use('/', routes);
 
+// Middleware para servir archivos estáticos
 app.use(express.static(path.join(__dirname, '..', 'dist', 'public')));
 
+// Iniciar el servidor
 app.listen(PORT, () => {
   console.log(`Servidor escuchando en el puerto ${PORT}`);
 });
