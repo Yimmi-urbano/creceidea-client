@@ -24,7 +24,7 @@ app.use('/', async (req, res, next) => {
         if (isValid) {
             next();
         } else {
-            res.status(403).send('Acceso no autorizado');
+            res.status(403).send('Acceso no autorizado: '+subdomain);
         }
     } catch (error) {
         console.error('Error al validar el subdominio:', error);
