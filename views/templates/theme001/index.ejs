@@ -1,51 +1,1164 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
+
 <head>
-  <link href="https://storage.googleapis.com/stores-crece/central/css/tabler.min.css?1684106062" rel="stylesheet" media="screen" />
-   
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="<%- contentHTML %>">
-    <meta name="keywords" content="Palabras clave relacionadas con tu página">
-    <meta name="author" content="Creceidea.pe">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>FiberStar</title>
+  <link href="./dist/css/tabler.min.css?1684106062" rel="stylesheet" />
+  <link href="./dist/css/tabler-flags.min.css?1684106062" rel="stylesheet" />
+  <link href="./dist/css/tabler-payments.min.css?1684106062" rel="stylesheet" />
+  <link href="./dist/css/tabler-vendors.min.css?1684106062" rel="stylesheet" />
+  <link href="./dist/css/demo.min.css?1684106062" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.0.7/css/swiper.min.css">
+  <link href="https://fonts.googleapis.com/css?family=Rajdhani&display=swap" rel="stylesheet">
+  <style>
+    @import url('https://rsms.me/inter/inter.css');
 
-    <!-- Metadatos para Facebook -->
-    <meta property="og:title" content="<%= pageTitle %>">
-    <meta property="og:description" content="<%- contentHTML %>">
-    <meta property="og:image" content="URL de la imagen que deseas mostrar">
-    <meta property="og:url" content="URL de tu página">
-    <meta property="og:type" content="website">
+    :root {
+      --tblr-font-sans-serif: 'Inter Var', -apple-system, BlinkMacSystemFont, San Francisco, Segoe UI, Roboto, Helvetica Neue, sans-serif;
+    }
 
-    <!-- Metadatos para Twitter -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="<%= pageTitle %>">
-    <meta name="twitter:description" content="<%- contentHTML %>">
-    <meta name="twitter:image" content="URL de la imagen que deseas mostrar">
+    body {
+      font-feature-settings: "cv03", "cv04", "cv11";
+      background-color: #fff !important;
+    }
 
-    <title>
-        <%= pageTitle %>
-    </title>
-  
+    :after,
+    :before,
+    * {
+      box-sizing: border-box;
+    }
+
+    .container {
+      width: 1200px;
+      padding-right: 15px;
+      padding-left: 15px;
+      margin-right: auto;
+      margin-left: auto;
+    }
+
+
+
+    body {
+      margin: 0;
+      font-family: 'Rajdhani', sans-serif;
+    }
+
+    h2 {
+      line-height: 1.1;
+    }
+
+    .hero-slider {
+      width: 100%;
+      height: 480px;
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: flex;
+      position: relative;
+      z-index: 0;
+    }
+
+    @media (max-width: 991px) {
+      .hero-slider {
+        height: 600px;
+      }
+    }
+
+    @media (max-width: 767px) {
+      .hero-slider {
+        height: 500px;
+      }
+    }
+
+    .hero-slider .swiper-slide {
+      overflow: hidden;
+      color: #fff;
+    }
+
+    .hero-slider .swiper-container {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      left: 0;
+      top: 0;
+    }
+
+    .hero-slider .slide-inner {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      left: 0;
+      top: 0;
+      z-index: 1;
+      background-size: cover;
+      background-position: center;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: left;
+    }
+
+    .hero-slider .swiper-button-prev,
+    .hero-slider .swiper-button-next {
+      background: transparent;
+      width: 55px;
+      height: 55px;
+      line-height: 53px;
+      margin-top: -30px;
+      text-align: center;
+      border: 2px solid #d4d3d3;
+      border-radius: 55px;
+      opacity: 0;
+      visibility: hidden;
+      transition: all .3s ease;
+    }
+
+    .hero-slider:hover .swiper-button-prev,
+    .hero-slider:hover .swiper-button-next {
+      transform: translateX(0);
+      opacity: 1;
+      visibility: visible;
+    }
+
+    @media (max-width: 767px) {
+
+      .hero-slider .swiper-button-prev,
+      .hero-slider .swiper-button-next {
+        display: none;
+      }
+    }
+
+    .hero-slider .swiper-button-prev {
+      left: 25px;
+      transform: translateX(50px);
+    }
+
+    .hero-slider .swiper-button-prev:before {
+      font-family: "Font Awesome 5 Free";
+      content: "\f060";
+      font-size: 15px;
+      color: #d4d3d3;
+      font-style: normal;
+      display: inline-block;
+      vertical-align: middle;
+      font-weight: 900;
+    }
+
+    .hero-slider .swiper-button-next {
+      right: 25px;
+      transform: translateX(-50px);
+    }
+
+    .hero-slider .swiper-button-next:before {
+      font-family: "Font Awesome 5 Free";
+      content: "\f061";
+      font-size: 15px;
+      color: #d4d3d3;
+      font-style: normal;
+      display: inline-block;
+      vertical-align: middle;
+      font-weight: 900;
+    }
+
+    .hero-slider .swiper-pagination-bullet {
+      width: 12px;
+      height: 12px;
+      text-align: left;
+      line-height: 12px;
+      font-size: 12px;
+      color: #000;
+      opacity: 0.3;
+      background: #fff;
+      transition: all .2s ease;
+    }
+
+    .hero-slider .swiper-pagination-bullet-active {
+      opacity: 1;
+    }
+
+    .hero-slider .swiper-container-horizontal>.swiper-pagination-bullets,
+    .hero-slider .swiper-pagination-custom,
+    .hero-slider .swiper-pagination-fraction {
+      bottom: 30px;
+    }
+
+    @media screen and (min-width: 992px) {
+
+      .hero-slider .swiper-container-horizontal>.swiper-pagination-bullets,
+      .hero-slider .swiper-pagination-custom,
+      .hero-slider .swiper-pagination-fraction {
+        /*     display: none; */
+      }
+    }
+
+    .swiper-pagination {
+      text-align: left;
+    }
+
+    .hero-slider .swiper-container-horizontal>.swiper-pagination-bullets {
+      bottom: 50px;
+      max-width: 1200px;
+      padding: 0 15px;
+      margin: 0 auto;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    @media (min-width: 767px) {
+      .hero-slider .swiper-container-horizontal>.swiper-pagination-bullets {
+        bottom: 30px;
+
+      }
+    }
+
+    /*--------------------------------------------------------------
+	#hero-style
+--------------------------------------------------------------*/
+    .hero-style {
+      height: 480px;
+      transition: all .4s ease;
+      border-radius: 25px;
+      overflow: hidden;
+    }
+
+    @media (max-width: 991px) {
+      .hero-style {
+        height: 500px;
+      }
+    }
+
+    @media (max-width: 767px) {
+      .hero-style {
+        height: 350px;
+      }
+    }
+
+    @media screen and (min-width: 992px) {
+      .hero-style .container {
+        padding-top: 95px;
+      }
+    }
+
+    .hero-style .slide-title,
+    .hero-style .slide-text,
+    .hero-style .slide-btns {
+      max-width: 690px;
+    }
+
+    .hero-style .slide-title h2 {
+      font-size: 40px;
+      font-weight: 600;
+      line-height: 1;
+      color: #ffffff;
+      margin: 0 0 40px;
+      text-transform: capitalize;
+      transition: all .4s ease;
+    }
+
+    @media (max-width: 1199px) {
+      .hero-style .slide-title h2 {
+        font-size: 75px;
+      }
+    }
+
+    @media (max-width: 991px) {
+      .hero-style .slide-title h2 {
+        font-size: 50px;
+        margin: 0 0 35px;
+      }
+    }
+
+    @media (max-width: 767px) {
+      .hero-style .slide-title h2 {
+        font-size: 35px;
+        margin: 0 0 30px;
+      }
+    }
+
+    .hero-style .slide-text p {
+      opacity: 0.8;
+      font-family: Rajdhani;
+      font-size: 32px;
+      font-weight: 500;
+      line-height: 1.25;
+      letter-spacing: normal;
+      color: #ffffff;
+      margin: 0 0 40px;
+      transition: all .4s ease;
+    }
+
+    @media (max-width: 767px) {
+      .hero-style .slide-text p {
+        font-size: 16px;
+        font-size: 1rem;
+        font-weight: normal;
+        margin: 0 0 30px;
+      }
+    }
+
+    .hero-style .slide-btns>a:first-child {
+      margin-right: 10px;
+    }
+
+
+    /*--------------------------------------------------------------
+	#button-style
+--------------------------------------------------------------*/
+    .theme-btn,
+    .theme-btn-s2 {
+      background-color: #ffffff;
+      font-size: 20px;
+      font-weight: 500;
+      line-height: 1.4;
+      text-align: center;
+      color: #2b3b95;
+      padding: 9px 32px;
+      border: 0;
+      border-radius: 3px;
+      text-transform: uppercase;
+      display: inline-block;
+      line-height: initial;
+      transition: all .4s ease;
+    }
+
+    a {
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+
+    .theme-btn-s2 {
+      background-color: rgba(255, 255, 255, 0.9);
+      color: #131e4a;
+    }
+
+    .theme-btn:hover,
+    .theme-btn-s2:hover,
+    .theme-btn:focus,
+    .theme-btn-s2:focus,
+    .theme-btn:active,
+    .theme-btn-s2:active {
+      background-color: #2b3b95;
+      color: #fff;
+    }
+
+    .theme-btn-s3 {
+      font-size: 16px;
+      font-weight: 500;
+      line-height: 1.5;
+      color: #ffffff;
+      text-transform: uppercase;
+    }
+
+    i.fa-chevron-circle-right {
+      height: 22px;
+      width: 22px;
+    }
+
+    a:hover {
+      text-decoration: none;
+    }
+
+    @media (max-width: 991px) {
+
+      .theme-btn,
+      .theme-btn-s2,
+      .theme-btn-s3 {
+        font-size: 13px;
+        padding: 15px 25px;
+      }
+    }
+
+    @media (max-width: 767px) {
+
+      .theme-btn,
+      .theme-btn-s2 {
+        padding: 13px 20px;
+        font-size: 13px;
+      }
+    }
+
+
+
+
+    .card {
+      border-radius: 27px;
+      background-color: #FFF;
+    }
+
+    .image-content,
+    .card-content {
+      display: flex;
+      flex-direction: column;
+      align-items: left;
+      padding: 10px 14px;
+    }
+
+    .image-content {
+      position: relative;
+      row-gap: 5px;
+      padding: 0;
+      overflow: hidden;
+      border-top-left-radius: 25px;
+      border-top-right-radius: 25px;
+    }
+
+    .overlay {
+      position: absolute;
+      left: 0;
+      top: 0;
+      height: 100%;
+      width: 100%;
+      background-color: #4070F4;
+      border-radius: 25px 25px 0 25px;
+    }
+
+    .overlay::before,
+    .overlay::after {
+      content: '';
+      position: absolute;
+      right: 0;
+      bottom: -40px;
+      height: 40px;
+      width: 40px;
+      background-color: #4070F4;
+    }
+
+    .overlay::after {
+      border-radius: 0 25px 0 0;
+      background-color: #FFF;
+    }
+
+    .card-image {
+      position: relative;
+      height: 220px;
+      width: 100%;
+    }
+
+    .card-image .card-img {
+      height: 220px;
+      object-fit: cover;
+    }
+
+    .name {
+      font-size: 20px;
+      color: #854fdb;
+      text-align: left;
+      font-weight: bold;
+    }
+
+    .description {
+      font-size: 14px;
+      color: #707070;
+      text-align: left;
+    }
+
+    .button {
+      border: none;
+      font-size: 16px;
+      color: #FFF;
+      padding: 8px 16px;
+      background-color: #4070F4;
+      border-radius: 25px;
+
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin-bottom: 2px;
+    }
+
+    .button:hover {
+      background: #265DF2;
+    }
+
+    .swiper-navBtn {
+      color: #6E93f7;
+      transition: color 0.3s ease;
+    }
+
+    .swiper-navBtn:hover {
+      color: #4070F4;
+    }
+
+    .swiper-navBtn::before,
+    .swiper-navBtn::after {
+      font-size: 35px;
+    }
+
+    .swiper-button-next {
+      right: 0;
+    }
+
+    .swiper-button-prev {
+      left: 0;
+    }
+
+    .swiper-pagination-bullet {
+      background-color: #6E93f7;
+      opacity: 1;
+    }
+
+    .swiper-pagination-bullet-active {
+      background-color: #4070F4;
+    }
+
+    @media screen and (max-width: 768px) {
+      .slide-content {
+        margin: 0 10px;
+      }
+
+      .swiper-navBtn {
+        display: none;
+      }
+
+      .card-image .card-img {
+        height: 180px;
+
+      }
+
+      .card-image {
+        height: 180px;
+      }
+    }
+
+
+    .hero-slider.hero-style .logo-header {
+
+      content: "";
+      height: 90px;
+      background-color: #fff;
+      position: absolute;
+      z-index: 9999;
+      top: 0px;
+      width: 230px;
+      border-bottom-right-radius: 20px;
+
+    }
+
+    .hero-slider.hero-style .logo-header::after {
+      z-index: -1;
+      content: "";
+      position: absolute;
+      background: radial-gradient(circle at 100% 100%, transparent 70%, #fff calc(70%)) bottom right;
+      background-size: 50% 50%;
+      background-repeat: no-repeat;
+      width: 50px;
+      height: 50px;
+      right: -25px;
+      top: -25px;
+    }
+
+    .hero-slider.hero-style .logo-header::before {
+      z-index: -1;
+      content: "";
+      position: absolute;
+      background: radial-gradient(circle at 100% 100%, transparent 69%, #fff calc(69%)) bottom right;
+      background-size: 50% 50%;
+      background-repeat: no-repeat;
+      width: 50px;
+      height: 50px;
+      left: -25px;
+      bottom: -25px;
+    }
+
+    #categories-multiple-slides .item-cat {
+
+      border: 1px solid #bc91fe;
+  border-radius: 20px;
+  height: 40px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  font-size: 16px;
+  font-weight: bold;
+  background-color: #854fdb;
+
+    }
+.button{
+  background-color: #854fdb;
+}
+    .price-tag .price-off {
+      display: block;
+      font-size: 22px;
+      font-weight: bold;
+      color: red;
+    }
+
+    .price-tag .price-normal {
+      display: block;
+      font-size: 15px;
+      color: #888;
+    }
+  </style>
 </head>
 
+
 <body>
-    <div class="page">
-        <%- include('header', { menuOptions: menuOptions}) %>
-            <div class="page-wrapper">
-                <div class="page-body">
-                    <div class="container-xl">
-                    <%- include('parts/' + contentTemplate) %>
-                </div>
-                </div>
-
-                <%- include('footer') %>
-
+  <script src="./dist/js/demo-theme.min.js?1684106062"></script>
+  <div class="page">
+    <div class="page-wrapper">
+      <div class="page-body">
+        <section class="container-fluid  d-flex flex-column justify-content-center">
+          <section class="hero-slider hero-style">
+            <div class="logo-header">
+              <img style="height: 70px;display: block;margin: auto;margin-top: 10px;object-fit: cover;width: 160px;"
+                src="https://storage.googleapis.com/stores-crece/freestore/basic_ecommerce/fiberstar/images/LogoSample_ByTailorBrands.jpg"
+                alt="">
             </div>
+            <div class="swiper-container">
+              <div class="swiper-wrapper">
+                <div class="swiper-slide">
+                  <div class="slide-inner slide-bg-image"
+                    data-background="https://storage.googleapis.com/stores-crece/freestore/basic_ecommerce/fiberstar/images/Capa-3.png">
+                    <div class="container">
+                      <div data-swiper-parallax="300" class="slide-title">
+                        <h2>VIVE EL PODER DE LA FIBRA OPTICA! </br> INSTALACIÓN GRATIS</h2>
+                      </div>
+
+                      <div class="clearfix"></div>
+
+                    </div>
+                  </div>
+                  <!-- end slide-inner -->
+                </div>
+                <div class="swiper-slide">
+                  <div class="slide-inner slide-bg-image"
+                    data-background="https://storage.googleapis.com/stores-crece/freestore/basic_ecommerce/fiberstar/images/ciudad.jpg">
+                    <div class="container">
+                      <div data-swiper-parallax="300" class="slide-title">
+                        <h2>VIVE EL PODER DE LA FIBRA OPTICA! </br> INSTALACIÓN GRATIS</h2>
+                      </div>
+
+                      <div class="clearfix"></div>
+
+                    </div>
+                  </div>
+                  <!-- end slide-inner -->
+                </div>
+              </div>
+              <div class="swiper-pagination"></div>
+              <div class="swiper-button-next"></div>
+              <div class="swiper-button-prev"></div>
+            </div>
+          </section>
+        </section>
+        <section class="container-xxl p-4 d-flex flex-column justify-content-center">
+          <div class="block-categories">
+            <div class="list-cat-aviable swiper" style="overflow: hidden;" id="categories-multiple-slides">
+              <div class="swiper-wrapper">
+                <div class="item-cat swiper-slide">Cobertura
+                </div>
+                <div class="item-cat swiper-slide" data-bs-toggle="modal" data-bs-target="#modal-scrollable">Planes</div>
+                <div class="item-cat swiper-slide">Beneficios</div>
+                <div class="item-cat swiper-slide">WhatsApp</div>
+                <div class="item-cat swiper-slide">Contacto</div>
+              </div>
+            </div>
+          </div>
+        </section>
+        <section class="container-xxl p-4 d-flex flex-column d-none justify-content-center" style=" overflow: hidden;">
+          <div class="swiper text-white" id="swiper-multiple-slides">
+            <div class="swiper-wrapper card-wrapper">
+              <div class="swiper-slide card">
+                <div class="image-content">
+
+                  <div class="card-image">
+                    <img src="https://i.pinimg.com/736x/c6/3c/48/c63c4844b7c041884b4f182f66a14bf9.jpg" alt=""
+                      class="card-img">
+                  </div>
+                </div>
+                <div class="card-content text-left">
+                  <h2 class="name m-0">David Dell</h2>
+                  <p class="description">The lorem text the.</p>
+                  <p class="price-tag">
+                    <span class="price-off"> S/ 20.00 </span>
+                    <span class="price-normal"> <del>S/ 200.00 </del> </span>
+                  </p>
+
+                  <button class="button">Comprar</button>
+                </div>
+              </div>
+              <div class="swiper-slide card">
+                <div class="image-content">
+                  <div class="card-image">
+                    <img src="https://i.pinimg.com/736x/c6/3c/48/c63c4844b7c041884b4f182f66a14bf9.jpg" alt=""
+                      class="card-img">
+                  </div>
+                </div>
+                <div class="card-content text-left">
+                  <h2 class="name m-0">David Dell</h2>
+                  <p class="description">The lorem text the.</p>
+                  <p class="price-tag">
+                    <span class="price-off"> S/ 20.00 </span>
+                    <span class="price-normal"> <del>S/ 200.00 </del> </span>
+                  </p>
+                  <button class="button">Comprar</button>
+                </div>
+              </div>
+              <div class="swiper-slide card">
+                <div class="image-content">
+                  <div class="card-image">
+                    <img src="https://i.pinimg.com/736x/c6/3c/48/c63c4844b7c041884b4f182f66a14bf9.jpg" alt=""
+                      class="card-img">
+                  </div>
+                </div>
+                <div class="card-content text-left">
+                  <h2 class="name m-0">David Dell</h2>
+                  <p class="description">The lorem text the.</p>
+                  <p class="price-tag">
+                    <span class="price-off"> S/ 20.00 </span>
+                    <span class="price-normal"> <del>S/ 200.00 </del> </span>
+                  </p>
+                  <button class="button">Comprar</button>
+                </div>
+              </div>
+              <div class="swiper-slide card">
+                <div class="image-content">
+
+                  <div class="card-image">
+                    <img src="https://i.pinimg.com/736x/c6/3c/48/c63c4844b7c041884b4f182f66a14bf9.jpg" alt=""
+                      class="card-img">
+                  </div>
+                </div>
+                <div class="card-content text-left">
+                  <h2 class="name m-0">David Dell</h2>
+                  <p class="description">The lorem text the.</p>
+                  <p class="price-tag">
+                    <span class="price-off"> S/ 20.00 </span>
+                    <span class="price-normal"> <del>S/ 200.00 </del> </span>
+                  </p>
+
+                  <button class="button">Comprar</button>
+                </div>
+              </div>
+              <div class="swiper-slide card">
+                <div class="image-content">
+
+                  <div class="card-image">
+                    <img src="https://i.pinimg.com/736x/c6/3c/48/c63c4844b7c041884b4f182f66a14bf9.jpg" alt=""
+                      class="card-img">
+                  </div>
+                </div>
+                <div class="card-content text-left">
+                  <h2 class="name m-0">David Dell</h2>
+                  <p class="description">The lorem text the.</p>
+                  <p class="price-tag">
+                    <span class="price-off"> S/ 20.00 </span>
+                    <span class="price-normal"> <del>S/ 200.00 </del> </span>
+                  </p>
+
+                  <button class="button">Comprar</button>
+                </div>
+              </div>
+              <div class="swiper-slide card">
+                <div class="image-content">
+
+                  <div class="card-image">
+                    <img src="https://i.pinimg.com/736x/c6/3c/48/c63c4844b7c041884b4f182f66a14bf9.jpg" alt=""
+                      class="card-img">
+                  </div>
+                </div>
+                <div class="card-content text-left">
+                  <h2 class="name m-0">David Dell</h2>
+                  <p class="description">The lorem text the.</p>
+                  <p class="price-tag">
+                    <span class="price-off"> S/ 20.00 </span>
+                    <span class="price-normal"> <del>S/ 200.00 </del> </span>
+                  </p>
+
+                  <button class="button">Comprar</button>
+                </div>
+              </div>
+              <div class="swiper-slide card">
+                <div class="image-content">
+
+                  <div class="card-image">
+                    <img src="https://i.pinimg.com/736x/c6/3c/48/c63c4844b7c041884b4f182f66a14bf9.jpg" alt=""
+                      class="card-img">
+                  </div>
+                </div>
+                <div class="card-content text-left">
+                  <h2 class="name m-0">David Dell</h2>
+                  <p class="description">The lorem text the.</p>
+                  <p class="price-tag">
+                    <span class="price-off"> S/ 20.00 </span>
+                    <span class="price-normal"> <del>S/ 200.00 </del> </span>
+                  </p>
+
+                  <button class="button">Comprar</button>
+                </div>
+              </div>
+              <div class="swiper-slide card">
+                <div class="image-content">
+
+                  <div class="card-image">
+                    <img src="https://i.pinimg.com/736x/c6/3c/48/c63c4844b7c041884b4f182f66a14bf9.jpg" alt=""
+                      class="card-img">
+                  </div>
+                </div>
+                <div class="card-content text-left">
+                  <h2 class="name m-0">David Dell</h2>
+                  <p class="description">The lorem text the.</p>
+                  <p class="price-tag">
+                    <span class="price-off"> S/ 20.00 </span>
+                    <span class="price-normal"> <del>S/ 200.00 </del> </span>
+                  </p>
+
+                  <button class="button">Comprar</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="container-xxl pt-4 pb-4">
+          <h2 style="text-align: center; color: rgb(0, 0, 0);"><span
+              style="color: rgb(66, 151, 216); font-family: Calibri, sans-serif;">VIVE EL PODER DE LA FIBRA OPTICA!
+              INSTALACI&Oacute;N GRATIS</span></h2>
+          <p style="text-align: center; color: rgb(0, 0, 0);"><span
+              style="color: rgb(40, 50, 78); font-family: Calibri, sans-serif;">Disfruta de nuestra conexi&oacute;n al
+              mejor precio sin contratos de por medio, contrata el mejor servicio de internet por Fibra &Oacute;ptica
+              con los mejores planes.<br>Sin Contratos de por medio&nbsp;</span><span
+              style="font-family: Calibri, sans-serif;"><span style="color: rgb(40, 50, 78);"><strong>BRINDA UNA
+                  CONEXI&Oacute;N MUCHO M&Aacute;S R&Aacute;PIDA Y ESTABLE</strong></span></span></p>
+          <p style="text-align: center; color: rgb(0, 0, 0);"><span
+              style="font-family: Calibri, sans-serif;"><br></span></p>
+          <table style="width: 100%;">
+            <tbody>
+              <tr>
+                <td style="width: 33.3333%; background-color: rgb(239, 239, 239);">
+                  <h3 style="text-align: center;"><span
+                      style="color: rgb(66, 151, 216); font-family: Calibri, sans-serif;">Wifi potente</span></h3>
+                  <div style="text-align: center;"><span
+                      style="font-family: Calibri, sans-serif; color: rgb(40, 50, 78);">Nuestros routers trabajan<br>con
+                      doble banda 2.4 y 5Ghz</span></div>
+                </td>
+                <td style="width: 33.3333%; background-color: rgb(255, 255, 255);">
+                  <h3 style="text-align: center; color: rgb(0, 0, 0);"><span
+                      style="color: rgb(66, 151, 216); font-family: Calibri, sans-serif;">Velocidad
+                      sim&eacute;trica</span></h3>
+                  <p style="text-align: center; color: rgb(0, 0, 0);"><span
+                      style="color: rgb(40, 50, 78); font-family: Calibri, sans-serif;">Ofrecemos igual velocidad<br>de
+                      bajada y subida</span></p>
+                </td>
+                <td style="width: 33.2435%; background-color: rgb(239, 239, 239);">
+                  <h3 style="text-align: center; color: rgb(0, 0, 0);"><span
+                      style="color: rgb(66, 151, 216); font-family: Calibri, sans-serif;">Atenci&oacute;n 24/7</span>
+                  </h3>
+                  <p style="text-align: center; color: rgb(0, 0, 0);"><span
+                      style="color: rgb(40, 50, 78); font-family: Calibri, sans-serif;">Resolvemos todas tus<br>dudas al
+                      momento</span></p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <h3 style="text-align: center; color: rgb(0, 0, 0);"><span
+              style="font-family: Calibri, sans-serif;"><br></span></h3>
+          <p style="text-align: center; color: rgb(0, 0, 0);"><span
+              style="color: rgb(40, 50, 78); font-family: Calibri, sans-serif;">Adquiere nuestro servicio,
+              ll&aacute;manos o escr&iacute;benos al WhatsApp:</span></p>
+          <h3 style="text-align: center; color: rgb(0, 0, 0);"><span
+              style="color: rgb(40, 50, 78); font-family: Calibri, sans-serif;">930 532 256 - 915 368 229</span></h3>
+        </section>
+
+        <footer class="footer footer-transparent d-print-none">
+          <div class="container-xl">
+            <div class="row text-center align-items-center flex-row-reverse">
+              <div class="col-lg-auto ms-lg-auto">
+                <ul class="list-inline list-inline-dots mb-0">
+                  <li class="list-inline-item"><a href="https://tabler.io/docs" target="_blank" class="link-secondary"
+                      rel="noopener">Documentation</a></li>
+                  <li class="list-inline-item"><a href="./license.html" class="link-secondary">License</a></li>
+                  <li class="list-inline-item"><a href="https://github.com/tabler/tabler" target="_blank"
+                      class="link-secondary" rel="noopener">Source code</a></li>
+                  <li class="list-inline-item">
+                    <a href="https://github.com/sponsors/codecalm" target="_blank" class="link-secondary"
+                      rel="noopener">
+                      <!-- Download SVG icon from http://tabler-icons.io/i/heart -->
+                      <svg xmlns="http://www.w3.org/2000/svg" class="icon text-pink icon-filled icon-inline" width="24"
+                        height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                        <path d="M19.5 12.572l-7.5 7.428l-7.5 -7.428a5 5 0 1 1 7.5 -6.566a5 5 0 1 1 7.5 6.572" />
+                      </svg>
+                      Sponsor
+                    </a>
+                  </li>
+                </ul>
+              </div>
+              <div class="col-12 col-lg-auto mt-3 mt-lg-0">
+                <ul class="list-inline list-inline-dots mb-0">
+                  <li class="list-inline-item">
+                    Copyright &copy; 2023
+                    <a href="." class="link-secondary">Tabler</a>.
+                    All rights reserved.
+                  </li>
+                  <li class="list-inline-item">
+                    <a href="./changelog.html" class="link-secondary" rel="noopener">
+                      v1.0.0-beta19
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </footer>
+      </div>
     </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="./dist/js/tabler.min.js?1684106062" defer></script>
+    <script src="./dist/js/demo.min.js?1684106062" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.5.1/js/swiper.min.js"></script>
+    <script>
+      var menu = [];
+      jQuery('.swiper-slide').each(function (index) {
+        menu.push(jQuery(this).find('.slide-inner').attr("data-text"));
+      });
+      var interleaveOffset = 0.5;
+      var swiperOptions = {
+        loop: true,
+        speed: 1000,
+        parallax: true,
+        autoplay: {
+          delay: 6500,
+          disableOnInteraction: false,
+        },
+        watchSlidesProgress: true,
+        pagination: {
+          el: '.swiper-pagination',
+          clickable: true,
+        },
+
+        navigation: {
+          nextEl: '.swiper-button-next',
+          prevEl: '.swiper-button-prev',
+        },
+
+        on: {
+          progress: function () {
+            var swiper = this;
+            for (var i = 0; i < swiper.slides.length; i++) {
+              var slideProgress = swiper.slides[i].progress;
+              var innerOffset = swiper.width * interleaveOffset;
+              var innerTranslate = slideProgress * innerOffset;
+              swiper.slides[i].querySelector(".slide-inner").style.transform =
+                "translate3d(" + innerTranslate + "px, 0, 0)";
+            }
+          },
+
+          touchStart: function () {
+            var swiper = this;
+            for (var i = 0; i < swiper.slides.length; i++) {
+              swiper.slides[i].style.transition = "";
+            }
+          },
+
+          setTransition: function (speed) {
+            var swiper = this;
+            for (var i = 0; i < swiper.slides.length; i++) {
+              swiper.slides[i].style.transition = speed + "ms";
+              swiper.slides[i].querySelector(".slide-inner").style.transition =
+                speed + "ms";
+            }
+          }
+        }
+      };
+
+      var swiper = new Swiper(".swiper-container", swiperOptions);
+
+      var sliderBgSetting = $(".slide-bg-image");
+      sliderBgSetting.each(function (indx) {
+        if ($(this).attr("data-background")) {
+          $(this).css("background-image", "url(" + $(this).data("background") + ")");
+        }
+      });
+
+      const swiperMultipleSlides = document.querySelector('#swiper-multiple-slides');
+      const SliderCategorias = document.querySelector('#categories-multiple-slides');
+
+      if (swiperMultipleSlides) {
+        new Swiper(swiperMultipleSlides, {
+          slidesPerView: 5,
+          spaceBetween: 30,
+          loop: true,
+          autoplay: false,
+          pagination: {
+            clickable: true,
+            el: '.swiper-pagination-products'
+          },
+          breakpoints: {
+
+            768: {
+              slidesPerView: 1,
+              stage: 2,
+
+            }
+          }
+        });
+      }
+
+      if (SliderCategorias) {
+        new Swiper(SliderCategorias, {
+          slidesPerView: 5,
+          spaceBetween: 30,
+          loop: true,
+          autoplay: false,
+          pagination: {
+            clickable: true,
+            el: '.swiper-pagination-products'
+          },
+          breakpoints: {
+            768: {
+              slidesPerView: 2,
+              stage: 2,
+
+            }
+          }
+        });
+      }
+    </script>
 </body>
+<div class="modal modal-blur fade" id="modal-scrollable" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-full-width" role="document">
+    <div class="modal-content">
+      <div class="modal-header" style="background-color: #854fdb;color: #fff;">
+        <h5 class="modal-title" style="font-size:22px">Planes</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
 
+          <div class="col-md-3 col-12 mb-4">
 
-  <script src="https://storage.googleapis.com/stores-crece/central/js/tabler.min.js?1684106062" defer></script>
+            <div class="swiper-slide card">
+              <div class="image-content">
 
+                <div class="card-image">
+                  <img src="https://storage.googleapis.com/stores-crece/freestore/basic_ecommerce/fiberstar/images/tablet.jpg" alt=""
+                    class="card-img">
+                </div>
+              </div>
+              <div class="card-content text-left">
+                <h2 class="name m-0">PLAN 50 Mbps de Velocidad</h2>
+                <p class="description">
+                <ul>
+                  <li> Costo mínimo de Instalación</li>
+                  <li>100% Fibra Óptica</li>
+                  <li>Internet Simétrico</li>
+                  <li>Duplica x 3 meses</li>
+                </ul>
+                </p>
+                <p class="price-tag">
+                  <span class="price-off"> S/ 40.00 x 3 meses</span>
+                  <span class="price-normal">Precio regular <del>S/ 50.00 </del> </span>
+                </p>
+
+                <button class="button">Contratar</button>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="col-md-3 col-12 mb-4">
+
+            <div class="swiper-slide card">
+              <div class="image-content">
+
+                <div class="card-image">
+                  <img src="https://storage.googleapis.com/stores-crece/freestore/basic_ecommerce/fiberstar/images/pareja.jpg" alt=""
+                    class="card-img">
+                </div>
+              </div>
+              <div class="card-content text-left">
+                <h2 class="name m-0">PLAN 100 Mbps de Velocidad</h2>
+                <p class="description">
+                <ul>
+                  <li>Costo mínimo de Instalación</li>
+                  <li>100% Fibra Óptica</li>
+                  <li>Internet Simétrico</li>
+                  <li>Duplica x 3 meses</li>
+                </ul>
+                </p>
+                <p class="price-tag">
+                  <span class="price-off"> S/ 55.00 x 3 meses</span>
+                  <span class="price-normal">Precio regular <del>S/ 65.00 </del> </span>
+                </p>
+
+                <button class="button">Contratar</button>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="col-md-3 col-12  mb-4">
+
+            <div class="swiper-slide card">
+              <div class="image-content">
+
+                <div class="card-image">
+                  <img src="https://storage.googleapis.com/stores-crece/freestore/basic_ecommerce/fiberstar/images/familia1.jpg" alt=""
+                    class="card-img">
+                </div>
+              </div>
+              <div class="card-content text-left">
+                <h2 class="name m-0">PLAN 150 Mbps de Velocidad</h2>
+                <p class="description">
+                <ul>
+                  <li> Costo mínimo de Instalación</li>
+                  <li>100% Fibra Óptica</li>
+                  <li>Internet Simétrico</li>
+                  <li>Duplica x 3 meses</li>
+                </ul>
+                </p>
+                <p class="price-tag">
+                  <span class="price-off"> S/ 65.00 x 3 meses</span>
+                  <span class="price-normal">Precio regular <del>S/ 75.00 </del> </span>
+                </p>
+
+                <button class="button">Contratar</button>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="col-md-3 col-12 ">
+
+            <div class="swiper-slide card">
+              <div class="image-content">
+
+                <div class="card-image">
+                  <img src="https://storage.googleapis.com/stores-crece/freestore/basic_ecommerce/fiberstar/images/habitacion.jpg" alt=""
+                    class="card-img">
+                </div>
+              </div>
+              <div class="card-content text-left">
+                <h2 class="name m-0">PLAN 200 Mbps de Velocidad</h2>
+                <p class="description">
+                <ul>
+                  <li>Costo mínimo de Instalación</li>
+                  <li>100% Fibra Óptica</li>
+                  <li>Internet Simétrico</li>
+                  <li>Duplica x 3 meses</li>
+                </ul>
+                </p>
+                <p class="price-tag">
+                  <span class="price-off"> S/ 75.00 x 3 meses</span>
+                  <span class="price-normal">Precio regular <del>S/ 85.00 </del> </span>
+                </p>
+
+                <button class="button">Contratar</button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
 
 </html>
