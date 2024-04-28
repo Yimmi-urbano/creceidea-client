@@ -2,7 +2,7 @@ const axios = require('axios');
 
 async function validateSubdomain(subdomain) {
     try {
-        const response = await axios.get('https://storage.googleapis.com/stores-crece/central/data-center/domain.json');
+        const response = await axios.get('https://storage.googleapis.com/stores-crece/central/data-center/domain.json?v=2');
         const data = response.data;
 
         if (data && data.status && data.data && Array.isArray(data.data)) {
