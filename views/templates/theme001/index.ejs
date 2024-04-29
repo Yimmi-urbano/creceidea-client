@@ -13,6 +13,14 @@
   <link href="./dist/css/demo.min.css?1684106062" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.0.7/css/swiper.min.css">
   <link href="https://fonts.googleapis.com/css?family=Rajdhani&display=swap" rel="stylesheet">
+  
+  <meta name="description" content="<%- GetInfo.meta_description %>">
+  <meta name="keywords" content="<%- GetInfo.meta_keyword %>">
+  <meta name="author" content="<%- GetInfo.title %>">
+  <meta name="robots" content="index, follow"> <!-- Para permitir que los motores de búsqueda indexen y sigan los enlaces -->
+  <meta name="referrer" content="no-referrer-when-downgrade"> <!-- Para controlar la política de referencia -->
+  
+
   <style>
     @import url('https://rsms.me/inter/inter.css');
 
@@ -1030,6 +1038,7 @@
 
           </div>
         </div>
+        <%- contentHTML %>
       </div>
 
     </div>
