@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const { fetchCatalogo, fetchMenu } = require('./apiService');
-const { getPageByUrl, getPageByIdProduct } = require('./functions');
+const { fetchCatalogo } = require('./apiService');
+const { getBanners, getInfoHomeText, getConfig } = require('./functions');
 
 // Middleware para manejar errores
 const errorHandler = (req, res, next) => {
@@ -18,10 +18,11 @@ router.use(errorHandler);
 
 // Ruta para la página de inicio
 router.get('/', async (req, res) => {
-  //const pgeCont = await getPageByUrl('/');
-  //res.render('index', { menuOptions: await fetchMenu(), pageTitle: pgeCont.title, contentHTML: pgeCont.content_html, contentTemplate: 'home' });
+  const banners = await getBanners();
+  const contentHTML = await getInfoHomeText()
+  const Config = await getConfig()
 
-  res.render('index', { contentHTML:'', pageTitle: '', contentTemplate: 'home' });
+  res.render('index', { banners: banners, contentHTML: contentHTML, GetInfo: Config, contentTemplate: 'home' });
 
 
 });

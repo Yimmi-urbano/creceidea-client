@@ -1,46 +1,44 @@
-<div class="swiper text-white" id="swiper-with-arrows">
-  <div class="swiper-wrapper">
-    <div class="swiper-slide" style="background-image: url(https://img.freepik.com/fotos-premium/cliente-compra-tienda-ropa-asociado-ventas-ayuda-consejos-clientes-diversos-eligen-ropa-elegante-marcas-coloridas-disenos-sostenibles_76964-109642.jpg)">
-      Slide 1
-    </div>
-    <div class="swiper-slide" style="background-image: url(https://img.freepik.com/fotos-premium/cliente-compra-tienda-ropa-asociado-ventas-ayuda-consejos-clientes-diversos-eligen-ropa-elegante-marcas-coloridas-disenos-sostenibles_76964-109642.jpg)">
-      Slide 2
-    </div>
-    <div class="swiper-slide" style="background-image: url(https://img.freepik.com/fotos-premium/cliente-compra-tienda-ropa-asociado-ventas-ayuda-consejos-clientes-diversos-eligen-ropa-elegante-marcas-coloridas-disenos-sostenibles_76964-109642.jpg)">
-      Slide 3
-    </div>
-    <div class="swiper-slide" style="background-image: url(./assets/img/elements/12.jpg)">
-      Slide 4
-    </div>
-    <div class="swiper-slide" style="background-image: url(./assets/img/elements/7.jpg)">
-      Slide 5
-    </div>
+<section class="hero-slider hero-style">
+  <div class="logo-header">
+    <img style="height: 70px;display: block;margin: auto;margin-top: 10px;object-fit: cover;width: 160px;"
+      src=" <%- GetInfo.logo %>"
+      alt="">
   </div>
-  <div class="swiper-button-next swiper-button-white custom-icon"></div>
-  <div class="swiper-button-prev swiper-button-white custom-icon"></div>
-</div>
-<div class="container-xxl flex-grow-1 container-p-y">
-<div class="col-12">
-  <div class="swiper text-white" id="swiper-multiple-slides">
+  <div class="swiper-container">
     <div class="swiper-wrapper">
-      <div class="swiper-slide" style="background-image: url(./assets/img/elements/13.jpg)">
-        Slide 1
+      <% for (let i = 0; i < banners.length; i++) { %>
+      <div class="swiper-slide">
+        <div class="slide-inner slide-bg-image"
+          data-background="<%- banners[i].image %>">
+          <div class="container">
+            <div data-swiper-parallax="300" class="slide-title">
+            <h2><%- banners[i].text %> </h2>  
+            </div>
+            <% for (let j = 0; j < banners[i].button.length; j++) { %>
+              <% const button = banners[i].button[j]; %>
+              <% if (button.show) { %>
+                  <% if (button.action === "modal") { %>
+                      <button type="button" class="button" data-bs-toggle="modal" data-bs-target="<%- button.destino %>">
+                          <%= button.text_button %>
+                      </button>
+                  <% } else if (button.action === "href") { %>
+                      <a href="<%- button.destino %>">
+                          <%- button.text_button %>
+                      </a>
+                  <% } %>
+              <% } %>
+          <% } %>
+            <div class="clearfix"></div>
+
+          </div>
+        </div>
+        <!-- end slide-inner -->
       </div>
-      <div class="swiper-slide" style="background-image: url(./assets/img/elements/19.jpg)">
-        Slide 2
-      </div>
-      <div class="swiper-slide" style="background-image: url(./assets/img/elements/18.jpg)">
-        Slide 3
-      </div>
-      <div class="swiper-slide" style="background-image: url(./assets/img/elements/7.jpg)">
-        Slide 4
-      </div>
-      <div class="swiper-slide" style="background-image: url(./assets/img/elements/20.jpg)">
-        Slide 5
-      </div>
+      <% } %>
     </div>
     <div class="swiper-pagination"></div>
+    <div class="swiper-button-next"></div>
+    <div class="swiper-button-prev"></div>
   </div>
-</div>
+</section>
 
-</div>
