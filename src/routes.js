@@ -3,7 +3,6 @@ const router = express.Router();
 const { fetchCatalogo } = require('./apiService');
 const { getBanners, getInfoHomeText, getConfig } = require('./functions');
 
-// Middleware para manejar errores
 const errorHandler = (req, res, next) => {
   try {
     next();
@@ -13,18 +12,15 @@ const errorHandler = (req, res, next) => {
   }
 };
 
-// Rutas
 router.use(errorHandler);
 
-// Ruta para la página de inicio
+
 router.get('/', async (req, res) => {
-  const banners = await getBanners();
-  const contentHTML = await getInfoHomeText()
-  const Config = await getConfig()
-
+  const domain = req.hostname ;
+  const banners = await getBanners(domain);
+  const contentHTML = await getInfoHomeText(domain)
+  const Config = await getConfig(domain)
   res.render('index', { banners: banners, contentHTML: contentHTML, GetInfo: Config, contentTemplate: 'home' });
-
-
 });
 
 // Ruta para la página de catálogo
