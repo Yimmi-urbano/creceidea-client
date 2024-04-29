@@ -14,26 +14,26 @@ app.set('view engine', 'ejs');
 app.use(express.static(path.join(__dirname, '..', 'public')));
 
 app.use('/', async (req, res, next) => {
-    try {
-        const subdomain = req.hostname;
-        if (!subdomain) {
-            return res.status(403).send('No se proporcionó ningún subdominio');
-        }
-        const isValid = await validateSubdomain(subdomain);
-
-        if (isValid) {
-            next();
-        } else {
-            res.status(403).send('Acceso no autorizado: '+subdomain);
-        }
-    } catch (error) {
-        console.error('Error al validar el subdominio:', error);
-        res.status(500).send('Error al validar el subdominio');
+  try {
+    const subdomain = req.hostname;
+    if (!subdomain) {
+      return res.status(403).send('No se proporcionó ningún subdominio');
     }
+    const isValid = await validateSubdomain(subdomain);
+
+    if (isValid) {
+      next();
+    } else {
+      res.status(403).send('Acceso no autorizado: ' + subdomain);
+    }
+  } catch (error) {
+    console.error('Error al validar el subdominio:', error);
+    res.status(500).send('Error al validar el subdominio');
+  }
 });
 
 app.use('/', routes);
 
 app.listen(PORT, () => {
-    console.log(`Servidor escuchando en el puerto ${PORT}`);
+  console.log(`Servidor escuchando en el puerto ${PORT}`);
 });

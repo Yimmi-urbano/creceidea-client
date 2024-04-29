@@ -5,7 +5,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-  <title>FiberStar</title>
+  <title><%- GetInfo.title %> | <%- GetInfo.slogan %></title>
   <link href="./dist/css/tabler.min.css?1684106062" rel="stylesheet" />
   <link href="./dist/css/tabler-flags.min.css?1684106062" rel="stylesheet" />
   <link href="./dist/css/tabler-payments.min.css?1684106062" rel="stylesheet" />
@@ -601,55 +601,17 @@
     <div class="page-wrapper">
       <div class="page-body">
         <section class="container-fluid  d-flex flex-column justify-content-center">
-          <section class="hero-slider hero-style">
-            <div class="logo-header">
-              <img style="height: 70px;display: block;margin: auto;margin-top: 10px;object-fit: cover;width: 160px;"
-                src="https://storage.googleapis.com/stores-crece/freestore/basic_ecommerce/fiberstar/images/LogoSample_ByTailorBrands.jpg"
-                alt="">
-            </div>
-            <div class="swiper-container">
-              <div class="swiper-wrapper">
-                <div class="swiper-slide">
-                  <div class="slide-inner slide-bg-image"
-                    data-background="https://storage.googleapis.com/stores-crece/freestore/basic_ecommerce/fiberstar/images/Capa-3.png">
-                    <div class="container">
-                      <div data-swiper-parallax="300" class="slide-title">
-                        <h2>VIVE EL PODER DE LA FIBRA OPTICA! </br> INSTALACIÓN GRATIS</h2>
-                      </div>
 
-                      <div class="clearfix"></div>
 
-                    </div>
-                  </div>
-                  <!-- end slide-inner -->
-                </div>
-                <div class="swiper-slide">
-                  <div class="slide-inner slide-bg-image"
-                    data-background="https://storage.googleapis.com/stores-crece/freestore/basic_ecommerce/fiberstar/images/ciudad.jpg">
-                    <div class="container">
-                      <div data-swiper-parallax="300" class="slide-title">
-                        <h2>VIVE EL PODER DE LA FIBRA OPTICA! </br> INSTALACIÓN GRATIS</h2>
-                      </div>
+          <%- include('parts/' + contentTemplate) %>
 
-                      <div class="clearfix"></div>
 
-                    </div>
-                  </div>
-                  <!-- end slide-inner -->
-                </div>
-              </div>
-              <div class="swiper-pagination"></div>
-              <div class="swiper-button-next"></div>
-              <div class="swiper-button-prev"></div>
-            </div>
-          </section>
         </section>
         <section class="container-xxl p-4 d-flex flex-column justify-content-center">
           <div class="block-categories">
             <div class="list-cat-aviable swiper" style="overflow: hidden;" id="categories-multiple-slides">
               <div class="swiper-wrapper">
-                <div class="item-cat swiper-slide">Cobertura
-                </div>
+                <div class="item-cat swiper-slide">Cobertura</div>
                 <div class="item-cat swiper-slide" data-bs-toggle="modal" data-bs-target="#modal-scrollable">Planes</div>
                 <div class="item-cat swiper-slide">Beneficios</div>
                 <div class="item-cat swiper-slide">WhatsApp</div>
@@ -814,97 +776,10 @@
         </section>
 
         <section class="container-xxl pt-4 pb-4">
-          <h2 style="text-align: center; color: rgb(0, 0, 0);"><span
-              style="color: rgb(66, 151, 216); font-family: Calibri, sans-serif;">VIVE EL PODER DE LA FIBRA OPTICA!
-              INSTALACI&Oacute;N GRATIS</span></h2>
-          <p style="text-align: center; color: rgb(0, 0, 0);"><span
-              style="color: rgb(40, 50, 78); font-family: Calibri, sans-serif;">Disfruta de nuestra conexi&oacute;n al
-              mejor precio sin contratos de por medio, contrata el mejor servicio de internet por Fibra &Oacute;ptica
-              con los mejores planes.<br>Sin Contratos de por medio&nbsp;</span><span
-              style="font-family: Calibri, sans-serif;"><span style="color: rgb(40, 50, 78);"><strong>BRINDA UNA
-                  CONEXI&Oacute;N MUCHO M&Aacute;S R&Aacute;PIDA Y ESTABLE</strong></span></span></p>
-          <p style="text-align: center; color: rgb(0, 0, 0);"><span
-              style="font-family: Calibri, sans-serif;"><br></span></p>
-          <table style="width: 100%;">
-            <tbody>
-              <tr>
-                <td style="width: 33.3333%; background-color: rgb(239, 239, 239);">
-                  <h3 style="text-align: center;"><span
-                      style="color: rgb(66, 151, 216); font-family: Calibri, sans-serif;">Wifi potente</span></h3>
-                  <div style="text-align: center;"><span
-                      style="font-family: Calibri, sans-serif; color: rgb(40, 50, 78);">Nuestros routers trabajan<br>con
-                      doble banda 2.4 y 5Ghz</span></div>
-                </td>
-                <td style="width: 33.3333%; background-color: rgb(255, 255, 255);">
-                  <h3 style="text-align: center; color: rgb(0, 0, 0);"><span
-                      style="color: rgb(66, 151, 216); font-family: Calibri, sans-serif;">Velocidad
-                      sim&eacute;trica</span></h3>
-                  <p style="text-align: center; color: rgb(0, 0, 0);"><span
-                      style="color: rgb(40, 50, 78); font-family: Calibri, sans-serif;">Ofrecemos igual velocidad<br>de
-                      bajada y subida</span></p>
-                </td>
-                <td style="width: 33.2435%; background-color: rgb(239, 239, 239);">
-                  <h3 style="text-align: center; color: rgb(0, 0, 0);"><span
-                      style="color: rgb(66, 151, 216); font-family: Calibri, sans-serif;">Atenci&oacute;n 24/7</span>
-                  </h3>
-                  <p style="text-align: center; color: rgb(0, 0, 0);"><span
-                      style="color: rgb(40, 50, 78); font-family: Calibri, sans-serif;">Resolvemos todas tus<br>dudas al
-                      momento</span></p>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-          <h3 style="text-align: center; color: rgb(0, 0, 0);"><span
-              style="font-family: Calibri, sans-serif;"><br></span></h3>
-          <p style="text-align: center; color: rgb(0, 0, 0);"><span
-              style="color: rgb(40, 50, 78); font-family: Calibri, sans-serif;">Adquiere nuestro servicio,
-              ll&aacute;manos o escr&iacute;benos al WhatsApp:</span></p>
-          <h3 style="text-align: center; color: rgb(0, 0, 0);"><span
-              style="color: rgb(40, 50, 78); font-family: Calibri, sans-serif;">930 532 256 - 915 368 229</span></h3>
+          <%- contentHTML %>
         </section>
 
-        <footer class="footer footer-transparent d-print-none">
-          <div class="container-xl">
-            <div class="row text-center align-items-center flex-row-reverse">
-              <div class="col-lg-auto ms-lg-auto">
-                <ul class="list-inline list-inline-dots mb-0">
-                  <li class="list-inline-item"><a href="https://tabler.io/docs" target="_blank" class="link-secondary"
-                      rel="noopener">Documentation</a></li>
-                  <li class="list-inline-item"><a href="./license.html" class="link-secondary">License</a></li>
-                  <li class="list-inline-item"><a href="https://github.com/tabler/tabler" target="_blank"
-                      class="link-secondary" rel="noopener">Source code</a></li>
-                  <li class="list-inline-item">
-                    <a href="https://github.com/sponsors/codecalm" target="_blank" class="link-secondary"
-                      rel="noopener">
-                      <!-- Download SVG icon from http://tabler-icons.io/i/heart -->
-                      <svg xmlns="http://www.w3.org/2000/svg" class="icon text-pink icon-filled icon-inline" width="24"
-                        height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                        stroke-linecap="round" stroke-linejoin="round">
-                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                        <path d="M19.5 12.572l-7.5 7.428l-7.5 -7.428a5 5 0 1 1 7.5 -6.566a5 5 0 1 1 7.5 6.572" />
-                      </svg>
-                      Sponsor
-                    </a>
-                  </li>
-                </ul>
-              </div>
-              <div class="col-12 col-lg-auto mt-3 mt-lg-0">
-                <ul class="list-inline list-inline-dots mb-0">
-                  <li class="list-inline-item">
-                    Copyright &copy; 2023
-                    <a href="." class="link-secondary">Tabler</a>.
-                    All rights reserved.
-                  </li>
-                  <li class="list-inline-item">
-                    <a href="./changelog.html" class="link-secondary" rel="noopener">
-                      v1.0.0-beta19
-                    </a>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </footer>
+        <%- include('footer') %>
       </div>
     </div>
 
