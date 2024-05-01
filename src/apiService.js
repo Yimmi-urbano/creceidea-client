@@ -21,7 +21,17 @@ async function fetchHome(domain) {
 async function fetchConfig(domain) {
   hostname = domain.split('.')[0];
   try {
-    const response = await axios.get(`https://storage.googleapis.com/stores-crece/freestore/basic_ecommerce/${hostname}/data/config.json?v=` + version);
+    const response = await axios.get(`https://storage.googleapis.com/stores-crece/freestore/basic_ecommerce/${hostname}/data/config.json?v=1` + version);
+    return response.data.data;
+  } catch (error) {
+    throw new Error('Error al obtener datos de la API');
+  }
+}
+
+async function fetchCatalogo(domain) {
+  hostname = domain.split('.')[0];
+  try {
+    const response = await axios.get(`https://storage.googleapis.com/stores-crece/freestore/basic_ecommerce/${hostname}/data/catalogo.json?v=` + version);
     return response.data.data;
   } catch (error) {
     throw new Error('Error al obtener datos de la API');
@@ -29,5 +39,4 @@ async function fetchConfig(domain) {
 }
 
 
-
-module.exports = { fetchHome, fetchConfig };
+module.exports = { fetchHome, fetchConfig, fetchCatalogo};

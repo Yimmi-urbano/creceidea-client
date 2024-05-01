@@ -13,13 +13,14 @@
   <link href="./dist/css/demo.min.css?1684106062" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.0.7/css/swiper.min.css">
   <link href="https://fonts.googleapis.com/css?family=Rajdhani&display=swap" rel="stylesheet">
-  
+
   <meta name="description" content="<%- GetInfo.meta_description %>">
   <meta name="keywords" content="<%- GetInfo.meta_keyword %>">
   <meta name="author" content="<%- GetInfo.title %>">
-  <meta name="robots" content="index, follow"> <!-- Para permitir que los motores de búsqueda indexen y sigan los enlaces -->
+  <meta name="robots" content="index, follow">
+  <!-- Para permitir que los motores de búsqueda indexen y sigan los enlaces -->
   <meta name="referrer" content="no-referrer-when-downgrade"> <!-- Para controlar la política de referencia -->
-  
+
 
   <style>
     @import url('https://rsms.me/inter/inter.css');
@@ -572,21 +573,23 @@
     #categories-multiple-slides .item-cat {
 
       border: 1px solid #bc91fe;
-  border-radius: 20px;
-  height: 40px;
-  text-align: center;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: #fff;
-  font-size: 16px;
-  font-weight: bold;
-  background-color: #854fdb;
+      border-radius: 20px;
+      height: 40px;
+      text-align: center;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #fff;
+      font-size: 16px;
+      font-weight: bold;
+      background-color: #854fdb;
 
     }
-.button{
-  background-color: #854fdb;
-}
+
+    .button {
+      background-color: #854fdb;
+    }
+
     .price-tag .price-off {
       display: block;
       font-size: 22px;
@@ -599,6 +602,18 @@
       font-size: 15px;
       color: #888;
     }
+
+    .adds-creceidea-pe {
+      text-align: center;
+      background-color: #6a6a6a;
+      color: #fff;
+      font-size: 20px;
+      height: 40px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-weight: bold;
+    }
   </style>
 </head>
 
@@ -607,7 +622,7 @@
   <script src="./dist/js/demo-theme.min.js?1684106062"></script>
   <div class="page">
     <div class="page-wrapper">
-      <div class="page-body">
+      <div class="page-body mb-0">
         <section class="container-fluid  d-flex flex-column justify-content-center">
 
 
@@ -620,7 +635,8 @@
             <div class="list-cat-aviable swiper" style="overflow: hidden;" id="categories-multiple-slides">
               <div class="swiper-wrapper">
                 <div class="item-cat swiper-slide">Cobertura</div>
-                <div class="item-cat swiper-slide" data-bs-toggle="modal" data-bs-target="#modal-scrollable">Planes</div>
+                <div class="item-cat swiper-slide" data-bs-toggle="modal" data-bs-target="#modal-scrollable">Planes
+                </div>
                 <div class="item-cat swiper-slide">Beneficios</div>
                 <div class="item-cat swiper-slide">WhatsApp</div>
                 <div class="item-cat swiper-slide">Contacto</div>
@@ -905,7 +921,7 @@
     </script>
 </body>
 <div class="modal modal-blur fade" id="modal-scrollable" tabindex="-1" role="dialog" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered modal-full-width" role="document">
+  <div class="modal-dialog modal-dialog-centered modal-full-width" role="document" style="width: 95%; margin: auto;">
     <div class="modal-content">
       <div class="modal-header" style="background-color: #854fdb;color: #fff;">
         <h5 class="modal-title" style="font-size:22px">Planes</h5>
@@ -914,131 +930,9 @@
       <div class="modal-body">
         <div class="row">
 
-          <div class="col-md-3 col-12 mb-4">
+          <%- include('parts/card_product', { productsData: dataProducts, GetInfo:GetInfo }) %>
 
-            <div class="swiper-slide card">
-              <div class="image-content">
-
-                <div class="card-image">
-                  <img src="https://storage.googleapis.com/stores-crece/freestore/basic_ecommerce/fiberstar/images/tablet.jpg" alt=""
-                    class="card-img">
-                </div>
-              </div>
-              <div class="card-content text-left">
-                <h2 class="name m-0">PLAN 50 Mbps de Velocidad</h2>
-                <p class="description">
-                <ul>
-                  <li> Costo mínimo de Instalación</li>
-                  <li>100% Fibra Óptica</li>
-                  <li>Internet Simétrico</li>
-                  <li>Duplica x 3 meses</li>
-                </ul>
-                </p>
-                <p class="price-tag">
-                  <span class="price-off"> S/ 40.00 x 3 meses</span>
-                  <span class="price-normal">Precio regular <del>S/ 50.00 </del> </span>
-                </p>
-
-                <button class="button">Contratar</button>
-              </div>
-            </div>
-
-          </div>
-
-          <div class="col-md-3 col-12 mb-4">
-
-            <div class="swiper-slide card">
-              <div class="image-content">
-
-                <div class="card-image">
-                  <img src="https://storage.googleapis.com/stores-crece/freestore/basic_ecommerce/fiberstar/images/pareja.jpg" alt=""
-                    class="card-img">
-                </div>
-              </div>
-              <div class="card-content text-left">
-                <h2 class="name m-0">PLAN 100 Mbps de Velocidad</h2>
-                <p class="description">
-                <ul>
-                  <li>Costo mínimo de Instalación</li>
-                  <li>100% Fibra Óptica</li>
-                  <li>Internet Simétrico</li>
-                  <li>Duplica x 3 meses</li>
-                </ul>
-                </p>
-                <p class="price-tag">
-                  <span class="price-off"> S/ 55.00 x 3 meses</span>
-                  <span class="price-normal">Precio regular <del>S/ 65.00 </del> </span>
-                </p>
-
-                <button class="button">Contratar</button>
-              </div>
-            </div>
-
-          </div>
-
-          <div class="col-md-3 col-12  mb-4">
-
-            <div class="swiper-slide card">
-              <div class="image-content">
-
-                <div class="card-image">
-                  <img src="https://storage.googleapis.com/stores-crece/freestore/basic_ecommerce/fiberstar/images/familia1.jpg" alt=""
-                    class="card-img">
-                </div>
-              </div>
-              <div class="card-content text-left">
-                <h2 class="name m-0">PLAN 150 Mbps de Velocidad</h2>
-                <p class="description">
-                <ul>
-                  <li> Costo mínimo de Instalación</li>
-                  <li>100% Fibra Óptica</li>
-                  <li>Internet Simétrico</li>
-                  <li>Duplica x 3 meses</li>
-                </ul>
-                </p>
-                <p class="price-tag">
-                  <span class="price-off"> S/ 65.00 x 3 meses</span>
-                  <span class="price-normal">Precio regular <del>S/ 75.00 </del> </span>
-                </p>
-
-                <button class="button">Contratar</button>
-              </div>
-            </div>
-
-          </div>
-
-          <div class="col-md-3 col-12 ">
-
-            <div class="swiper-slide card">
-              <div class="image-content">
-
-                <div class="card-image">
-                  <img src="https://storage.googleapis.com/stores-crece/freestore/basic_ecommerce/fiberstar/images/habitacion.jpg" alt=""
-                    class="card-img">
-                </div>
-              </div>
-              <div class="card-content text-left">
-                <h2 class="name m-0">PLAN 200 Mbps de Velocidad</h2>
-                <p class="description">
-                <ul>
-                  <li>Costo mínimo de Instalación</li>
-                  <li>100% Fibra Óptica</li>
-                  <li>Internet Simétrico</li>
-                  <li>Duplica x 3 meses</li>
-                </ul>
-                </p>
-                <p class="price-tag">
-                  <span class="price-off"> S/ 75.00 x 3 meses</span>
-                  <span class="price-normal">Precio regular <del>S/ 85.00 </del> </span>
-                </p>
-
-                <button class="button">Contratar</button>
-              </div>
-            </div>
-
-          </div>
         </div>
-        <%- contentHTML %>
       </div>
 
     </div>
