@@ -2,7 +2,7 @@
 const axios = require('axios');
 const { generarCodigoVersion } = require('./helpers');
 
-const version = generarCodigoVersion;
+const version = generarCodigoVersion();
 let hostname = [];
 
 
@@ -21,7 +21,7 @@ async function fetchHome(domain) {
 async function fetchConfig(domain) {
   hostname = domain.split('.')[0];
   try {
-    const response = await axios.get(`https://storage.googleapis.com/stores-crece/freestore/basic_ecommerce/${hostname}/data/config.json?v=1` + version);
+    const response = await axios.get(`https://storage.googleapis.com/stores-crece/freestore/basic_ecommerce/${hostname}/data/config.json?v=2` + version);
     return response.data.data;
   } catch (error) {
     throw new Error('Error al obtener datos de la API');
@@ -39,4 +39,4 @@ async function fetchCatalogo(domain) {
 }
 
 
-module.exports = { fetchHome, fetchConfig, fetchCatalogo};
+module.exports = { fetchHome, fetchConfig, fetchCatalogo };
