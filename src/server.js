@@ -20,7 +20,6 @@ app.use('/', async (req, res, next) => {
       return res.status(403).send('No se proporcionó ningún subdominio');
     }
     const isValid = await validateSubdomain(subdomain);
-
     if (isValid) {
       next();
     } else {

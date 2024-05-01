@@ -1,0 +1,19 @@
+<style>
+    :root {
+        --background: <%- GetInfo.catalogo.button["color_bg"] %>;
+        --color: <%- GetInfo.catalogo.button["color_text"] %>;
+    }
+
+    .btn-actions-catalog {
+        background-color: var(--background);
+        color: var(--color);
+    }
+
+    .btn-actions-catalog:hover {
+        background-color: var(--background);
+        color: var(--color);
+        opacity: 0.8;
+    }
+</style>
+<button class="button mt-3 btn-actions-catalog" data-action="<%- GetInfo.catalogo.button['action'] %>">
+    <%- GetInfo.catalogo.button['text'] %> </button>

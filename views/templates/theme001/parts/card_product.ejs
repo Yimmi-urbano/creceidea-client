@@ -1,0 +1,34 @@
+<% productsData.forEach(product=> { %>
+    <div class="col-md-3 col-12">
+        <div class="card h-100">
+            <div class="image-content">
+
+                <div class="card-image">
+                    <img src="https://storage.googleapis.com/stores-crece/freestore/basic_ecommerce/fiberstar/images/tablet.jpg"
+                        alt="" class="card-img">
+                </div>
+            </div>
+            <div class="card-body card-content">
+                <h2 class="name m-0">
+                    <%= product.title %>
+                </h2>
+
+                <p class="card-text description"><%- product.description_short %></p>
+                <div class="price-tag">
+                    <div class="card-text price-off"><strong>S/ </strong>
+                        <%= product.price.sale.toFixed(2) %>
+                            <%= product.price.tag %>
+                    </div>
+                    <div class="card-text price-normal"><strong>Precio regular:</strong> <del>S/ <%=
+                                product.price.regular.toFixed(2) %></del></div>
+                </div>
+                <% if(product.is_aviable) { %>
+                    <%- include('./button',{GetInfo:GetInfo}) %>
+                        <% } else { %>
+                            <p class="text-danger">No disponible</p>
+                            <% } %>
+            </div>
+
+        </div>
+    </div>
+    <% }) %>

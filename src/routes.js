@@ -17,11 +17,13 @@ router.use(errorHandler);
 
 router.get('/', async (req, res) => {
   try {
-    const domain = req.hostname;
+    const domain = "fiberstar.creceidea.pe"; //req.hostname;
     const banners = await getBanners(domain);
     const contentHTML = await getInfoHomeText(domain);
     const Config = await getConfig(domain);
-    res.render('index', { banners: banners, contentHTML: contentHTML, GetInfo: Config, contentTemplate: 'home' });
+    const listCatalog = await fetchCatalogo(domain);
+
+    res.render('index', { dataProducts:listCatalog, banners: banners, contentHTML: contentHTML, GetInfo: Config, contentTemplate: 'home' });
   } catch (error) {
     res.render('error_page', { error: error });
   }
