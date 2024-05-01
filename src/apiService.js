@@ -20,6 +20,7 @@ async function fetchHome(domain) {
 
 async function fetchConfig(domain) {
   hostname = domain.split('.')[0];
+ 
   try {
     const response = await axios.get(`https://storage.googleapis.com/stores-crece/freestore/basic_ecommerce/${hostname}/data/config.json?v=2` + version);
     return response.data.data;
