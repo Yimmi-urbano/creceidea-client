@@ -42,3 +42,27 @@
   </div>
 </section>
 
+<section class="container-xxl p-4 d-flex flex-column justify-content-center">
+  <div class="block-categories">
+    <div class="list-cat-aviable swiper" style="overflow: hidden;" id="categories-multiple-slides">
+      <div class="swiper-wrapper">
+        <div class="item-cat swiper-slide">Cobertura</div>
+        <div class="item-cat swiper-slide" data-bs-toggle="modal" data-bs-target="#modal-scrollable">Planes
+        </div>
+        <div class="item-cat swiper-slide">Beneficios</div>
+        <div class="item-cat swiper-slide">WhatsApp</div>
+        <div class="item-cat swiper-slide">Contacto</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="container-xxl p-4 d-flex flex-column justify-content-center">
+
+  <div class="row">
+
+    <%- include('./card_product', { productsData: dataProducts, GetInfo:GetInfo }) %>
+
+  </div>
+</section>
