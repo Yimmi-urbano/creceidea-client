@@ -15,12 +15,13 @@
 
                 <p class="card-text description"><%- product.description_short %></p>
                 <div class="price-tag">
-                    <div class="card-text price-off"><strong>S/ </strong>
+                    <div class="card-text price-off"><strong><%- GetInfo.catalogo.currency['symbol'] %> </strong>
                         <%= product.price.sale.toFixed(2) %>
                             <%= product.price.tag %>
                     </div>
-                    <div class="card-text price-normal"><strong>Precio regular:</strong> <del>S/ <%=
-                                product.price.regular.toFixed(2) %></del></div>
+                    <div class="card-text price-normal"><strong>Precio regular:</strong> <del><%-
+                                GetInfo.catalogo.currency['symbol'] %>
+                                <%= product.price.regular.toFixed(2) %></del></div>
                 </div>
                 <% if(product.is_aviable) { %>
                     <%- include('./button',{GetInfo:GetInfo}) %>
