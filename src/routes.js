@@ -32,12 +32,15 @@ router.get('/', async (req, res) => {
 
 // Ruta para la página de catálogo
 router.get('/catalog', async (req, res) => {
-  const listCatalog = await fetchCatalogo();
-  res.render('index', { listCatalog, menuOptions: await fetchMenu(), pageTitle: 'Servicios', contentHTML: 'Pagina de lista de servicios', contentTemplate: 'catalog' });
+  const domain = "fiberstar.samishop.pe" ;//req.hostname;
+  const listCatalog = await fetchCatalogo(domain);
+  const Config = await getConfig(domain);
+  const banners = await getBanners(domain);
+  res.render('index', { dataProducts:listCatalog, banners: banners, pageTitle: 'Servicios', contentHTML: '',GetInfo: Config, contentTemplate: 'catalog' });
 });
 
 // Ruta para detalles del producto en el catálogo
-router.get('/catalog/:rutaDinamica', async (req, res) => {
+router.get('/detail-product/:rutaDinamica', async (req, res) => {
   const pgeCant = await getPageByIdProduct('/catalog/' + req.params.rutaDinamica);
   res.render('index', { menuOptions: await fetchMenu(), pageTitle: pgeCant.title, contentHTML: pgeCant.description_short, contentTemplate: 'product_detail' });
 });
