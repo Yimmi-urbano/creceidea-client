@@ -10,7 +10,7 @@
   <link href="/dist/css/tabler-flags.min.css?1684106062" rel="stylesheet" />
   <link href="/dist/css/tabler-payments.min.css?1684106062" rel="stylesheet" />
   <link href="/dist/css/tabler-vendors.min.css?1684106062" rel="stylesheet" />
-  <link href="/dist/css/demo.min.css?1684106062" rel="stylesheet" />
+
   <link rel="stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.0.7/css/swiper.min.css">
   <link rel="stylesheet" as="style" href="https://fonts.googleapis.com/css?family=Rajdhani&display=swap">
   <link rel="stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
@@ -28,6 +28,31 @@
 
     :root {
       --tblr-font-sans-serif: 'Inter Var', -apple-system, BlinkMacSystemFont, San Francisco, Segoe UI, Roboto, Helvetica Neue, sans-serif;
+    }
+
+    .banner-container {
+      display: flex;
+      height: 100%;
+    }
+    .banner-catalog h2 {
+      color: #fff;
+      font-size: 32px;
+      margin: 0px;
+      padding: 0px;
+    }
+    .banner-catalog {
+      height: 220px;
+      background-color: #3993d5;
+      border-radius: 25px;
+      position: relative;
+    }
+
+    .inner-banner {
+      height: 100%;
+      display: flex;
+      width: 100%;
+      justify-content: center;
+      align-items: center;
     }
 
     body {
@@ -532,7 +557,8 @@
     }
 
 
-    .hero-slider.hero-style .logo-header {
+    .hero-slider.hero-style .logo-header,
+    .banner-catalog .logo-header {
 
       content: "";
       height: 90px;
@@ -545,7 +571,8 @@
 
     }
 
-    .hero-slider.hero-style .logo-header::after {
+    .hero-slider.hero-style .logo-header::after,
+    .banner-catalog .logo-header::after {
       z-index: -1;
       content: "";
       position: absolute;
@@ -558,7 +585,8 @@
       top: -25px;
     }
 
-    .hero-slider.hero-style .logo-header::before {
+    .hero-slider.hero-style .logo-header::before,
+    .banner-catalog .logo-header::before {
       z-index: -1;
       content: "";
       position: absolute;
@@ -620,7 +648,7 @@
 
 
 <body>
-  <script src="./dist/js/demo-theme.min.js?1684106062"></script>
+
   <div class="page">
     <div class="page-wrapper">
       <div class="page-body mb-0">

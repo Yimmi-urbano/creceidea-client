@@ -1,51 +1,35 @@
-
-<section class="hero-slider hero-style">
+<section class="banner-catalog">
     <div class="logo-header">
-      <img style="height: 70px;display: block;margin: auto;margin-top: 10px;object-fit: cover;width: 160px;"
-        src=" <%- GetInfo.logo %>"
-        alt="">
+        <a href="/">
+            <img style="height: 70px;display: block;margin: auto;margin-top: 10px;object-fit: cover;width: 160px;"
+                src=" <%- GetInfo.logo %>" alt="">
+        </a>
     </div>
-    <div class="swiper-container">
-      <div class="swiper-wrapper">
-        <% for (let i = 0; i < banners.length; i++) { %>
-        <div class="swiper-slide">
-          <div class="slide-inner slide-bg-image"
-            data-background="<%- banners[i].image %>">
-            <div class="container">
-              <div data-swiper-parallax="300" class="slide-title">
-              <h2><%- banners[i].text %> </h2>  
-              </div>
-              <% for (let j = 0; j < banners[i].button.length; j++) { %>
-                <% const button = banners[i].button[j]; %>
-                <% if (button.show) { %>
-                    <% if (button.action === "modal") { %>
-                        <button type="button" class="button" data-bs-toggle="modal" data-bs-target="<%- button.destino %>">
-                            <%= button.text_button %>
-                        </button>
-                    <% } else if (button.action === "href") { %>
-                        <a href="<%- button.destino %>">
-                            <%- button.text_button %>
-                        </a>
-                    <% } %>
-                <% } %>
-            <% } %>
-              <div class="clearfix"></div>
-  
-            </div>
-          </div>
-          <!-- end slide-inner -->
+    <div class="banner-container">
+        <div class="inner-banner">
+            <h2 class="titulo-catalog">PLANES</h2>
         </div>
-        <% } %>
-      </div>
-      <div class="swiper-pagination"></div>
-      <div class="swiper-button-next"></div>
-      <div class="swiper-button-prev"></div>
+
     </div>
-  </section>
-<section class="container pt-4">
-<div class="row">
+</section>
+<section class="container-xxl p-4 d-flex flex-column justify-content-center">
+    <div class="block-categories">
+        <div class="list-cat-aviable swiper" style="overflow: hidden;" id="categories-multiple-slides">
+            <div class="swiper-wrapper">
+                <div class="item-cat swiper-slide">Cobertura</div>
+                <div class="item-cat swiper-slide" data-bs-toggle="modal" data-bs-target="#modal-scrollable">Planes
+                </div>
+                <div class="item-cat swiper-slide">Beneficios</div>
+                <div class="item-cat swiper-slide">WhatsApp</div>
+                <div class="item-cat swiper-slide">Contacto</div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="container-xxl pt-4">
+    <div class="row">
 
-    <%- include('./card_product', { productsData: dataProducts, GetInfo:GetInfo }) %>
+        <%- include('./card_product', { productsData: dataProducts, GetInfo:GetInfo }) %>
 
-  </div>
+    </div>
 </section>
