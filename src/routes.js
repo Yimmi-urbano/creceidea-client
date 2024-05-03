@@ -43,6 +43,14 @@ router.get('/detail-product/:rutaDinamica', async (req, res) => {
   res.render('index', { menuOptions: await fetchMenu(), pageTitle: pgeCant.title, contentHTML: pgeCant.description_short, contentTemplate: 'product_detail' });
 });
 
+// Ruta para renderizar el archivo style.ejs
+router.get('/styles', (req, res) => {
+  // Renderiza el archivo style.ejs
+  res.set('Content-Type', 'text/css');
+  res.render('styles');
+});
+
+
 /*
 // Ruta para otras páginas
 router.get('/:rutaDinamica', async (req, res) => {
