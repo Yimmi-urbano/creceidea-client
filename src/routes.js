@@ -29,21 +29,20 @@ router.get('/', async (req, res) => {
   }
 });
 
-
-// Ruta para la página de catálogo
 router.get('/catalog', async (req, res) => {
   const domain = "fiberstar.samishop.pe" ;//req.hostname;
   const listCatalog = await fetchCatalogo(domain);
+  const contentHTML = await getInfoHomeText(domain);
   const Config = await getConfig(domain);
   const banners = await getBanners(domain);
-  res.render('index', { dataProducts:listCatalog, banners: banners, pageTitle: 'Servicios', contentHTML: '',GetInfo: Config, contentTemplate: 'catalog' });
+  res.render('index', { dataProducts:listCatalog, banners: banners, pageTitle: 'Servicios', contentHTML: contentHTML,GetInfo: Config, contentTemplate: 'catalog' });
 });
 
-// Ruta para detalles del producto en el catálogo
 router.get('/detail-product/:rutaDinamica', async (req, res) => {
   const pgeCant = await getPageByIdProduct('/catalog/' + req.params.rutaDinamica);
   res.render('index', { menuOptions: await fetchMenu(), pageTitle: pgeCant.title, contentHTML: pgeCant.description_short, contentTemplate: 'product_detail' });
 });
+
 /*
 // Ruta para otras páginas
 router.get('/:rutaDinamica', async (req, res) => {
