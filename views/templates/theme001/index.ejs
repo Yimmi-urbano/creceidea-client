@@ -7,28 +7,30 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge" />
   <title><%- GetInfo.title %> | <%- GetInfo.slogan %></title>
   <link href="/dist/css/tabler.min.css?1684106062" rel="stylesheet" />
-  
-  <link rel="stylesheet" href="/styles?v=02313" />
+
+  <link rel="stylesheet" href="/styles?v=023131" />
   <link rel="stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.0.7/css/swiper.min.css">
   <link rel="stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
   <meta name="description" content="<%- GetInfo.meta_description %>">
   <meta name="keywords" content="<%- GetInfo.meta_keyword %>">
   <meta name="author" content="<%- GetInfo.title %>">
   <meta name="robots" content="index, follow">
-  <meta name="referrer" content="no-referrer-when-downgrade"> 
+  <meta name="referrer" content="no-referrer-when-downgrade">
 </head>
+
 <body>
 
   <div class="page">
     <div class="page-wrapper">
       <div class="page-body mb-0">
-        <section class="container-fluid  d-flex flex-column justify-content-center">
-          <%- include('parts/' + contentTemplate) %>
-        </section>
-        <section class="container-xxl pt-4 pb-4">
-          <%- contentHTML %>
-        </section>
-        <%- include('footer') %>
+        <%- include('header') %>
+          <section class="container-fluid  d-flex flex-column justify-content-center">
+            <%- include('parts/' + contentTemplate) %>
+          </section>
+          <section class="container-xxl pt-4 pb-4">
+            <%- contentHTML %>
+          </section>
+          <%- include('footer') %>
       </div>
     </div>
 
