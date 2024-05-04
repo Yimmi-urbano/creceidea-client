@@ -11,7 +11,7 @@ async function fetchHome(domain) {
   hostname = domain.split('.')[0];
 
   try {
-    const response = await axios.get(`https://storage.googleapis.com/stores-crece/freestore/basic_ecommerce/${hostname}/data/home.json?v=` + version);
+    const response = await axios.get(`https://api.creceidea.pe/data/${hostname}/home.json?v=` + version);
     return response.data;
   } catch (error) {
     throw new Error('Error al obtener datos de la API');
@@ -22,7 +22,7 @@ async function fetchConfig(domain) {
   hostname = domain.split('.')[0];
  
   try {
-    const response = await axios.get(`https://storage.googleapis.com/stores-crece/freestore/basic_ecommerce/${hostname}/data/config.json?v=2` + version);
+    const response = await axios.get(`https://api.creceidea.pe/data/${hostname}/config.json?v=2` + version);
     return response.data.data;
   } catch (error) {
     throw new Error('Error al obtener datos de la API');
@@ -32,7 +32,7 @@ async function fetchConfig(domain) {
 async function fetchCatalogo(domain) {
   hostname = domain.split('.')[0];
   try {
-    const response = await axios.get(`https://storage.googleapis.com/stores-crece/freestore/basic_ecommerce/${hostname}/data/catalogo.json?v=` + version);
+    const response = await axios.get(`https://api.creceidea.pe/data/${hostname}/catalogo.json?v=` + version);
     return response.data.data;
   } catch (error) {
     throw new Error('Error al obtener datos de la API');
