@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="es">
+
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
@@ -15,11 +16,11 @@
   <meta name="robots" content="index, follow">
   <meta name="referrer" content="no-referrer-when-downgrade">
   <style>
-  :root {
-  --primary-color: <%- GetInfo.colors[0] %>;
-  --secondary-color: <%- GetInfo.colors[1] %>; 
-  --accent-color: <%- GetInfo.colors[2] %>; 
-}
+    :root {
+      --primary-color: <%- GetInfo.colors[0] %>;
+      --secondary-color: <%- GetInfo.colors[1] %>;
+      --accent-color: <%- GetInfo.colors[2] %>;
+    }
   </style>
 </head>
 
@@ -149,6 +150,20 @@
           }
         });
       }
+
+
+      document.getElementById('shareBtn').addEventListener('click', async () => {
+        try {
+          await navigator.share({
+            title: 'Título del contenido compartido',
+            text: 'Descripción o texto del contenido compartido',
+            url: 'URL del contenido a compartir',
+          });
+          console.log('Contenido compartido exitosamente');
+        } catch (error) {
+          console.error('Error al compartir:', error.message);
+        }
+      });
     </script>
 </body>
 

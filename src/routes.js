@@ -23,7 +23,7 @@ router.get('/', async (req, res) => {
     const Config = await getConfig(domain);
     const listCatalog = await fetchCatalogo(domain);
 
-    res.render('index', { dataProducts:listCatalog, banners: banners, contentHTML: contentHTML, GetInfo: Config, contentTemplate: 'home' });
+    res.render('index', { dataProducts: listCatalog, banners: banners, contentHTML: contentHTML, GetInfo: Config, contentTemplate: 'home' });
   } catch (error) {
     res.render('error_page', { error: error });
   }
@@ -35,7 +35,7 @@ router.get('/catalog', async (req, res) => {
   const contentHTML = await getInfoHomeText(domain);
   const Config = await getConfig(domain);
   const banners = await getBanners(domain);
-  res.render('index', { dataProducts:listCatalog, banners: banners, pageTitle: 'Servicios', contentHTML: contentHTML,GetInfo: Config, contentTemplate: 'catalog' });
+  res.render('index', { dataProducts: listCatalog, banners: banners, pageTitle: 'Servicios', contentHTML: contentHTML, GetInfo: Config, contentTemplate: 'catalog' });
 });
 
 router.get('/detail-product/:rutaDinamica', async (req, res) => {
