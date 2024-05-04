@@ -17,7 +17,7 @@ router.use(errorHandler);
 
 router.get('/', async (req, res) => {
   try {
-    const domain = "fiberstar.creceidea.pe" //req.hostname;
+    const domain = req.hostname;
     const banners = await getBanners(domain);
     const contentHTML = await getInfoHomeText(domain);
     const Config = await getConfig(domain);
@@ -30,7 +30,7 @@ router.get('/', async (req, res) => {
 });
 
 router.get('/catalog', async (req, res) => {
-  const domain = "fiberstar.creceidea.pe" //req.hostname;
+  const domain = req.hostname;
   const listCatalog = await fetchCatalogo(domain);
   const contentHTML = await getInfoHomeText(domain);
   const Config = await getConfig(domain);
