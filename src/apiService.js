@@ -39,5 +39,15 @@ async function fetchCatalogo(domain) {
   }
 }
 
+async function fetchNavBar(domain) {
+  hostname = domain.split('.')[0];
+  try {
+    const response = await axios.get(`https://api.creceidea.pe/data/${hostname}/navigation.json?v=` + version);
+    return response.data.data;
+  } catch (error) {
+    throw new Error('Error al obtener datos de la API');
+  }
+}
 
-module.exports = { fetchHome, fetchConfig, fetchCatalogo };
+
+module.exports = { fetchHome, fetchConfig, fetchCatalogo,fetchNavBar };
