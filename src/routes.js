@@ -1,8 +1,11 @@
 const express = require('express');
+require('dotenv').config();
 const router = express.Router();
-const { fetchCatalogo } = require('./apiService');
+const { fetchCatalogo, fetchNavBar } = require('./apiService');
+const { generarCodigoVersion } = require('./helpers')
 const { getBanners, getInfoHomeText, getConfig } = require('./functions');
-
+const DOMAIN_LOCAL = process.env.DOMAIN_LOCAL;
+const version = generarCodigoVersion()
 const errorHandler = (req, res, next) => {
   try {
     next();
@@ -17,25 +20,27 @@ router.use(errorHandler);
 
 router.get('/', async (req, res) => {
   try {
-    const domain = req.hostname;
+    const domain = DOMAIN_LOCAL ?? req.hostname;
     const banners = await getBanners(domain);
     const contentHTML = await getInfoHomeText(domain);
     const Config = await getConfig(domain);
     const listCatalog = await fetchCatalogo(domain);
+    const navbar = await fetchNavBar(domain)
+ 
 
-    res.render('index', { dataProducts: listCatalog, banners: banners, contentHTML: contentHTML, GetInfo: Config, contentTemplate: 'home' });
+    res.render('index', {v:version,navbar:navbar, dataProducts: listCatalog, banners: banners, contentHTML: contentHTML, GetInfo: Config, contentTemplate: 'home' });
   } catch (error) {
     res.render('error_page', { error: error });
   }
 });
 
 router.get('/catalog', async (req, res) => {
-  const domain = req.hostname;
+  const domain = DOMAIN_LOCAL ?? req.hostname;
   const listCatalog = await fetchCatalogo(domain);
   const contentHTML = await getInfoHomeText(domain);
   const Config = await getConfig(domain);
-  const banners = await getBanners(domain);
-  res.render('index', { dataProducts: listCatalog, banners: banners, pageTitle: 'Servicios', contentHTML: contentHTML, GetInfo: Config, contentTemplate: 'catalog' });
+  const navbar = await fetchNavBar(domain);
+  res.render('index', {v:version, navbar:navbar, dataProducts: listCatalog, pageTitle: 'Servicios', contentHTML: contentHTML, GetInfo: Config, contentTemplate: 'catalog' });
 });
 
 router.get('/detail-product/:rutaDinamica', async (req, res) => {
