@@ -52,7 +52,7 @@ async function fetchNavBar(domain) {
 async function fetchPageBySlug(domain,slugSearch) {
   const hostname = domain.split('.')[0];
   try {
-    const response = await axios.get('http://localhost:4000/api/pages/slug/'+slugSearch, {
+    const response = await axios.get('https://api-pages.creceidea.pe/api/pages/slug/'+slugSearch, {
       headers: {
         'domain': hostname
       }
