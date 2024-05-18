@@ -20,7 +20,7 @@ async function fetchHome(domain) {
 
 async function fetchConfig(domain) {
   hostname = domain.split('.')[0];
- 
+
   try {
     const response = await axios.get(`https://api.creceidea.pe/data/${hostname}/config.json?v=2` + version);
     return response.data.data;
@@ -49,5 +49,19 @@ async function fetchNavBar(domain) {
   }
 }
 
+async function fetchPageBySlug(domain,slugSearch) {
+  const hostname = domain.split('.')[0];
+  try {
+    const response = await axios.get('http://localhost:4000/api/pages/slug/'+slugSearch, {
+      headers: {
+        'domain': hostname
+      }
+    });
+    return response.data;
+  } catch (error) {
+    throw new Error('Error al obtener datos de la API');
+  }
+}
 
-module.exports = { fetchHome, fetchConfig, fetchCatalogo,fetchNavBar };
+
+module.exports = { fetchHome, fetchConfig, fetchCatalogo, fetchNavBar, fetchPageBySlug };
