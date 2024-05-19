@@ -1,4 +1,5 @@
-<section class="banner-catalog" style="background-image: url('<%- infoPage.image_default %>'); background-size: cover; background-position: top left; background-attachment: scroll;">
+<section class="banner-catalog"
+    style="background-image: url('<%- infoPage.image_default %>'); background-size: cover; background-position: top left; background-attachment: scroll;">
     <div class="logo-header">
         <a href="/">
             <img style="height: 70px;display: block;margin: auto;margin-top: 10px;object-fit: cover;width: 160px;"
@@ -6,7 +7,7 @@
         </a>
     </div>
     <div class="banner-container">
-        <div class="inner-banner" >
+        <div class="inner-banner">
             <h2 class="titulo-catalog"><%- infoPage.title %> </h2>
         </div>
     </div>
@@ -25,12 +26,15 @@
     <textarea class="d-none hidden" type="text" name=""
         id="information"><%- JSON.stringify(infoPage.content) %></textarea>
 
-    <script src="https://cdn.jsdelivr.net/npm/@editorjs/editorjs@latest"></script>
+
     <script src="https://cdn.jsdelivr.net/npm/@editorjs/image@latest"></script>
     <script src="https://cdn.jsdelivr.net/npm/@editorjs/header@latest"></script>
     <script src="https://cdn.jsdelivr.net/npm/@editorjs/delimiter@latest"></script>
     <script src="https://cdn.jsdelivr.net/npm/@editorjs/list@latest"></script>
     <script src="https://cdn.jsdelivr.net/npm/@editorjs/checklist@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@editorjs/paragraph@latest"></script>
+    <script src="/dist/tools/custom-tool.bundle.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@editorjs/editorjs@latest"></script>
     <script>
 
         document.addEventListener('DOMContentLoaded', function () {
@@ -38,13 +42,23 @@
 
             const editor = new EditorJS({
                 readOnly: true,
+                holderOpts: {
+                    styles: {
+
+                        maxWidth: '800px'
+                    }
+                },
                 tools: {
                     image: ImageTool,
                     header: Header,
                     list: List,
                     checklist: Checklist,
+
                 },
-                data: body
+                data: body,
+                onReady: () => {
+                    CustomTool.default.applyStylesToExistingBlocks({ api: editor, data: body });
+                }
             });
         });
     </script>
