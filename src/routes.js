@@ -19,22 +19,33 @@ const errorHandler = (req, res, next) => {
 
 router.use(errorHandler);
 
-// Middleware para obtener los datos comunes
 const fetchDataMiddleware = async (req, res, next) => {
   try {
     const domain = DOMAIN_LOCAL ?? req.hostname;
     res.locals.domain = domain;
     res.locals.version = version;
-    res.locals.banners = await getBanners(domain);
-    res.locals.contentHTML = await getInfoHomeText(domain);
-    res.locals.Config = await getConfig(domain);
-    res.locals.navbar = await fetchNavBar(domain);
-    res.locals.listCatalog = await fetchCatalogo(domain);
+    
+    // Ejecutar todas las promesas de manera concurrente
+    const [banners, contentHTML, Config, navbar, listCatalog] = await Promise.all([
+      getBanners(domain),
+      getInfoHomeText(domain),
+      getConfig(domain),
+      fetchNavBar(domain),
+      fetchCatalogo(domain)
+    ]);
+
+    res.locals.banners = banners;
+    res.locals.contentHTML = contentHTML;
+    res.locals.Config = Config;
+    res.locals.navbar = navbar;
+    res.locals.listCatalog = listCatalog;
+
     next();
   } catch (error) {
     next(error);
   }
 };
+
 
 router.use(fetchDataMiddleware);
 

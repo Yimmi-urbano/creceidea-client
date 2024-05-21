@@ -42,7 +42,7 @@ async function getInfoHomeText(domain) {
 
 async function getConfig(domain) {
     const data = await fetchConfig(domain);
-   
+
     if (data) {
         return data;
     } else {
