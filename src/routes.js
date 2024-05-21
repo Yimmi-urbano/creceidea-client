@@ -1,31 +1,26 @@
 const express = require('express');
 require('dotenv').config();
 const router = express.Router();
-const { fetchCatalogo, fetchNavBar, fetchPageBySlug } = require('./apiService');
+const { fetchCatalogo, fetchNavBar, fetchPageBySlug, getPageByIdProduct, fetchMenu } = require('./apiService');
 const { generarCodigoVersion } = require('./helpers');
 const { getBanners, getInfoHomeText, getConfig } = require('./functions');
 
 const DOMAIN_LOCAL = process.env.DOMAIN_LOCAL;
 const version = generarCodigoVersion();
 
-const errorHandler = (req, res, next) => {
-  try {
-    next();
-  } catch (error) {
-    console.error('Error al manejar la solicitud:', error);
-    res.status(500).send('Error al manejar la solicitud');
-  }
+// Middleware de manejo de errores
+const errorHandler = (err, req, res, next) => {
+  console.error('Error al manejar la solicitud:', err);
+  res.status(500).send('Error al manejar la solicitud');
 };
 
-router.use(errorHandler);
-
+// Middleware para cargar datos
 const fetchDataMiddleware = async (req, res, next) => {
   try {
     const domain = DOMAIN_LOCAL ?? req.hostname;
     res.locals.domain = domain;
     res.locals.version = version;
     
-    // Ejecutar todas las promesas de manera concurrente
     const [banners, contentHTML, Config, navbar, listCatalog] = await Promise.all([
       getBanners(domain),
       getInfoHomeText(domain),
@@ -46,39 +41,32 @@ const fetchDataMiddleware = async (req, res, next) => {
   }
 };
 
+// Middleware específico para la carga de datos en las rutas necesarias
+const fetchDataForRoutes = ['/', '/catalog', '/:slug'];
+router.use(fetchDataForRoutes, fetchDataMiddleware);
 
-router.use(fetchDataMiddleware);
-
-router.get('/', async (req, res) => {
-  try {
-    res.render('index', { 
-      v: res.locals.version, 
-      navbar: res.locals.navbar, 
-      dataProducts: res.locals.listCatalog, 
-      banners: res.locals.banners, 
-      contentHTML: res.locals.contentHTML, 
-      GetInfo: res.locals.Config, 
-      contentTemplate: 'home' 
-    });
-  } catch (error) {
-    res.render('error_page', { error: error });
-  }
+router.get('/', (req, res) => {
+  res.render('index', { 
+    v: res.locals.version, 
+    navbar: res.locals.navbar, 
+    dataProducts: res.locals.listCatalog, 
+    banners: res.locals.banners, 
+    contentHTML: res.locals.contentHTML, 
+    GetInfo: res.locals.Config, 
+    contentTemplate: 'home' 
+  });
 });
 
-router.get('/catalog', async (req, res) => {
-  try {
-    res.render('index', { 
-      v: res.locals.version, 
-      navbar: res.locals.navbar, 
-      dataProducts: res.locals.listCatalog, 
-      pageTitle: 'Servicios', 
-      contentHTML: res.locals.contentHTML, 
-      GetInfo: res.locals.Config, 
-      contentTemplate: 'catalog' 
-    });
-  } catch (error) {
-    res.render('error_page', { error: error });
-  }
+router.get('/catalog', (req, res) => {
+  res.render('index', { 
+    v: res.locals.version, 
+    navbar: res.locals.navbar, 
+    dataProducts: res.locals.listCatalog, 
+    pageTitle: 'Servicios', 
+    contentHTML: res.locals.contentHTML, 
+    GetInfo: res.locals.Config, 
+    contentTemplate: 'catalog' 
+  });
 });
 
 router.get('/styles', (req, res) => {
@@ -86,7 +74,7 @@ router.get('/styles', (req, res) => {
   res.render('styles');
 });
 
-router.get('/detail-product/:rutaDinamica', async (req, res) => {
+router.get('/detail-product/:rutaDinamica', async (req, res, next) => {
   try {
     const pgeCant = await getPageByIdProduct('/catalog/' + req.params.rutaDinamica);
     res.render('index', { 
@@ -96,11 +84,11 @@ router.get('/detail-product/:rutaDinamica', async (req, res) => {
       contentTemplate: 'product_detail' 
     });
   } catch (error) {
-    res.render('error_page', { error: error });
+    next(error);
   }
 });
 
-router.get('/:slug', async (req, res) => {
+router.get('/:slug', async (req, res, next) => {
   try {
     const slugSearch = req.params.slug;
     const getPage = await fetchPageBySlug(res.locals.domain, slugSearch);
@@ -114,8 +102,11 @@ router.get('/:slug', async (req, res) => {
       contentTemplate: 'page' 
     });
   } catch (error) {
-    res.render('error_page', { error: error });
+    next(error);
   }
 });
+
+// Middleware de manejo de errores al final
+router.use(errorHandler);
 
 module.exports = router;
