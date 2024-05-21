@@ -12,6 +12,9 @@ app.set('views', path.join(__dirname, '..', 'views', 'templates', 'theme001'));
 app.set('view engine', 'ejs');
 
 app.use(express.static(path.join(__dirname, '..', 'public')));
+app.use(express.static('public', { maxAge: 31557600 }));
+app.use(compression());
+
 
 app.use('/', async (req, res, next) => {
   try {
