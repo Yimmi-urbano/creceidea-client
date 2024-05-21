@@ -22,8 +22,14 @@ async function fetchConfig(domain) {
   hostname = domain.split('.')[0];
 
   try {
-    const response = await axios.get(`https://api.creceidea.pe/data/${hostname}/config.json?v=2` + version);
-    return response.data.data;
+    const response = await axios.get(`https://api-configuration.creceidea.pe/api/configurations`,{
+
+    headers: {
+      'domain': hostname
+    }
+
+    });
+    return response.data[0];
   } catch (error) {
     throw new Error('Error al obtener datos de la API');
   }
