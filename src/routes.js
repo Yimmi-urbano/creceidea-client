@@ -11,7 +11,7 @@ const version = generarCodigoVersion();
 // Middleware de manejo de errores
 const errorHandler = (err, req, res, next) => {
   console.error('Error al manejar la solicitud:', err);
-  res.status(500).send('Error al manejar la solicitud');
+  res.status(500).render('error_page');
 };
 
 // Middleware para cargar datos
