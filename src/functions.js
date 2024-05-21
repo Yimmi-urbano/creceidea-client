@@ -42,6 +42,7 @@ async function getInfoHomeText(domain) {
 
 async function getConfig(domain) {
     const data = await fetchConfig(domain);
+   
     if (data) {
         return data;
     } else {
@@ -52,20 +53,5 @@ async function getConfig(domain) {
     }
 }
 
-/*
-async function getPageByIdProduct(url) {
-    const data = await fetchCatalogo();
-    const product = data.find(product => product.url === url);
-    
-    if (product) {
-        return product;
-    } else {
-        return {
-            title: "No Encontrado",
-            content_html: "<h1>No Encontrado</h1><p>La página que buscas no fue encontrada.</p>"
-        };
-    }
-}
-*/
 
 module.exports = { getPageByUrl, getBanners, getInfoHomeText, getConfig };

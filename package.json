@@ -9,6 +9,7 @@
     "ejs": "^3.1.9",
     "express": "^4.19.2",
     "lru-cache": "^10.2.0",
+    "node-cache": "^5.1.2",
     "ts-node": "^10.9.2",
     "ts-node-dev": "^2.0.0",
     "typescript": "^5.4.3"
