@@ -33,7 +33,7 @@
           <section class="container-fluid  d-flex flex-column justify-content-center">
             <%- include('parts/' + contentTemplate) %>
           </section>
-       
+
           <%- include('footer') %>
       </div>
     </div>
@@ -148,8 +148,6 @@
           }
         });
       }
-
-
       document.getElementById('shareBtn').addEventListener('click', async () => {
         try {
           await navigator.share({
@@ -162,6 +160,26 @@
           console.error('Error al compartir:', error.message);
         }
       });
+
+      const button_whatsapp = document.querySelectorAll('.btn-actions-catalog');
+
+button_whatsapp.forEach(button => {
+  button.addEventListener('click', () => {
+    const phone = button.getAttribute('data-number');
+    const title = button.getAttribute('data-title');
+    const price = button.getAttribute('data-price');
+    
+    if (phone && title && price) {
+      const message = `Hola, estoy interesado en comprar *${title}* al precio de S/ ${price}. ¿Podría proporcionar más detalles?`;
+      const whatsappLink = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+      window.open(whatsappLink, '_blank');
+    } else {
+      console.error('Required data attributes not found');
+    }
+  });
+});
+
+
     </script>
 </body>
 
