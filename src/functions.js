@@ -1,4 +1,6 @@
 const { fetchPages, fetchHome, fetchConfig } = require('./apiService');
+const path = require('path');
+const fs = require('fs');
 
 async function getPageByUrl(url) {
     const data = await fetchPages();
@@ -53,5 +55,32 @@ async function getConfig(domain) {
     }
 }
 
+function getSvgContent(title) {
+    let filePath;
+    switch (title.toLowerCase()) {
+        case 'facebook':
+            filePath = path.join(__dirname, 'svgs', 'facebook.svg');
+            break;
+        case 'ex':
+            filePath = path.join(__dirname, 'svgs', 'ex.svg');
+            break;
+        case 'instagram':
+            filePath = path.join(__dirname, 'svgs', 'instagram.svg');
+            break;
+        case 'tiktok':
+            filePath = path.join(__dirname, 'svgs', 'tiktok.svg');
+            break;
+        case 'youtube':
+            filePath = path.join(__dirname, 'svgs', 'youtube.svg');
+            break;
+        case 'linkedin':
+            filePath = path.join(__dirname, 'svgs', 'linkedin.svg');
+            break;
 
-module.exports = { getPageByUrl, getBanners, getInfoHomeText, getConfig };
+        default:
+            return '';
+    }
+    return fs.readFileSync(filePath, 'utf8');
+}
+
+module.exports = { getPageByUrl, getBanners, getInfoHomeText, getConfig, getSvgContent };

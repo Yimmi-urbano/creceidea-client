@@ -3,7 +3,7 @@ require('dotenv').config();
 const router = express.Router();
 const { fetchCatalogo, fetchNavBar, fetchPageBySlug, getPageByIdProduct, fetchMenu } = require('./apiService');
 const { generarCodigoVersion } = require('./helpers');
-const { getBanners, getInfoHomeText, getConfig } = require('./functions');
+const { getBanners, getInfoHomeText, getConfig, getSvgContent } = require('./functions');
 
 const DOMAIN_LOCAL = process.env.DOMAIN_LOCAL;
 const version = generarCodigoVersion();
@@ -53,6 +53,7 @@ router.get('/', (req, res) => {
     banners: res.locals.banners, 
     contentHTML: res.locals.contentHTML, 
     GetInfo: res.locals.Config, 
+    printContent:getSvgContent,
     contentTemplate: 'home' 
   });
 });
