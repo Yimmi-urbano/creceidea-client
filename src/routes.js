@@ -2,7 +2,7 @@ const express = require('express');
 require('dotenv').config();
 
 const router = express.Router();
-const { fetchCatalogo, fetchNavBar, fetchPageBySlug, getPageByIdProduct, fetchMenu } = require('./apiService');
+const { fetchCatalogo, fetchNavBar, fetchPageBySlug, getPageByIdProduct, fetchMenu, getPageByCategory } = require('./apiService');
 const { generarCodigoVersion } = require('./helpers');
 const { getBanners, getInfoHomeText, getConfig, getSvgContent } = require('./functions');
 
@@ -21,7 +21,7 @@ const fetchDataMiddleware = async (req, res, next) => {
     const domain = DOMAIN_LOCAL ?? req.hostname;
     res.locals.domain = domain;
     res.locals.version = version;
-    
+
     const [banners, contentHTML, Config, navbar, listCatalog] = await Promise.all([
       getBanners(domain),
       getInfoHomeText(domain),
@@ -47,28 +47,28 @@ const fetchDataForRoutes = ['/', '/catalog', '/:slug'];
 router.use(fetchDataForRoutes, fetchDataMiddleware);
 
 router.get('/', (req, res) => {
-  res.render('index', { 
-    v: res.locals.version, 
-    navbar: res.locals.navbar, 
-    dataProducts: res.locals.listCatalog, 
-    banners: res.locals.banners, 
-    contentHTML: res.locals.contentHTML, 
-    GetInfo: res.locals.Config, 
-    printContent:getSvgContent,
-    contentTemplate: 'home' 
+  res.render('index', {
+    v: res.locals.version,
+    navbar: res.locals.navbar,
+    dataProducts: res.locals.listCatalog,
+    banners: res.locals.banners,
+    contentHTML: res.locals.contentHTML,
+    GetInfo: res.locals.Config,
+    printContent: getSvgContent,
+    contentTemplate: 'home'
   });
 });
 
 router.get('/catalog', (req, res) => {
-  res.render('index', { 
-    v: res.locals.version, 
-    navbar: res.locals.navbar, 
-    dataProducts: res.locals.listCatalog, 
-    pageTitle: 'Servicios', 
-    contentHTML: res.locals.contentHTML, 
-    GetInfo: res.locals.Config, 
-    printContent:getSvgContent,
-    contentTemplate: 'catalog' 
+  res.render('index', {
+    v: res.locals.version,
+    navbar: res.locals.navbar,
+    dataProducts: res.locals.listCatalog,
+    pageTitle: 'Todos los productos',
+    contentHTML: res.locals.contentHTML,
+    GetInfo: res.locals.Config,
+    printContent: getSvgContent,
+    contentTemplate: 'catalog'
   });
 });
 
@@ -80,12 +80,12 @@ router.get('/styles', (req, res) => {
 router.get('/detail-product/:rutaDinamica', async (req, res, next) => {
   try {
     const pgeCant = await getPageByIdProduct('/catalog/' + req.params.rutaDinamica);
-    res.render('index', { 
-      menuOptions: await fetchMenu(), 
-      pageTitle: pgeCant.title, 
-      contentHTML: pgeCant.description_short, 
-      printContent:getSvgContent,
-      contentTemplate: 'product_detail' 
+    res.render('index', {
+      menuOptions: await fetchMenu(),
+      pageTitle: pgeCant.title,
+      contentHTML: pgeCant.description_short,
+      printContent: getSvgContent,
+      contentTemplate: 'product_detail'
     });
   } catch (error) {
     next(error);
@@ -96,15 +96,36 @@ router.get('/:slug', async (req, res, next) => {
   try {
     const slugSearch = req.params.slug;
     const getPage = await fetchPageBySlug(res.locals.domain, slugSearch);
-    res.render('index', { 
-      v: res.locals.version, 
-      navbar: res.locals.navbar, 
-      infoPage: getPage, 
-      pageTitle: 'Servicios', 
-      contentHTML: res.locals.contentHTML, 
-      GetInfo: res.locals.Config, 
-      printContent:getSvgContent,
-      contentTemplate: 'page' 
+    res.render('index', {
+      v: res.locals.version,
+      navbar: res.locals.navbar,
+      infoPage: getPage,
+      pageTitle: 'Servicios',
+      contentHTML: res.locals.contentHTML,
+      GetInfo: res.locals.Config,
+      printContent: getSvgContent,
+      contentTemplate: 'page'
+    });
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.get('/category/:category', async (req, res, next) => {
+  try {
+    const domain = DOMAIN_LOCAL ?? req.hostname;
+    const nameCategory = req.params.category;
+    const categoryListProducts = await getPageByCategory(domain, nameCategory);
+  
+    res.render('index', {
+      v: res.locals.version,
+      navbar: res.locals.navbar,
+      dataProducts: categoryListProducts,
+      pageTitle: nameCategory,
+      contentHTML: res.locals.contentHTML,
+      GetInfo: res.locals.Config,
+      printContent: getSvgContent,
+      contentTemplate: 'catalog'
     });
   } catch (error) {
     next(error);

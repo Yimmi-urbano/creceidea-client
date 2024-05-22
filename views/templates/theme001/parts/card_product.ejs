@@ -4,7 +4,7 @@
             <div class="image-content">
 
                 <div class="card-image">
-                    <img src="<%- product.image%>"
+                    <img src="<%- product.image_default[0]%>"
                         alt="" class="card-img">
                 </div>
             </div>
@@ -23,7 +23,7 @@
                                 GetInfo.catalogo.currency['symbol'] %>
                                 <%= product.price.regular.toFixed(2) %></del></div>
                 </div>
-                <% if(product.is_aviable) { %>
+                <% if(product.is_available) { %>
                     <%- include('./button',{GetInfo:GetInfo,title:product.title,price:product.price.regular.toFixed(2)}) %>
                         <% } else { %>
                             <p class="text-danger">No disponible</p>
