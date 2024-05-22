@@ -2,12 +2,12 @@
     <div class="logo-header">
         <a href="/">
             <img style="height: 70px;display: block;margin: auto;margin-top: 10px;object-fit: cover;width: 160px;"
-                src=" <%- GetInfo.logo %>" alt="">
+                src="<%- GetInfo.logo %>" alt="">
         </a>
     </div>
     <div class="banner-container">
         <div class="inner-banner">
-            <h2 class="titulo-catalog">PLANES</h2>
+            <h2 class="titulo-catalog"><%- pageTitle %> </h2>
         </div>
 
     </div>
@@ -17,7 +17,7 @@
 
     <div class="container-products-catalog">
         <div class="row">
-            <%- include('./card_product', { productsData: dataProducts, GetInfo:GetInfo }) %>
+            <%- include('./card_product', { productsData: dataProducts.products, GetInfo:GetInfo }) %>
         </div>
     </div>
 </section>

@@ -22,11 +22,11 @@ async function fetchConfig(domain) {
   hostname = domain.split('.')[0];
 
   try {
-    const response = await axios.get(`https://api-configuration.creceidea.pe/api/configurations`,{
+    const response = await axios.get(`https://api-configuration.creceidea.pe/api/configurations`, {
 
-    headers: {
-      'domain': hostname
-    }
+      headers: {
+        'domain': hostname
+      }
 
     });
     return response.data[0];
@@ -38,12 +38,32 @@ async function fetchConfig(domain) {
 async function fetchCatalogo(domain) {
   hostname = domain.split('.')[0];
   try {
-    const response = await axios.get(`https://api.creceidea.pe/data/${hostname}/catalogo.json?v=` + version);
-    return response.data.data;
+    const response = await axios.get(`https://api-products.creceidea.pe/api/products/`, {
+      headers: {
+        'domain': hostname
+      }
+    });
+
+    return response.data;
   } catch (error) {
     throw new Error('Error al obtener datos de la API');
   }
 }
+async function getPageByCategory(domain,nameCategory) {
+  hostname = domain.split('.')[0];
+  try {
+    const response = await axios.get(`https://api-products.creceidea.pe/api/products/category/`+nameCategory, {
+      headers: {
+        'domain': hostname
+      }
+    });
+    
+    return response.data;
+  } catch (error) {
+    throw new Error('Error al obtener datos de la API');
+  }
+}
+
 
 async function fetchNavBar(domain) {
   hostname = domain.split('.')[0];
@@ -55,10 +75,10 @@ async function fetchNavBar(domain) {
   }
 }
 
-async function fetchPageBySlug(domain,slugSearch) {
+async function fetchPageBySlug(domain, slugSearch) {
   const hostname = domain.split('.')[0];
   try {
-    const response = await axios.get('https://api-pages.creceidea.pe/api/pages/slug/'+slugSearch, {
+    const response = await axios.get('https://api-pages.creceidea.pe/api/pages/slug/' + slugSearch, {
       headers: {
         'domain': hostname
       }
@@ -70,4 +90,4 @@ async function fetchPageBySlug(domain,slugSearch) {
 }
 
 
-module.exports = { fetchHome, fetchConfig, fetchCatalogo, fetchNavBar, fetchPageBySlug };
+module.exports = { fetchHome, fetchConfig, fetchCatalogo, fetchNavBar, fetchPageBySlug, getPageByCategory };

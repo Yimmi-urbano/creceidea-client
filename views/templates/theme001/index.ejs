@@ -15,11 +15,16 @@
   <meta name="author" content="<%- GetInfo.title %>">
   <meta name="robots" content="index, follow">
   <meta name="referrer" content="no-referrer-when-downgrade">
+
   <style>
     :root {
       --primary-color: <%- GetInfo.colors[0] %>;
       --secondary-color: <%- GetInfo.colors[1] %>;
       --accent-color: <%- GetInfo.colors[2] %>;
+    }
+
+    .social-links svg {
+      width: 25px;
     }
   </style>
 </head>
@@ -163,21 +168,21 @@
 
       const button_whatsapp = document.querySelectorAll('.btn-actions-catalog');
 
-button_whatsapp.forEach(button => {
-  button.addEventListener('click', () => {
-    const phone = button.getAttribute('data-number');
-    const title = button.getAttribute('data-title');
-    const price = button.getAttribute('data-price');
-    
-    if (phone && title && price) {
-      const message = `Hola, estoy interesado en comprar *${title}* al precio de S/ ${price}. ¿Podría proporcionar más detalles?`;
-      const whatsappLink = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
-      window.open(whatsappLink, '_blank');
-    } else {
-      console.error('Required data attributes not found');
-    }
-  });
-});
+      button_whatsapp.forEach(button => {
+        button.addEventListener('click', () => {
+          const phone = button.getAttribute('data-number');
+          const title = button.getAttribute('data-title');
+          const price = button.getAttribute('data-price');
+
+          if (phone && title && price) {
+            const message = `Hola, estoy interesado en comprar *${title}* al precio de S/ ${price}. ¿Podría proporcionar más detalles?`;
+            const whatsappLink = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+            window.open(whatsappLink, '_blank');
+          } else {
+            console.error('Required data attributes not found');
+          }
+        });
+      });
 
 
     </script>
