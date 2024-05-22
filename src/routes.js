@@ -1,5 +1,6 @@
 const express = require('express');
 require('dotenv').config();
+
 const router = express.Router();
 const { fetchCatalogo, fetchNavBar, fetchPageBySlug, getPageByIdProduct, fetchMenu } = require('./apiService');
 const { generarCodigoVersion } = require('./helpers');
@@ -66,6 +67,7 @@ router.get('/catalog', (req, res) => {
     pageTitle: 'Servicios', 
     contentHTML: res.locals.contentHTML, 
     GetInfo: res.locals.Config, 
+    printContent:getSvgContent,
     contentTemplate: 'catalog' 
   });
 });
@@ -82,6 +84,7 @@ router.get('/detail-product/:rutaDinamica', async (req, res, next) => {
       menuOptions: await fetchMenu(), 
       pageTitle: pgeCant.title, 
       contentHTML: pgeCant.description_short, 
+      printContent:getSvgContent,
       contentTemplate: 'product_detail' 
     });
   } catch (error) {
@@ -100,6 +103,7 @@ router.get('/:slug', async (req, res, next) => {
       pageTitle: 'Servicios', 
       contentHTML: res.locals.contentHTML, 
       GetInfo: res.locals.Config, 
+      printContent:getSvgContent,
       contentTemplate: 'page' 
     });
   } catch (error) {
