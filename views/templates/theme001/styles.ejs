@@ -305,9 +305,23 @@ margin: 0 0 35px;
 /*----- RESPONSIVE ALL SITE */
 
 @media (max-width: 767px) {
+
+.social-links{
+    width: 50%;
+flex-wrap: wrap;
+}
+.social-links>div{
+
+flex: 1 1 calc(50% - 10px);
+box-sizing: border-box;
+}
 .tools-header {
 
-right: 17px !important;
+    flex-direction: column-reverse;
+  }
+.tools-header {
+
+right: 8px !important;
 
 }
 .inner-banner {
@@ -611,15 +625,15 @@ color: #888;
 }
 
 .adds-creceidea-pe {
-    text-align: center;
-    background-color: #ffc004;
-    color: #242d4a;
-    font-size: 19px;
-    height: 40px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-weight: 900;
+text-align: center;
+background-color: #ffc004;
+color: #242d4a;
+font-size: 19px;
+height: 40px;
+display: flex;
+justify-content: center;
+align-items: center;
+font-weight: 900;
 }
 
 .swiper-container .slide-inner:after{
@@ -686,5 +700,5 @@ padding:0px !important;
 display:none;
 }
 footer{
-    height:50px;
+height:50px;
 }
