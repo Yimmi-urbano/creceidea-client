@@ -24,7 +24,7 @@
                                 <%= product.price.regular.toFixed(2) %></del></div>
                 </div>
                 <% if(product.is_aviable) { %>
-                    <%- include('./button',{GetInfo:GetInfo}) %>
+                    <%- include('./button',{GetInfo:GetInfo,title:product.title,price:product.price.regular.toFixed(2)}) %>
                         <% } else { %>
                             <p class="text-danger">No disponible</p>
                             <% } %>
