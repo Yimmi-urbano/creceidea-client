@@ -89,7 +89,20 @@ async function fetchPageBySlug(domain, slugSearch) {
   }
 }
 const fetchUserTheme = async (domain) => {
-  return 'theme002';
+  
+  const hostname = domain.split('.')[0];
+  if (hostname=='donguston') {
+    console.log('theme002')
+    return 'theme002';
+    
+  }else {
+    console.log('theme001')
+    return 'theme001';
+
+  }
+
+
+ 
 };
 
 module.exports = { fetchHome, fetchConfig, fetchCatalogo, fetchNavBar, fetchPageBySlug, getPageByCategory, fetchUserTheme };

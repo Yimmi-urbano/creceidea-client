@@ -9,6 +9,7 @@ const { fetchUserTheme } = require('./apiService');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+const { DOMAIN_LOCAL } = process.env;
 
 app.set('view engine', 'ejs');
 
@@ -59,7 +60,7 @@ app.use(async (req, res, next) => {
 // Middleware para configurar el tema del usuario
 const themeMiddleware = async (req, res, next) => {
   try {
-    const domain = req.hostname;
+    const domain = DOMAIN_LOCAL || req.hostname;
     const userTheme = await fetchUserTheme(domain);
     const theme = userTheme || 'theme002';
     app.set('views', path.join(__dirname, '..', 'views', 'templates', theme));
