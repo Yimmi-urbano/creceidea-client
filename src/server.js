@@ -69,6 +69,7 @@ const themeMiddleware = async (req, res, next) => {
   }
 };
 
+
 // Aplica el middleware del tema antes de las rutas
 app.use(themeMiddleware);
 
