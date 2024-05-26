@@ -89,5 +89,8 @@ async function fetchPageBySlug(domain, slugSearch) {
   }
 }
 
+const fetchUserTheme = async (domain) => {
+  return 'theme001';
+};
 
-module.exports = { fetchHome, fetchConfig, fetchCatalogo, fetchNavBar, fetchPageBySlug, getPageByCategory };
+module.exports = { fetchHome, fetchConfig, fetchCatalogo, fetchNavBar, fetchPageBySlug, getPageByCategory, fetchUserTheme };

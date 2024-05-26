@@ -5,19 +5,20 @@ const compression = require('compression');
 const helmet = require('helmet');
 const routes = require('./routes');
 const validateSubdomain = require('./domainValidator');
+const { fetchUserTheme } = require('./apiService');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-app.set('views', path.join(__dirname, '..', 'views', 'templates', 'theme001'));
 app.set('view engine', 'ejs');
 
+// Middleware para servir archivos estáticos
 app.use(express.static(path.join(__dirname, '..', 'public'), { maxAge: '1y' }));
 
-// Agregar middleware de compresión
+// Middleware de compresión
 app.use(compression());
 
-// Agregar middleware de seguridad con Helmet
+// Middleware de seguridad con Helmet
 /*
 app.use(helmet());
 
@@ -35,6 +36,7 @@ app.use(helmet.contentSecurityPolicy({
   }
 }));
 */
+
 // Middleware para validar subdominio
 app.use(async (req, res, next) => {
   try {
@@ -53,6 +55,22 @@ app.use(async (req, res, next) => {
     res.status(500).send('Error al validar el subdominio');
   }
 });
+
+// Middleware para configurar el tema del usuario
+const themeMiddleware = async (req, res, next) => {
+  try {
+    const domain = req.hostname;
+    const userTheme = await fetchUserTheme(domain);
+    const theme = userTheme || 'theme002';
+    app.set('views', path.join(__dirname, '..', 'views', 'templates', theme));
+    next();
+  } catch (error) {
+    next(error);
+  }
+};
+
+// Aplica el middleware del tema antes de las rutas
+app.use(themeMiddleware);
 
 // Rutas
 app.use('/', routes);
