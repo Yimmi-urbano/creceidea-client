@@ -1,12 +1,25 @@
 const express = require('express');
+const path = require('path');
 require('dotenv').config();
 
-const router = express.Router();
-const { fetchCatalogo, fetchNavBar, fetchPageBySlug, getPageByIdProduct, fetchMenu, getPageByCategory } = require('./apiService');
+const {
+  fetchCatalogo,
+  fetchNavBar,
+  fetchPageBySlug,
+  getPageByIdProduct,
+  fetchMenu,
+  getPageByCategory
+} = require('./apiService');
 const { generarCodigoVersion } = require('./helpers');
-const { getBanners, getInfoHomeText, getConfig, getSvgContent } = require('./functions');
+const {
+  getBanners,
+  getInfoHomeText,
+  getConfig,
+  getSvgContent
+} = require('./functions');
 
-const DOMAIN_LOCAL = process.env.DOMAIN_LOCAL;
+const router = express.Router();
+const { DOMAIN_LOCAL } = process.env;
 const version = generarCodigoVersion();
 
 // Middleware de manejo de errores
@@ -18,11 +31,11 @@ const errorHandler = (err, req, res, next) => {
 // Middleware para cargar datos
 const fetchDataMiddleware = async (req, res, next) => {
   try {
-    const domain = DOMAIN_LOCAL ?? req.hostname;
+    const domain = DOMAIN_LOCAL || req.hostname;
     res.locals.domain = domain;
     res.locals.version = version;
 
-    const [banners, contentHTML, Config, navbar, listCatalog] = await Promise.all([
+    const [banners, contentHTML, config, navbar, catalog] = await Promise.all([
       getBanners(domain),
       getInfoHomeText(domain),
       getConfig(domain),
@@ -30,19 +43,14 @@ const fetchDataMiddleware = async (req, res, next) => {
       fetchCatalogo(domain)
     ]);
 
-    res.locals.banners = banners;
-    res.locals.contentHTML = contentHTML;
-    res.locals.Config = Config;
-    res.locals.navbar = navbar;
-    res.locals.listCatalog = listCatalog;
-
+    res.locals = { ...res.locals, banners, contentHTML, config, navbar, catalog };
     next();
   } catch (error) {
     next(error);
   }
 };
 
-// Middleware específico para la carga de datos en las rutas necesarias
+// Define las rutas y usa los middlewares necesarios
 const fetchDataForRoutes = ['/', '/catalog', '/:slug'];
 router.use(fetchDataForRoutes, fetchDataMiddleware);
 
@@ -50,23 +58,28 @@ router.get('/', (req, res) => {
   res.render('index', {
     v: res.locals.version,
     navbar: res.locals.navbar,
-    dataProducts: res.locals.listCatalog,
+    dataProducts: res.locals.catalog,
     banners: res.locals.banners,
     contentHTML: res.locals.contentHTML,
-    GetInfo: res.locals.Config,
+    GetInfo: res.locals.config,
     printContent: getSvgContent,
     contentTemplate: 'home'
   });
+
+
+
+
+
 });
 
 router.get('/catalog', (req, res) => {
   res.render('index', {
     v: res.locals.version,
     navbar: res.locals.navbar,
-    dataProducts: res.locals.listCatalog,
+    dataProducts: res.locals.catalog,
     pageTitle: 'Todos los productos',
     contentHTML: res.locals.contentHTML,
-    GetInfo: res.locals.Config,
+    GetInfo: res.locals.config,
     printContent: getSvgContent,
     contentTemplate: 'catalog'
   });
@@ -79,11 +92,13 @@ router.get('/styles', (req, res) => {
 
 router.get('/detail-product/:rutaDinamica', async (req, res, next) => {
   try {
-    const pgeCant = await getPageByIdProduct('/catalog/' + req.params.rutaDinamica);
+    const productPage = await getPageByIdProduct(`/catalog/${req.params.rutaDinamica}`);
+    const menuOptions = await fetchMenu();
+
     res.render('index', {
-      menuOptions: await fetchMenu(),
-      pageTitle: pgeCant.title,
-      contentHTML: pgeCant.description_short,
+      menuOptions,
+      pageTitle: productPage.title,
+      contentHTML: productPage.description_short,
       printContent: getSvgContent,
       contentTemplate: 'product_detail'
     });
@@ -94,15 +109,16 @@ router.get('/detail-product/:rutaDinamica', async (req, res, next) => {
 
 router.get('/:slug', async (req, res, next) => {
   try {
-    const slugSearch = req.params.slug;
-    const getPage = await fetchPageBySlug(res.locals.domain, slugSearch);
+    const slug = req.params.slug;
+    const page = await fetchPageBySlug(res.locals.domain, slug);
+
     res.render('index', {
       v: res.locals.version,
       navbar: res.locals.navbar,
-      infoPage: getPage,
+      infoPage: page,
       pageTitle: 'Servicios',
       contentHTML: res.locals.contentHTML,
-      GetInfo: res.locals.Config,
+      GetInfo: res.locals.config,
       printContent: getSvgContent,
       contentTemplate: 'page'
     });
@@ -113,17 +129,17 @@ router.get('/:slug', async (req, res, next) => {
 
 router.get('/category/:category', async (req, res, next) => {
   try {
-    const domain = DOMAIN_LOCAL ?? req.hostname;
-    const nameCategory = req.params.category;
-    const categoryListProducts = await getPageByCategory(domain, nameCategory);
-  
+    const domain = DOMAIN_LOCAL || req.hostname;
+    const category = req.params.category;
+    const categoryProducts = await getPageByCategory(domain, category);
+
     res.render('index', {
       v: res.locals.version,
       navbar: res.locals.navbar,
-      dataProducts: categoryListProducts,
-      pageTitle: nameCategory,
+      dataProducts: categoryProducts,
+      pageTitle: category,
       contentHTML: res.locals.contentHTML,
-      GetInfo: res.locals.Config,
+      GetInfo: res.locals.config,
       printContent: getSvgContent,
       contentTemplate: 'catalog'
     });
@@ -132,7 +148,6 @@ router.get('/category/:category', async (req, res, next) => {
   }
 });
 
-// Middleware de manejo de errores al final
 router.use(errorHandler);
 
 module.exports = router;
