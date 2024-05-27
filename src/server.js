@@ -48,6 +48,7 @@ const themeMiddleware = async (req, res, next) => {
 };
 
 
+
 app.use(themeMiddleware);
 
 app.use('/', routes);

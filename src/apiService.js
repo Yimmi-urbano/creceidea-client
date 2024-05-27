@@ -88,7 +88,6 @@ async function fetchPageBySlug(domain, slugSearch) {
     throw new Error('Error al obtener datos de la API');
   }
 }
-
 const fetchUserTheme = async (domain) => {
 
   const hostname = domain.split('.')[0];
