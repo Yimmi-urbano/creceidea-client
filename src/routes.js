@@ -22,13 +22,11 @@ const router = express.Router();
 const { DOMAIN_LOCAL } = process.env;
 const version = generarCodigoVersion();
 
-// Middleware de manejo de errores
 const errorHandler = (err, req, res, next) => {
   console.error('Error al manejar la solicitud:', err);
   res.status(500).render('error_page');
 };
 
-// Middleware para cargar datos
 const fetchDataMiddleware = async (req, res, next) => {
   try {
     const domain = DOMAIN_LOCAL || req.hostname;
@@ -50,7 +48,6 @@ const fetchDataMiddleware = async (req, res, next) => {
   }
 };
 
-// Define las rutas y usa los middlewares necesarios
 const fetchDataForRoutes = ['/', '/catalog', '/:slug'];
 router.use(fetchDataForRoutes, fetchDataMiddleware);
 
@@ -65,10 +62,6 @@ router.get('/', (req, res) => {
     printContent: getSvgContent,
     contentTemplate: 'home'
   });
-
-
-
-
 
 });
 

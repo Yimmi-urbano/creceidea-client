@@ -1,8 +1,6 @@
 const express = require('express');
 const path = require('path');
-const ejs = require('ejs');
 const compression = require('compression');
-const helmet = require('helmet');
 const routes = require('./routes');
 const validateSubdomain = require('./domainValidator');
 const { fetchUserTheme } = require('./apiService');
@@ -16,29 +14,9 @@ app.set('view engine', 'ejs');
 // Middleware para servir archivos estáticos
 app.use(express.static(path.join(__dirname, '..', 'public'), { maxAge: '1y' }));
 
-// Middleware de compresión
+
 app.use(compression());
 
-// Middleware de seguridad con Helmet
-/*
-app.use(helmet());
-
-app.use(helmet.contentSecurityPolicy({
-  directives: {
-    defaultSrc: ["'self'"],
-    scriptSrc: ["'self'", "'unsafe-inline'"],
-    styleSrc: ["'self'", "'unsafe-inline'"],
-    imgSrc: ["'self'", "data:", "https://storage.googleapis.com"],
-    connectSrc: ["'self'"],
-    fontSrc: ["'self'"],
-    objectSrc: ["'none'"],
-    frameAncestors: ["'self'"],
-    upgradeInsecureRequests: []
-  }
-}));
-*/
-
-// Middleware para validar subdominio
 app.use(async (req, res, next) => {
   try {
     const subdomain = req.hostname;
@@ -57,7 +35,6 @@ app.use(async (req, res, next) => {
   }
 });
 
-// Middleware para configurar el tema del usuario
 const themeMiddleware = async (req, res, next) => {
   try {
     const domain = DOMAIN_LOCAL || req.hostname;
@@ -70,13 +47,11 @@ const themeMiddleware = async (req, res, next) => {
   }
 };
 
-// Aplica el middleware del tema antes de las rutas
+
 app.use(themeMiddleware);
 
-// Rutas
 app.use('/', routes);
 
-// Middleware para manejo de errores
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).send('Algo salió mal en el servidor!');
