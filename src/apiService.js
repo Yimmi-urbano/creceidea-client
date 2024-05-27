@@ -49,15 +49,15 @@ async function fetchCatalogo(domain) {
     throw new Error('Error al obtener datos de la API');
   }
 }
-async function getPageByCategory(domain,nameCategory) {
+async function getPageByCategory(domain, nameCategory) {
   hostname = domain.split('.')[0];
   try {
-    const response = await axios.get(`https://api-products.creceidea.pe/api/products/category/`+nameCategory, {
+    const response = await axios.get(`https://api-products.creceidea.pe/api/products/category/` + nameCategory, {
       headers: {
         'domain': hostname
       }
     });
-    
+
     return response.data;
   } catch (error) {
     throw new Error('Error al obtener datos de la API');
@@ -89,20 +89,20 @@ async function fetchPageBySlug(domain, slugSearch) {
   }
 }
 const fetchUserTheme = async (domain) => {
-  
+
   const hostname = domain.split('.')[0];
-  if (hostname=='donguston') {
+  if (hostname == 'donguston') {
     console.log('theme002')
     return 'theme002';
-    
-  }else {
+
+  } else {
     console.log('theme001')
     return 'theme001';
 
   }
 
 
- 
+
 };
 
 module.exports = { fetchHome, fetchConfig, fetchCatalogo, fetchNavBar, fetchPageBySlug, getPageByCategory, fetchUserTheme };
