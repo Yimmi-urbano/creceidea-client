@@ -38,8 +38,9 @@ app.use(async (req, res, next) => {
 const themeMiddleware = async (req, res, next) => {
   try {
     const domain = DOMAIN_LOCAL || req.hostname;
+    console.log('midel', domain)
     const userTheme = await fetchUserTheme(domain);
-    const theme = userTheme || 'theme002';
+    const theme = userTheme || 'theme001';
     app.set('views', path.join(__dirname, '..', 'views', 'templates', theme));
     next();
   } catch (error) {
