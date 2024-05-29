@@ -1,0 +1,28 @@
+2024-05-29T04:23:07.420Z [info]: Servidor escuchando en el puerto 3000
+2024-05-29T04:23:40.919Z [info]: Servidor escuchando en el puerto 3000
+2024-05-29T04:23:43.333Z [info]: Servidor escuchando en el puerto 3000
+2024-05-29T04:23:54.048Z [info]: Servidor escuchando en el puerto 3000
+2024-05-29T04:23:58.170Z [info]: Ejecutando themeMiddleware
+2024-05-29T04:23:58.171Z [info]: Tema del usuario: theme002
+2024-05-29T04:23:58.171Z [info]: Ruta de templates: /Users/yimmi.urbano/Documents/GitHub/creceidea-client/views/templates/theme002
+2024-05-29T04:23:58.900Z [info]: Renderizando vista: /Users/yimmi.urbano/Documents/GitHub/creceidea-client/views/templates/theme002/index
+2024-05-29T04:23:59.734Z [info]: Ejecutando themeMiddleware
+2024-05-29T04:23:59.735Z [info]: Tema del usuario: theme002
+2024-05-29T04:23:59.735Z [info]: Ruta de templates: /Users/yimmi.urbano/Documents/GitHub/creceidea-client/views/templates/theme002
+2024-05-29T04:23:59.959Z [info]: Renderizando vista: /Users/yimmi.urbano/Documents/GitHub/creceidea-client/views/templates/theme002/styles
+2024-05-29T04:24:03.091Z [info]: Ejecutando themeMiddleware
+2024-05-29T04:24:03.092Z [info]: Tema del usuario: theme002
+2024-05-29T04:24:03.092Z [info]: Ruta de templates: /Users/yimmi.urbano/Documents/GitHub/creceidea-client/views/templates/theme002
+2024-05-29T04:24:03.317Z [info]: Renderizando vista: /Users/yimmi.urbano/Documents/GitHub/creceidea-client/views/templates/theme002/index
+2024-05-29T04:24:03.945Z [info]: Ejecutando themeMiddleware
+2024-05-29T04:24:03.945Z [info]: Tema del usuario: theme002
+2024-05-29T04:24:03.945Z [info]: Ruta de templates: /Users/yimmi.urbano/Documents/GitHub/creceidea-client/views/templates/theme002
+2024-05-29T04:24:04.207Z [info]: Renderizando vista: /Users/yimmi.urbano/Documents/GitHub/creceidea-client/views/templates/theme002/styles
+2024-05-29T04:25:54.706Z [info]: Ejecutando themeMiddleware
+2024-05-29T04:25:54.707Z [info]: Tema del usuario: theme002
+2024-05-29T04:25:54.707Z [info]: Ruta de templates: /Users/yimmi.urbano/Documents/GitHub/creceidea-client/views/templates/theme002
+2024-05-29T04:25:56.236Z [info]: Renderizando vista: /Users/yimmi.urbano/Documents/GitHub/creceidea-client/views/templates/theme002/index
+2024-05-29T04:25:57.673Z [info]: Ejecutando themeMiddleware
+2024-05-29T04:25:57.673Z [info]: Tema del usuario: theme002
+2024-05-29T04:25:57.673Z [info]: Ruta de templates: /Users/yimmi.urbano/Documents/GitHub/creceidea-client/views/templates/theme002
+2024-05-29T04:25:57.928Z [info]: Renderizando vista: /Users/yimmi.urbano/Documents/GitHub/creceidea-client/views/templates/theme002/styles

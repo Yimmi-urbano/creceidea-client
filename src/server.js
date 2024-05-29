@@ -4,6 +4,25 @@ const compression = require('compression');
 const routes = require('./routes');
 const validateSubdomain = require('./domainValidator');
 const { fetchUserTheme } = require('./apiService');
+const { createLogger, format, transports } = require('winston');
+const { combine, timestamp, printf } = format;
+
+// Configuración de Winston
+const logFormat = printf(({ level, message, timestamp }) => {
+  return `${timestamp} [${level}]: ${message}`;
+});
+
+const logger = createLogger({
+  level: 'info',
+  format: combine(
+    timestamp(),
+    logFormat
+  ),
+  transports: [
+    new transports.Console(), // Log en la consola
+    new transports.File({ filename: 'server.log' }) // Log en un archivo
+  ]
+});
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -32,7 +51,7 @@ app.use(async (req, res, next) => {
       res.status(403).send('Acceso no autorizado: ' + subdomain);
     }
   } catch (error) {
-    console.error('Error al validar el subdominio:', error);
+    logger.error('Error al validar el subdominio:', error);
     res.status(500).send('Error al validar el subdominio');
   }
 });
@@ -40,19 +59,30 @@ app.use(async (req, res, next) => {
 // Middleware para obtener y configurar el tema del usuario
 const themeMiddleware = async (req, res, next) => {
   try {
+
     const domain = DOMAIN_LOCAL || req.hostname;
     const userTheme = await fetchUserTheme(domain);
     const theme = userTheme;
-    // Configurar la ruta de las vistas según el tema del usuario
-    app.set('views', path.join(__dirname, '..', 'views', 'templates', theme));
+    req.themePath = path.join(__dirname, '..', 'views', 'templates', theme);
     next();
   } catch (error) {
-    console.error('Error al obtener el tema del usuario:', error);
+ 
     next(error);
   }
 };
 
 app.use(themeMiddleware);
+
+// Sobrescribir res.render para usar la ruta de vista del tema del usuario
+app.use((req, res, next) => {
+  const originalRender = res.render;
+  res.render = function(view, options, callback) {
+    const viewPath = path.join(req.themePath, view);
+
+    return originalRender.call(this, viewPath, options, callback);
+  };
+  next();
+});
 
 // Rutas principales de la aplicación
 app.use('/', routes);
