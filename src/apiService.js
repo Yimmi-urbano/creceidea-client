@@ -91,17 +91,18 @@ async function fetchPageBySlug(domain, slugSearch) {
 const fetchUserTheme = async (domain) => {
 
   const hostname = domain.split('.')[0];
+  let theme_select;
+
   if (hostname == 'donguston') {
-    console.log('theme002')
-    return 'theme002';
+    theme_select =  'theme002';
 
   } else {
-    console.log('theme001')
-    return 'theme001';
+    
+    theme_select =  'theme001';
 
   }
 
-
+ return theme_select
 
 };
 

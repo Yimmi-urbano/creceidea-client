@@ -38,10 +38,10 @@ app.use(async (req, res, next) => {
 const themeMiddleware = async (req, res, next) => {
   try {
     const domain = DOMAIN_LOCAL || req.hostname;
-    console.log('Dominio procesado:', domain); // Agrega este log
+   
     const userTheme = await fetchUserTheme(domain);
-    const theme = userTheme || 'theme001';
-    // Configurar las vistas de manera específica para esta solicitud
+    const theme = userTheme;
+    console.log('theme procesado:', theme);
     req.themeViewsPath = path.join(__dirname, '..', 'views', 'templates', theme);
     next();
   } catch (error) {
