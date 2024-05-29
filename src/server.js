@@ -9,17 +9,19 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 const { DOMAIN_LOCAL } = process.env;
 
+// Configurar el motor de plantillas a EJS
 app.set('view engine', 'ejs');
 
-// Middleware para servir archivos estáticos
+// Middleware para servir archivos estáticos con caché de 1 año
 app.use(express.static(path.join(__dirname, '..', 'public'), { maxAge: '1y' }));
 
+// Middleware para comprimir las respuestas
 app.use(compression());
 
+// Middleware para validar el subdominio
 app.use(async (req, res, next) => {
   try {
-    const subdomain = req.hostname;
-    console.log('Subdominio recibido:', subdomain); // Agrega este log
+    const subdomain = DOMAIN_LOCAL || req.hostname;
     if (!subdomain) {
       return res.status(403).send('No se proporcionó ningún subdominio');
     }
@@ -35,35 +37,33 @@ app.use(async (req, res, next) => {
   }
 });
 
+// Middleware para obtener y configurar el tema del usuario
 const themeMiddleware = async (req, res, next) => {
   try {
     const domain = DOMAIN_LOCAL || req.hostname;
-   
     const userTheme = await fetchUserTheme(domain);
     const theme = userTheme;
-    console.log('theme procesado:', theme);
-    req.themeViewsPath = path.join(__dirname, '..', 'views', 'templates', theme);
+    // Configurar la ruta de las vistas según el tema del usuario
+    app.set('views', path.join(__dirname, '..', 'views', 'templates', theme));
     next();
   } catch (error) {
+    console.error('Error al obtener el tema del usuario:', error);
     next(error);
   }
 };
 
 app.use(themeMiddleware);
 
-// Middleware para establecer la ruta de las vistas de manera específica para cada solicitud
-app.use((req, res, next) => {
-  app.set('views', req.themeViewsPath);
-  next();
-});
-
+// Rutas principales de la aplicación
 app.use('/', routes);
 
+// Middleware para manejo de errores
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).send('Algo salió mal en el servidor!');
 });
 
+// Iniciar el servidor
 app.listen(PORT, () => {
   console.log(`Servidor escuchando en el puerto ${PORT}`);
 });
