@@ -94,15 +94,15 @@ const fetchUserTheme = async (domain) => {
   let theme_select;
 
   if (hostname == 'donguston') {
-    theme_select =  'theme002';
+    theme_select = 'theme002';
 
   } else {
-    
-    theme_select =  'theme001';
+
+    theme_select = 'theme001';
 
   }
 
- return theme_select
+  return theme_select
 
 };
 
