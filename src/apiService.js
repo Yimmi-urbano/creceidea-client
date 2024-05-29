@@ -35,10 +35,11 @@ async function fetchConfig(domain) {
   }
 }
 
-async function fetchCatalogo(domain) {
+async function fetchCatalogo(domain,page) {
+
   hostname = domain.split('.')[0];
   try {
-    const response = await axios.get(`https://api-products.creceidea.pe/api/products/`, {
+    const response = await axios.get(`https://api-products.creceidea.pe/api/products?page=`+page, {
       headers: {
         'domain': hostname
       }
@@ -64,7 +65,6 @@ async function getPageByCategory(domain, nameCategory) {
   }
 }
 
-
 async function fetchNavBar(domain) {
   hostname = domain.split('.')[0];
   try {
@@ -88,6 +88,7 @@ async function fetchPageBySlug(domain, slugSearch) {
     throw new Error('Error al obtener datos de la API');
   }
 }
+
 const fetchUserTheme = async (domain) => {
 
   const hostname = domain.split('.')[0];

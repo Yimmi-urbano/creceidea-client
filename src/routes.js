@@ -30,6 +30,7 @@ const errorHandler = (err, req, res, next) => {
 const fetchDataMiddleware = async (req, res, next) => {
   try {
     const domain = DOMAIN_LOCAL || req.hostname;
+    const page = req.query.page;
     res.locals.domain = domain;
     res.locals.version = version;
 
@@ -38,7 +39,7 @@ const fetchDataMiddleware = async (req, res, next) => {
       getInfoHomeText(domain),
       getConfig(domain),
       fetchNavBar(domain),
-      fetchCatalogo(domain)
+      fetchCatalogo(domain,page)
     ]);
 
     res.locals = { ...res.locals, banners, contentHTML, config, navbar, catalog };
@@ -66,6 +67,7 @@ router.get('/', (req, res) => {
 });
 
 router.get('/catalog', (req, res) => {
+
   res.render('index', {
     v: res.locals.version,
     navbar: res.locals.navbar,
