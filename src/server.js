@@ -19,6 +19,7 @@ app.use(compression());
 app.use(async (req, res, next) => {
   try {
     const subdomain = req.hostname;
+    console.log('Subdominio recibido:', subdomain); // Agrega este log
     if (!subdomain) {
       return res.status(403).send('No se proporcionó ningún subdominio');
     }
@@ -37,6 +38,7 @@ app.use(async (req, res, next) => {
 const themeMiddleware = async (req, res, next) => {
   try {
     const domain = DOMAIN_LOCAL || req.hostname;
+    console.log('Dominio procesado:', domain); // Agrega este log
     const userTheme = await fetchUserTheme(domain);
     const theme = userTheme || 'theme001';
     // Configurar las vistas de manera específica para esta solicitud
