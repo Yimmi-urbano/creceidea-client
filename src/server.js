@@ -14,7 +14,6 @@ app.set('view engine', 'ejs');
 // Middleware para servir archivos estáticos
 app.use(express.static(path.join(__dirname, '..', 'public'), { maxAge: '1y' }));
 
-
 app.use(compression());
 
 app.use(async (req, res, next) => {
@@ -38,19 +37,23 @@ app.use(async (req, res, next) => {
 const themeMiddleware = async (req, res, next) => {
   try {
     const domain = DOMAIN_LOCAL || req.hostname;
-    console.log('midel', domain)
     const userTheme = await fetchUserTheme(domain);
     const theme = userTheme || 'theme001';
-    app.set('views', path.join(__dirname, '..', 'views', 'templates', theme));
+    // Configurar las vistas de manera específica para esta solicitud
+    req.themeViewsPath = path.join(__dirname, '..', 'views', 'templates', theme);
     next();
   } catch (error) {
     next(error);
   }
 };
 
-
-
 app.use(themeMiddleware);
+
+// Middleware para establecer la ruta de las vistas de manera específica para cada solicitud
+app.use((req, res, next) => {
+  app.set('views', req.themeViewsPath);
+  next();
+});
 
 app.use('/', routes);
 
