@@ -1,0 +1,9 @@
+<% socialLinks.forEach(social => { %>
+  <% if (social.is_active) { %>
+    <div class="<%= social.title %>">
+      <a href="<%= social.url %>">
+        <%- printContent(social.icon) %>
+      </a>
+    </div>
+  <% } %>
+<% }) %>
