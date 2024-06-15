@@ -25,7 +25,7 @@ const logger = createLogger({
 });
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 5000;
 const { DOMAIN_LOCAL } = process.env;
 
 // Configurar el motor de plantillas a EJS
