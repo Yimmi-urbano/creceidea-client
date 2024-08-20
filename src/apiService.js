@@ -112,7 +112,7 @@ const fetchUserTheme = async (domain) => {
   const hostname = domain.split('.')[0];
   let theme_select;
 
-  if (hostname == 'donguston'|| hostname=='tucoleccion') {
+  if (hostname == 'donguston'|| hostname=='identidadmovil') {
     theme_select = 'theme002';
 
   } else {
