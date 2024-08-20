@@ -1,4 +1,4 @@
-const { fetchPages, fetchHome, fetchConfig } = require('./apiService');
+const { fetchPages, fetchHome, fetchConfig, fetchBanners} = require('./apiService');
 const path = require('path');
 const fs = require('fs');
 
@@ -17,14 +17,15 @@ async function getPageByUrl(url) {
 }
 
 async function getBanners(domain) {
-    const data = await fetchHome(domain);
-    const banners = data.data[0].banner;
+    const data = await fetchBanners(domain);
+    const banners = data;
+    console.log(banners)
     if (banners) {
         return banners;
     } else {
         return {
             title: "No Encontrado",
-            content_html: "<h1>No Encontrado</h1><p>La página que buscas no fue encontrada.</p>"
+            content_html: "<h1>No Encontrado</h1><p>La página que buscas no fue encontrada sin banner.</p>"
         };
     }
 }

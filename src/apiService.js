@@ -18,6 +18,24 @@ async function fetchHome(domain) {
   }
 }
 
+async function fetchBanners(domain) {
+
+  hostname = domain.split('.')[0];
+
+  try {
+    const response = await axios.get(`https://api-configuration.creceidea.pe/api/banners`,{
+
+      headers: {
+        'domain': hostname
+      }
+
+    });
+    return response.data;
+  } catch (error) {
+    throw new Error('Error al obtener datos de la API');
+  }
+}
+
 async function fetchConfig(domain) {
   hostname = domain.split('.')[0];
 
@@ -107,4 +125,4 @@ const fetchUserTheme = async (domain) => {
 
 };
 
-module.exports = { fetchHome, fetchConfig, fetchCatalogo, fetchNavBar, fetchPageBySlug, getPageByCategory, fetchUserTheme };
+module.exports = { fetchHome, fetchConfig, fetchCatalogo, fetchNavBar, fetchPageBySlug, getPageByCategory, fetchUserTheme, fetchBanners };
