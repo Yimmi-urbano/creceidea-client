@@ -60,19 +60,24 @@ app.use(async (req, res, next) => {
 const themeMiddleware = async (req, res, next) => {
   try {
     const domain = DOMAIN_LOCAL || req.hostname;
+    const cacheExpirationTime = 5 * 60 * 1000; // 5 minutos
 
-    // Verificar si el tema ya está en res.locals
+    // Verificar si el tema ya está en res.locals y si no ha caducado
     if (res.locals.theme && res.locals.domain === domain) {
-      return next();
+      const currentTime = Date.now();
+      if (currentTime - res.locals.themeTimestamp < cacheExpirationTime) {
+        return next(); // Usar el tema almacenado si aún es válido
+      }
     }
 
     // Obtener la configuración del tema desde la API
     const userConfig = await getConfig(domain);
     const theme = userConfig.theme;
 
-    // Guardar la configuración en res.locals para uso futuro
+    // Guardar la configuración y el timestamp en res.locals para uso futuro
     res.locals.theme = theme;
-    res.locals.domain = domain; // Guardar el dominio actual
+    res.locals.domain = domain;
+    res.locals.themeTimestamp = Date.now(); // Guardar el timestamp actual
 
     // Establecer el camino de la plantilla del tema
     req.themePath = path.join(__dirname, '..', 'views', 'templates', theme);
