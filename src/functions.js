@@ -19,7 +19,6 @@ async function getPageByUrl(url) {
 async function getBanners(domain) {
     const data = await fetchBanners(domain);
     const banners = data;
-    console.log(banners)
     if (banners) {
         return banners;
     } else {

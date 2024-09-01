@@ -107,22 +107,4 @@ async function fetchPageBySlug(domain, slugSearch) {
   }
 }
 
-const fetchUserTheme = async (domain) => {
-
-  const hostname = domain.split('.')[0];
-  let theme_select;
-
-  if (hostname == 'donguston'|| hostname=='identidadmovil') {
-    theme_select = 'theme002';
-
-  } else {
-
-    theme_select = 'theme001';
-
-  }
-
-  return theme_select
-
-};
-
-module.exports = { fetchHome, fetchConfig, fetchCatalogo, fetchNavBar, fetchPageBySlug, getPageByCategory, fetchUserTheme, fetchBanners };
+module.exports = { fetchHome, fetchConfig, fetchCatalogo, fetchNavBar, fetchPageBySlug, getPageByCategory, fetchBanners };
