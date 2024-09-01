@@ -1,11 +1,9 @@
-<% productsData.forEach(product=> { %>
+<% productsData.forEach(product => { %>
     <div class="col-md-3 col-6 mb-3">
         <div class="card h-100">
             <div class="image-content">
-
                 <div class="card-image">
-                    <img src="<%- product.image_default[0]%>"
-                        alt="" class="card-img">
+                    <img src="<%- product.image_default[0] %>" alt="" class="card-img">
                 </div>
             </div>
             <div class="card-body card-content">
@@ -15,21 +13,35 @@
 
                 <div class="card-text description"><%- product.description_short %></div>
                 <div class="price-tag">
-                    <div class="card-text price-off"><strong><%- GetInfo.catalogo.currency['symbol'] %> </strong>
-                        <%= product.price.sale.toFixed(2) %>
+                    <% if (product.price.sale && product.price.sale !== 0 && product.price.regular !== product.price.sale) { %>
+                        <!-- Mostrar ambos precios si el precio sale es diferente del regular, no es vacío y no es 0 -->
+                        <div class="card-text price-off">
+                            <strong><%- GetInfo.catalogo.currency['symbol'] %></strong>
+                            <%= product.price.sale.toFixed(2) %>
                             <%= product.price.tag %>
-                    </div>
-                    <div class="card-text price-normal"><strong>Precio regular:</strong> <del><%-
-                                GetInfo.catalogo.currency['symbol'] %>
-                                <%= product.price.regular.toFixed(2) %></del></div>
+                        </div>
+                        <div class="card-text price-normal">
+                            <strong>Precio regular:</strong>
+                            <del>
+                                <%- GetInfo.catalogo.currency['symbol'] %>
+                                <%= product.price.regular.toFixed(2) %>
+                            </del>
+                        </div>
+                    <% } else { %>
+                        <!-- Mostrar solo el precio regular si el precio sale es igual al regular, es vacío, o es 0 -->
+                        <div class="card-text price-normal-sin-descuento">
+                            <strong><%- GetInfo.catalogo.currency['symbol'] %></strong>
+                            <%= product.price.regular.toFixed(2) %>
+                        </div>
+                    <% } %>
                 </div>
-                <% if(product.is_available) { %>
-                    <%- include('./button',{GetInfo:GetInfo,title:product.title,price:product.price.regular.toFixed(2)}) %>
-                        <% } else { %>
-                            <p class="text-danger">No disponible</p>
-                            <% } %>
-            </div>
 
+                <% if (product.is_available) { %>
+                    <%- include('./button', { GetInfo: GetInfo, title: product.title, price: product.price.regular.toFixed(2) }) %>
+                <% } else { %>
+                    <p class="text-danger">No disponible</p>
+                <% } %>
+            </div>
         </div>
     </div>
-    <% }) %>
+<% }) %>

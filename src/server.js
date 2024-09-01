@@ -3,7 +3,7 @@ const path = require('path');
 const compression = require('compression');
 const routes = require('./routes');
 const validateSubdomain = require('./domainValidator');
-const { fetchUserTheme } = require('./apiService');
+const { getConfig } = require('./functions');
 const { createLogger, format, transports } = require('winston');
 const { combine, timestamp, printf } = format;
 
@@ -19,8 +19,8 @@ const logger = createLogger({
     logFormat
   ),
   transports: [
-    new transports.Console(), // Log en la consola
-    new transports.File({ filename: 'server.log' }) // Log en un archivo
+    new transports.Console(),
+    new transports.File({ filename: 'server.log' })
   ]
 });
 
@@ -59,14 +59,26 @@ app.use(async (req, res, next) => {
 // Middleware para obtener y configurar el tema del usuario
 const themeMiddleware = async (req, res, next) => {
   try {
-
     const domain = DOMAIN_LOCAL || req.hostname;
-    const userTheme = await fetchUserTheme(domain);
-    const theme = userTheme;
+
+    // Verificar si el tema ya está en res.locals
+    if (res.locals.theme && res.locals.domain === domain) {
+      return next();
+    }
+
+    // Obtener la configuración del tema desde la API
+    const userConfig = await getConfig(domain);
+    const theme = userConfig.theme;
+
+    // Guardar la configuración en res.locals para uso futuro
+    res.locals.theme = theme;
+    res.locals.domain = domain; // Guardar el dominio actual
+
+    // Establecer el camino de la plantilla del tema
     req.themePath = path.join(__dirname, '..', 'views', 'templates', theme);
     next();
   } catch (error) {
- 
+    logger.error('Error al obtener el tema del usuario:', error);
     next(error);
   }
 };
@@ -78,7 +90,6 @@ app.use((req, res, next) => {
   const originalRender = res.render;
   res.render = function(view, options, callback) {
     const viewPath = path.join(req.themePath, view);
-
     return originalRender.call(this, viewPath, options, callback);
   };
   next();

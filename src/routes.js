@@ -64,6 +64,7 @@ router.get('/', (req, res) => {
     contentTemplate: 'home'
   });
 
+
 });
 
 router.get('/catalog', (req, res) => {
