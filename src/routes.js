@@ -55,7 +55,7 @@ router.use(fetchDataForRoutes, fetchDataMiddleware);
 router.get('/', (req, res) => {
   res.render('index', {
     v: res.locals.version,
-    navbar: res.locals.navbar,
+    
     dataProducts: res.locals.catalog,
     banners: res.locals.banners,
     contentHTML: res.locals.contentHTML,
@@ -71,7 +71,7 @@ router.get('/catalog', (req, res) => {
 
   res.render('index', {
     v: res.locals.version,
-    navbar: res.locals.navbar,
+    
     dataProducts: res.locals.catalog,
     pageTitle: 'Todos los productos',
     contentHTML: res.locals.contentHTML,
@@ -110,7 +110,7 @@ router.get('/:slug', async (req, res, next) => {
 
     res.render('index', {
       v: res.locals.version,
-      navbar: res.locals.navbar,
+     
       infoPage: page,
       pageTitle: 'Servicios',
       contentHTML: res.locals.contentHTML,
@@ -131,7 +131,7 @@ router.get('/category/:category', async (req, res, next) => {
 
     res.render('index', {
       v: res.locals.version,
-      navbar: res.locals.navbar,
+     
       dataProducts: categoryProducts,
       pageTitle: category,
       contentHTML: res.locals.contentHTML,
