@@ -86,8 +86,12 @@ async function getPageByCategory(domain, nameCategory) {
 async function fetchNavBar(domain) {
   hostname = domain.split('.')[0];
   try {
-    const response = await axios.get(`https://api.creceidea.pe/data/${hostname}/navigation.json?v=` + version);
-    return response.data.data;
+    const response = await axios.get(`https://api-categories.creceidea.pe/api/categories`, {
+      headers: {
+        'domain': hostname
+      }
+    });
+    return response.data;
   } catch (error) {
     throw new Error('Error al obtener datos de la API');
   }
