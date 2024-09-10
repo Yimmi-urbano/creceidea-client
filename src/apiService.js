@@ -68,6 +68,7 @@ async function fetchCatalogo(domain,page) {
     throw new Error('Error al obtener datos de la API');
   }
 }
+
 async function getPageByCategory(domain, nameCategory) {
   hostname = domain.split('.')[0];
   try {
