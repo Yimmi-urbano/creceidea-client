@@ -3,7 +3,7 @@
       <div class="list-cat-aviable swiper" style="overflow: hidden;" id="categories-multiple-slides">
         <div class="swiper-wrapper">
             <% navbar.forEach(item=> { %>
-          <div class="item-cat swiper-slide"> <a href="<%- item.link %>" target="<%- item.target %>"> <%- item.title %> </a></div>
+          <div class="item-cat swiper-slide"> <a href="/category/<%- item.slug %>" target="<%- item.target %>"> <%- item.title %> </a></div>
           <% }) %>
         </div>
       </div>
