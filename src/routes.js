@@ -55,7 +55,6 @@ router.use(fetchDataForRoutes, fetchDataMiddleware);
 router.get('/', (req, res) => {
   res.render('index', {
     v: res.locals.version,
-    
     dataProducts: res.locals.catalog,
     banners: res.locals.banners,
     contentHTML: res.locals.contentHTML,
@@ -71,7 +70,6 @@ router.get('/catalog', (req, res) => {
 
   res.render('index', {
     v: res.locals.version,
-    
     dataProducts: res.locals.catalog,
     pageTitle: 'Todos los productos',
     contentHTML: res.locals.contentHTML,
@@ -86,16 +84,17 @@ router.get('/styles', (req, res) => {
   res.render('styles');
 });
 
-router.get('/detail-product/:rutaDinamica', async (req, res, next) => {
+router.get('/product/:rutaDinamica', async (req, res, next) => {
+  const domain = DOMAIN_LOCAL || req.hostname;
+  const slug = req.params.rutaDinamica;
   try {
-    const productPage = await getPageByIdProduct(`/catalog/${req.params.rutaDinamica}`);
-    const menuOptions = await fetchMenu();
-
+    const productPage = await getPageByIdProduct(domain, slug);
     res.render('index', {
-      menuOptions,
+      v: res.locals.version,
       pageTitle: productPage.title,
-      contentHTML: productPage.description_short,
+      contentHTML: productPage,
       printContent: getSvgContent,
+      GetInfo: res.locals.config,
       contentTemplate: 'product_detail'
     });
   } catch (error) {
@@ -110,7 +109,6 @@ router.get('/:slug', async (req, res, next) => {
 
     res.render('index', {
       v: res.locals.version,
-     
       infoPage: page,
       pageTitle: 'Servicios',
       contentHTML: res.locals.contentHTML,
@@ -131,7 +129,6 @@ router.get('/category/:category', async (req, res, next) => {
 
     res.render('index', {
       v: res.locals.version,
-     
       dataProducts: categoryProducts,
       pageTitle: category,
       contentHTML: res.locals.contentHTML,

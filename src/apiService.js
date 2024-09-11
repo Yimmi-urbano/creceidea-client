@@ -84,6 +84,22 @@ async function getPageByCategory(domain, nameCategory) {
   }
 }
 
+
+async function getPageByIdProduct(domain,slug) {
+  hostname = domain.split('.')[0];
+  try {
+    const response = await axios.get(`https://api-products.creceidea.pe/api/client/products/` + slug, {
+      headers: {
+        'domain': hostname
+      }
+    });
+    return response.data;
+  } catch (error) {
+    throw new Error('Error al obtener datos de la API');
+  }
+}
+
+
 async function fetchNavBar(domain) {
   hostname = domain.split('.')[0];
   try {
@@ -112,4 +128,4 @@ async function fetchPageBySlug(domain, slugSearch) {
   }
 }
 
-module.exports = { fetchHome, fetchConfig, fetchCatalogo, fetchNavBar, fetchPageBySlug, getPageByCategory, fetchBanners };
+module.exports = {getPageByIdProduct, fetchHome, fetchConfig, fetchCatalogo, fetchNavBar, fetchPageBySlug, getPageByCategory, fetchBanners };
