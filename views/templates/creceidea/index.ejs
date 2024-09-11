@@ -171,7 +171,7 @@
 
       button_whatsapp.forEach(button => {
         button.addEventListener('click', () => {
-          const phone = button.getAttribute('data-number');
+          const phone = "<%- GetInfo.catalogo.whatsapp['number'] %>";
           const title = button.getAttribute('data-title');
           const price = button.getAttribute('data-price');
 
@@ -185,6 +185,93 @@
         });
       });
 
+      function getQueryParam(param) {
+        const urlParams = new URLSearchParams(window.location.search);
+        return urlParams.get(param);
+      }
+
+      function updateURL(param, value) {
+        const url = new URL(window.location);
+        url.searchParams.set(param, value);
+        window.history.pushState({}, '', url);
+      }
+
+      const carouselIndicators = document.getElementById('carouselIndicators');
+      const carouselInner = document.getElementById('carouselInner');
+
+      function generateCarousel(images) {
+        let indicatorsHTML = '';
+        let innerHTML = '';
+
+        images.forEach((imageUrl, index) => {
+
+          indicatorsHTML += `<button type="button" data-bs-target="#carousel-indicators-thumb" data-bs-slide-to="${index}" class="ratio ratio-4x3 ${index === 0 ? 'active' : ''}" style="background-image: url(${imageUrl})"></button>`;
+
+          innerHTML += `
+                  <div class="carousel-item ${index === 0 ? 'active' : ''}">
+                    <img class="d-block w-100 image-product object-fit-cover border rounded" alt="Imagen ${index + 1}" src="${imageUrl}">
+                  </div>
+                `;
+        });
+
+        carouselIndicators.innerHTML = indicatorsHTML;
+        carouselInner.innerHTML = innerHTML;
+      }
+
+
+      async function fetchProduct(product) {
+        const apiUrl = `http://localhost:4600/api/client/products/${product}`;
+        try {
+          const response = await fetch(apiUrl, {
+            method: 'GET',
+            headers: {
+              'domain': 'donguston'
+            }
+          });
+          if (!response.ok) {
+            throw new Error('Producto no encontrado');
+          }
+          const productData = await response.json();
+          return productData;
+        } catch (error) {
+          console.error(error);
+          return null;
+        }
+      }
+
+      async function openModalIfProductExists(product) {
+        const productData = await fetchProduct(product);
+        if (productData) {
+
+          const modalElement = document.getElementById('modal-large');
+          const modal = new bootstrap.Modal(modalElement);
+          generateCarousel(productData.image_default);
+          document.querySelector('.btn-actions-catalog').setAttribute('data-title', productData.title);
+          document.querySelector('.btn-actions-catalog').setAttribute('data-price', productData.price['regular']);
+          $('.detail-product').html(productData.description_short)
+          $('.title').text(productData.title)
+          modal.show();
+
+          updateURL('product', product);
+        } else {
+          alert('Producto no encontrado');
+        }
+      }
+
+      document.addEventListener('DOMContentLoaded', () => {
+        const buttons = document.querySelectorAll('.get_detail_product');
+        buttons.forEach(button => {
+          button.addEventListener('click', () => {
+            const slug = button.getAttribute('data-slug');
+            openModalIfProductExists(slug);
+          });
+        });
+      });
+
+      const product = getQueryParam('product');
+      if (product) {
+        openModalIfProductExists(product);
+      }
 
     </script>
 </body>
