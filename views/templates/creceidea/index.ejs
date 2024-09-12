@@ -31,7 +31,39 @@
 </head>
 
 <body>
-
+  <div class="modal modal-blur fade" id="modal-large" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Detalle de producto</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-lg-7">
+                        <div id="carousel-indicators-thumb" class="carousel slide carousel-fade"
+                            data-bs-ride="carousel">
+                            <div class="carousel-indicators carousel-indicators-thumb" id="carouselIndicators">
+                            </div>
+                            <div class="carousel-inner" id="carouselInner"> </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-5">
+                        <h3 class="title mt-4"></h3>
+                        <p class="detail-product"></p>
+                        <div class="d-grid gap-2">
+  
+                        <button type="button" class="btn btn-primary btn-actions-catalog" data-title="" data-price=""
+                        data-action="" data-bs-dismiss="modal">Cotizar producto</button>
+                    </div>
+                    </div>
+                </div>
+  
+            </div>
+          
+        </div>
+    </div>
+  </div>
   <div class="page">
     <div class="page-wrapper">
       <div class="page-body mb-0">
