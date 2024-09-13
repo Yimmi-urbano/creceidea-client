@@ -14,7 +14,7 @@ async function fetchHome(domain) {
   hostname = domain.split('.')[0];
 
   try {
-    const response = await axios.get(`https://api.creceidea.pe/data/${hostname}/home.json?v=` + version);
+    const response = await axios.get(`https://api.creceidea.pe/data/${hostname}/home1.json?v=` + version);
     return response.data;
   } catch (error) {
     throw new Error('Error al obtener datos de la API');
