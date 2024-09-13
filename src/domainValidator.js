@@ -1,12 +1,11 @@
 const axios = require('axios');
 const { generarCodigoVersion } = require('./helpers');
-require('dotenv').config();
+
 const version = generarCodigoVersion();
-const API_DOMAIN_VALIDATE = process.env.API_DOMAIN_VALIDATE;
 
 async function validateSubdomain(subdomain) {
     try {
-        const response = await axios.post(`${API_DOMAIN_VALIDATE}/domains/exists`, {
+        const response = await axios.post('https://api-domain.creceidea.pe/domains/exists', {
             domain: subdomain
         });
 
