@@ -1,10 +1,13 @@
 
 const axios = require('axios');
 const { generarCodigoVersion } = require('./helpers');
-
+require('dotenv').config();
 const version = generarCodigoVersion();
 let hostname = [];
 
+const API_PRODUCTS = process.env.API_PRODUCTS;
+const API_CATEGORIES = process.env.API_CATEGORIES;
+const API_CONFIGURATION = process.env.API_CONFIGURATION;
 
 async function fetchHome(domain) {
 
@@ -23,7 +26,7 @@ async function fetchBanners(domain) {
   hostname = domain.split('.')[0];
 
   try {
-    const response = await axios.get(`https://api-configuration.creceidea.pe/api/banners`,{
+    const response = await axios.get(`${API_CONFIGURATION}/api/banners`,{
 
       headers: {
         'domain': hostname
@@ -40,7 +43,7 @@ async function fetchConfig(domain) {
   hostname = domain.split('.')[0];
 
   try {
-    const response = await axios.get(`https://api-configuration.creceidea.pe/api/configurations`, {
+    const response = await axios.get(`${API_CONFIGURATION}/api/configurations`, {
 
       headers: {
         'domain': hostname
@@ -57,7 +60,7 @@ async function fetchCatalogo(domain,page) {
 
   hostname = domain.split('.')[0];
   try {
-    const response = await axios.get(`https://api-products.creceidea.pe/api/products?page=`+page, {
+    const response = await axios.get(`${API_PRODUCTS}/api/products?page=`+page, {
       headers: {
         'domain': hostname
       }
@@ -72,7 +75,7 @@ async function fetchCatalogo(domain,page) {
 async function getPageByCategory(domain, nameCategory) {
   hostname = domain.split('.')[0];
   try {
-    const response = await axios.get(`https://api-products.creceidea.pe/api/products/category/` + nameCategory, {
+    const response = await axios.get(`${API_PRODUCTS}/api/products/category/` + nameCategory, {
       headers: {
         'domain': hostname
       }
@@ -83,12 +86,11 @@ async function getPageByCategory(domain, nameCategory) {
     throw new Error('Error al obtener datos de la API');
   }
 }
-
 
 async function getPageByIdProduct(domain,slug) {
   hostname = domain.split('.')[0];
   try {
-    const response = await axios.get(`https://api-products.creceidea.pe/api/client/products/` + slug, {
+    const response = await axios.get(`${API_PRODUCTS}/api/client/products/` + slug, {
       headers: {
         'domain': hostname
       }
@@ -99,11 +101,10 @@ async function getPageByIdProduct(domain,slug) {
   }
 }
 
-
 async function fetchNavBar(domain) {
   hostname = domain.split('.')[0];
   try {
-    const response = await axios.get(`https://api-categories.creceidea.pe/api/categories`, {
+    const response = await axios.get(`${API_CATEGORIES}/api/categories`, {
       headers: {
         'domain': hostname
       }

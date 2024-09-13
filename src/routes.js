@@ -19,7 +19,7 @@ const {
 } = require('./functions');
 
 const router = express.Router();
-const { DOMAIN_LOCAL } = process.env;
+const { DOMAIN_LOCAL, API_PRODUCTS } = process.env;
 const version = generarCodigoVersion();
 
 const errorHandler = (err, req, res, next) => {
@@ -30,8 +30,10 @@ const errorHandler = (err, req, res, next) => {
 const fetchDataMiddleware = async (req, res, next) => {
   try {
     const domain = DOMAIN_LOCAL || req.hostname;
+    const api_product= API_PRODUCTS;
     const page = req.query.page;
     res.locals.domain = domain;
+    res.locals.api_product= api_product;
     res.locals.version = version;
 
     const [banners, contentHTML, config, navbar, catalog] = await Promise.all([
@@ -42,7 +44,7 @@ const fetchDataMiddleware = async (req, res, next) => {
       fetchCatalogo(domain,page)
     ]);
 
-    res.locals = { ...res.locals, banners, contentHTML, config, navbar, catalog };
+    res.locals = { ...res.locals, banners, contentHTML, config, navbar, catalog, api_product };
     next();
   } catch (error) {
     next(error);
@@ -59,6 +61,7 @@ router.get('/', (req, res) => {
     banners: res.locals.banners,
     contentHTML: res.locals.contentHTML,
     GetInfo: res.locals.config,
+    api_product:res.locals.api_product,
     printContent: getSvgContent,
     contentTemplate: 'home'
   });
@@ -74,6 +77,7 @@ router.get('/catalog', (req, res) => {
     pageTitle: 'Todos los productos',
     contentHTML: res.locals.contentHTML,
     GetInfo: res.locals.config,
+    api_product:res.locals.api_product,
     printContent: getSvgContent,
     contentTemplate: 'catalog'
   });
@@ -93,6 +97,7 @@ router.get('/product/:rutaDinamica', async (req, res, next) => {
       v: res.locals.version,
       pageTitle: productPage.title,
       contentHTML: productPage,
+      api_product:res.locals.api_product,
       printContent: getSvgContent,
       GetInfo: res.locals.config,
       contentTemplate: 'product_detail'
@@ -113,6 +118,7 @@ router.get('/:slug', async (req, res, next) => {
       pageTitle: 'Servicios',
       contentHTML: res.locals.contentHTML,
       GetInfo: res.locals.config,
+      api_product:res.locals.api_product,
       printContent: getSvgContent,
       contentTemplate: 'page'
     });
@@ -133,6 +139,7 @@ router.get('/category/:category', async (req, res, next) => {
       pageTitle: category,
       contentHTML: res.locals.contentHTML,
       GetInfo: res.locals.config,
+      api_product:res.locals.api_product,
       printContent: getSvgContent,
       contentTemplate: 'catalog'
     });
