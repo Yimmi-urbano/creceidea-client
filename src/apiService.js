@@ -23,7 +23,7 @@ async function fetchHome(domain) {
 
 async function fetchBanners(domain) {
 
-  hostname = domain.split('.')[0];
+  hostname = domain;
 
   try {
     const response = await axios.get(`${API_CONFIGURATION}/api/banners`,{
