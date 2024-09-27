@@ -41,7 +41,6 @@ async function fetchBanners(domain) {
 
 async function fetchConfig(domain) {
   hostname = domain;
-
   try {
     const response = await axios.get(`${API_CONFIGURATION}/api/configurations`, {
 
@@ -102,7 +101,7 @@ async function getPageByIdProduct(domain,slug) {
 }
 
 async function fetchNavBar(domain) {
-  hostname = domain.split('.')[0];
+  hostname = domain;
   try {
     const response = await axios.get(`${API_CATEGORIES}/api/categories`, {
       headers: {
