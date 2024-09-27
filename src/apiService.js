@@ -40,7 +40,7 @@ async function fetchBanners(domain) {
 }
 
 async function fetchConfig(domain) {
-  hostname = domain.split('.')[0];
+  hostname = domain;
 
   try {
     const response = await axios.get(`${API_CONFIGURATION}/api/configurations`, {
