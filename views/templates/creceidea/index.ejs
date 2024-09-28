@@ -16,15 +16,15 @@
   <meta name="robots" content="index, follow">
   <meta name="referrer" content="no-referrer-when-downgrade">
   <meta name="theme" content="theme-002">
- <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-3S40H8Q0BG"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-3S40H8Q0BG"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
 
-  gtag('config', 'G-3S40H8Q0BG');
-</script>
+    gtag('config', 'G-3S40H8Q0BG');
+  </script>
   <style>
     :root {
       --primary-color: <%- GetInfo.colors[0] %>;
@@ -259,17 +259,25 @@
 
 
       async function fetchProduct(product) {
+   
+        const fullHostname = window.location.hostname;
+
+        const subdomain = fullHostname.split('.')[0]; 
+
         const apiUrl = `<%- api_product %>/api/client/products/${product}`;
+
         try {
           const response = await fetch(apiUrl, {
             method: 'GET',
             headers: {
-              'domain': 'donguston'
+              'domain': subdomain
             }
           });
+
           if (!response.ok) {
             throw new Error('Producto no encontrado');
           }
+
           const productData = await response.json();
           return productData;
         } catch (error) {
