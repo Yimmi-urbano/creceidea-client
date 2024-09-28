@@ -110,7 +110,7 @@ async function fetchNavBar(domain) {
     });
     return response.data;
   } catch (error) {
-    throw new Error('Error al obtener datos de la API');
+    return [];
   }
 }
 
