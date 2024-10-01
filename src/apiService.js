@@ -1,4 +1,3 @@
-
 const axios = require('axios');
 const { generarCodigoVersion } = require('./helpers');
 require('dotenv').config();
@@ -26,7 +25,7 @@ async function fetchBanners(domain) {
   hostname = domain;
 
   try {
-    const response = await axios.get(`${API_CONFIGURATION}/api/banners`,{
+    const response = await axios.get(`${API_CONFIGURATION}/api/banners`, {
 
       headers: {
         'domain': hostname
@@ -55,11 +54,11 @@ async function fetchConfig(domain) {
   }
 }
 
-async function fetchCatalogo(domain,page) {
+async function fetchCatalogo(domain, page) {
 
   hostname = domain.split('.')[0];
   try {
-    const response = await axios.get(`${API_PRODUCTS}/api/products?page=`+page, {
+    const response = await axios.get(`${API_PRODUCTS}/api/products?page=` + page, {
       headers: {
         'domain': hostname
       }
@@ -86,7 +85,7 @@ async function getPageByCategory(domain, nameCategory) {
   }
 }
 
-async function getPageByIdProduct(domain,slug) {
+async function getPageByIdProduct(domain, slug) {
   hostname = domain.split('.')[0];
   try {
     const response = await axios.get(`${API_PRODUCTS}/api/client/products/` + slug, {
@@ -128,4 +127,13 @@ async function fetchPageBySlug(domain, slugSearch) {
   }
 }
 
-module.exports = {getPageByIdProduct, fetchHome, fetchConfig, fetchCatalogo, fetchNavBar, fetchPageBySlug, getPageByCategory, fetchBanners };
+module.exports = {
+  getPageByIdProduct,
+  fetchHome,
+  fetchConfig,
+  fetchCatalogo,
+  fetchNavBar,
+  fetchPageBySlug,
+  getPageByCategory,
+  fetchBanners
+};
