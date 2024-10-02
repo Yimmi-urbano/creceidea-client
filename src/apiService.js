@@ -78,7 +78,6 @@ async function getPageByCategory(domain, nameCategory) {
         'domain': hostname
       }
     });
-console.log(nameCategory)
     return response.data;
   } catch (error) {
     throw new Error('Error al obtener datos de la API');
