@@ -13,65 +13,83 @@
     </div>
 </section>
 <%- include('./navbar', { navbar: navbar}) %>
-    <section class="container-xxl pt-4">
-        <% function generatePagination(dataProducts) { %>
-            <% const totalPages=dataProducts.totalPages; %>
-                <% const currentPage=dataProducts.page; %>
-                    <ul class="pagination m-5 d-flex justify-content-center">
-                        <!-- Botón "Anterior" -->
-                        <% if (currentPage> 1) { %>
-                            <li class="page-item disabled"> <a href="" class="page-link"> <svg
-                                        xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
-                                        viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                                        stroke-linecap="round" stroke-linejoin="round">
-                                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                        <path d="M15 6l-6 6l6 6"></path>
-                                    </svg> Anterior</a></li>
-                            <% } %>
+    <div class="container-xxl pt-4">
+        <div class="row">
+            <div class="col-2">
+                <section class="sidebar-filter">
+                    Categoria
+                  <div style="height: 400px; width: 100%;"> 
+                    <% subcategories.forEach(item=> { %>
+                        <div class="item-cat">   <a href="/category/<%- item.slug %>" target="<%- item.target %>"> <%- item.title %> </a></div>
+                    <% }) %>
+                </div>
+                </section>
+            </div>
+            
+            <div class="col-10">
+                <section class="">
+                    <% function generatePagination(dataProducts) { %>
+                        <% const totalPages=dataProducts.totalPages; %>
+                            <% const currentPage=dataProducts.page; %>
+                                <ul class="pagination m-5 d-flex justify-content-center">
+                                    <!-- Botón "Anterior" -->
+                                    <% if (currentPage> 1) { %>
+                                        <li class="page-item disabled"> <a href="" class="page-link"> <svg
+                                                    xmlns="http://www.w3.org/2000/svg" class="icon" width="24"
+                                                    height="24" viewBox="0 0 24 24" stroke-width="2"
+                                                    stroke="currentColor" fill="none" stroke-linecap="round"
+                                                    stroke-linejoin="round">
+                                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                                    <path d="M15 6l-6 6l6 6"></path>
+                                                </svg> Anterior</a></li>
+                                        <% } %>
 
-                                <!-- Botones de páginas -->
-                                <% for (let i=1; i <=totalPages; i++) { %>
-                                    <li class="page-item <%= i === currentPage ? 'active' : '' %>"> <a
-                                            href="/catalog?page=<%= i %>" class="page-link">
-                                            <%= i %>
-                                        </a></li>
-                                    <% } %>
+                                            <!-- Botones de páginas -->
+                                            <% for (let i=1; i <=totalPages; i++) { %>
+                                                <li class="page-item <%= i === currentPage ? 'active' : '' %>"> <a
+                                                        href="/catalog?page=<%= i %>" class="page-link">
+                                                        <%= i %>
+                                                    </a></li>
+                                                <% } %>
 
-                                        <!-- Botón "Siguiente" -->
-                                        <% if (currentPage < totalPages) { %>
-                                            <li class="page-item disabled"> <a href="" class="page-link"> Siguiente <svg
-                                                        xmlns="http://www.w3.org/2000/svg" class="icon" width="24"
-                                                        height="24" viewBox="0 0 24 24" stroke-width="2"
-                                                        stroke="currentColor" fill="none" stroke-linecap="round"
-                                                        stroke-linejoin="round">
-                                                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                                        <path d="M9 6l6 6l-6 6"></path>
-                                                    </svg></a></li>
-                                            <% } %>
-                    </ul>
-                    <% } %>
-                        <div class="container-products-catalog">
-                            <div class="row">
-                                <% if (dataProducts.products.length===0) { %>
-                                    <section class="no-products">
-                                        <h2>No hay productos disponibles en este momento</h2>
-                                    </section>
+                                                    <!-- Botón "Siguiente" -->
+                                                    <% if (currentPage < totalPages) { %>
+                                                        <li class="page-item disabled"> <a href="" class="page-link">
+                                                                Siguiente <svg xmlns="http://www.w3.org/2000/svg"
+                                                                    class="icon" width="24" height="24"
+                                                                    viewBox="0 0 24 24" stroke-width="2"
+                                                                    stroke="currentColor" fill="none"
+                                                                    stroke-linecap="round" stroke-linejoin="round">
+                                                                    <path stroke="none" d="M0 0h24v24H0z" fill="none">
+                                                                    </path>
+                                                                    <path d="M9 6l6 6l-6 6"></path>
+                                                                </svg></a></li>
+                                                        <% } %>
+                                </ul>
+                                <% } %>
+                                    <div class="container-products-catalog">
+                                        <div class="row">
+                                            <% if (dataProducts.products.length===0) { %>
+                                                <section class="no-products">
+                                                    <h2>No hay productos disponibles en este momento</h2>
+                                                </section>
 
-                                    <% } else { %>
+                                                <% } else { %>
 
-                                        <%- include('./card_product', { productsData: dataProducts.products,
-                                            GetInfo:GetInfo }) %>
-                                            <% } %>
-                            </div>
-                            <div class="row">
-                                <div class="col-12">
+                                                    <%- include('./card_product', { productsData: dataProducts.products,
+                                                        GetInfo:GetInfo }) %>
+                                                        <% } %>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-12">
 
-                                    <%- generatePagination(dataProducts) %>
-                                </div>
+                                                <%- generatePagination(dataProducts) %>
+                                            </div>
 
-                            </div>
-                        </div>
-    </section>
+                                        </div>
+                                    </div>
+                </section>
 
-
-
+            </div>
+        </div>
+    </div>
