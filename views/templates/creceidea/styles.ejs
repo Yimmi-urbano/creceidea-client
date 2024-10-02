@@ -386,11 +386,7 @@ margin-top: 10px;
 font-size: 11px !important;
 }
 
-.price-tag .price-off {
 
-font-size: 14px !important;
-
-}
 .btn-actions-catalog {
 font-size: 11px !important;
 font-weight: bold;
@@ -507,16 +503,25 @@ object-fit: cover;
 }
 
 .name {
-font-size: 20px;
-color: var(--primary-color);
-text-align: left;
-font-weight: bold;
+    font-size: 20px;
+    color: var(--primary-color);
+    text-align: left;
+    font-weight: bold;
+    height: 30px;
+    display: flex;
+    align-items: center;
 }
 
 .description {
 font-size: 14px;
 color: #707070;
 text-align: left;
+display: -webkit-box;        /* Usamos un contenedor flex vertical */
+-webkit-box-orient: vertical; /* Definimos orientación vertical */
+-webkit-line-clamp: 3;        /* Máximo de 3 líneas */
+overflow: hidden;             /* Oculta el texto sobrante */
+text-overflow: ellipsis;      /* Añade puntos suspensivos (...) */
+max-height: 45px;     /* Altura máxima para 3 líneas */
 }
 
 .button {
@@ -748,3 +753,41 @@ font-size: 22px;
 font-weight: bold;
 color: #333333;
 }
+
+
+
+.product-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .price-buy {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  @media (max-width: 576px) {
+    .product-card {
+      flex-direction: row;
+    }
+
+    .product-card img {
+      width: 150px;
+      height: auto;
+      margin-right: 1rem;
+    }
+
+    .card-body {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .price-buy {
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+    }
+  }
