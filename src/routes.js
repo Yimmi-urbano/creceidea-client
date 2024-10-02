@@ -123,15 +123,43 @@ router.get('/:slug', async (req, res, next) => {
 router.get('/category/:category', async (req, res, next) => {
   try {
     const domain = DOMAIN_LOCAL || req.hostname;
-    const category = req.params.category;
-    const categoryProducts = await getPageByCategory(domain, category);
+    
+    const categorySlug = req.params.category;
+
+    const navbar = res.locals.navbar;
+
+    let categoryData = navbar.find(cat => cat.slug === categorySlug);
+
+    let subcategoryData = null;
+
+    if (!categoryData) {
+     
+      for (const category of navbar) {
+        subcategoryData = category.children.find(subcat => subcat.slug === categorySlug);
+        if (subcategoryData) {
+          categoryData = category; 
+          break;
+        }
+      }
+    }
+
+    if (!categoryData && !subcategoryData) {
+      return res.status(404).render('error_page', { message: 'Categoría no encontrada' });
+    }
+
+    const pageTitle = subcategoryData ? subcategoryData.title : categoryData.title;
+
+    const subcategories = subcategoryData ? [] : categoryData.children || [];
+
+    const categoryProducts = await getPageByCategory(domain, categorySlug);
 
     res.render('index', {
       v: res.locals.version,
       dataProducts: categoryProducts,
-      pageTitle: category,    
+      pageTitle,
+      subcategories,
       GetInfo: res.locals.config,
-      api_product:res.locals.api_product,
+      api_product: res.locals.api_product,
       printContent: getSvgContent,
       contentTemplate: 'catalog'
     });
@@ -139,6 +167,8 @@ router.get('/category/:category', async (req, res, next) => {
     next(error);
   }
 });
+
+
 
 router.use(errorHandler);
 
