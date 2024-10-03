@@ -521,23 +521,20 @@ display: -webkit-box;
 -webkit-line-clamp: 3; 
 overflow: hidden;
 text-overflow: ellipsis;
-max-height: 45px;
+max-height: 50px;
+line-height: normal;
 }
 
-.button {
+.button-catalog {
 border: none;
-font-size: 16px;
 color: #FFF;
 padding: 8px 16px;
 background-color: var(--primary-color);
-border-radius: 25px;
-
 cursor: pointer;
 transition: all 0.3s ease;
-margin-bottom: 2px;
 }
 
-.button:hover {
+button-catalog:hover {
 background: var(--primary-color);
 }
 
@@ -574,10 +571,6 @@ background-color: #4070F4;
 
 @media screen and (max-width: 768px) {
 
-    .button {
-        
-        font-size: 10px;
-      }
 
 .slide-content {
 margin: 0 10px;
@@ -658,7 +651,7 @@ background-color: var(--primary-color);
 color: #fff;
 text-decoration: none;
 }
-.button {
+.button-catalog {
 background-color: var(--primary-color);
 }
 
