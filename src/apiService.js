@@ -63,7 +63,6 @@ async function fetchCatalogo(domain, page) {
         'domain': hostname
       }
     });
-
     return response.data;
   } catch (error) {
     throw new Error('Error al obtener datos de la API');
@@ -120,7 +119,7 @@ async function fetchPageBySlug(domain, slugSearch) {
         'domain': hostname
       }
     });
-    return response.data;
+    return response.data??[];
   } catch (error) {
     throw new Error('Error al obtener datos de la API');
   }
