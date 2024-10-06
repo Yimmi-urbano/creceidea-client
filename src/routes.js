@@ -67,15 +67,46 @@ router.get('/', (req, res) => {
 
 router.get('/catalog', (req, res) => {
 
+  try {
+    const domain = DOMAIN_LOCAL || req.hostname;
+    const categorySlug = req.params.category;
+    const navbar = res.locals.navbar;
+    let categoryData = navbar;
+    let subcategoryData = null;
+    console.log(categoryData)
+
+    if (!categoryData) {
+      for (const category of navbar) {
+        subcategoryData = category.children.find(subcat => subcat.slug === categorySlug);
+        if (subcategoryData) {
+          categoryData = category; 
+          break;
+        }
+      }
+    }
+
+    if (!categoryData && !subcategoryData) {
+      return res.status(404).render('error_page', { message: 'Categoría no encontrada' });
+    }
+
+    const pageTitle = subcategoryData ? subcategoryData.title : categoryData.title;
+    const subcategories = subcategoryData ? [] : categoryData || [];
+
+
   res.render('index', {
     v: res.locals.version,
     dataProducts: res.locals.catalog,
-    pageTitle: 'Todos los productos',
+    subcategories,
+    pageTitle,
     GetInfo: res.locals.config,
     api_product:res.locals.api_product,
     printContent: getSvgContent,
     contentTemplate: 'catalog'
   });
+} catch (error) {
+
+  next(error);
+}
 });
 
 router.get('/styles', (req, res) => {
