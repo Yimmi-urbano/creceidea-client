@@ -56,7 +56,7 @@ async function fetchConfig(domain) {
 
 async function fetchCatalogo(domain, page) {
 
-  hostname = domain.split('.')[0];
+  hostname = domain;
   try {
     const response = await axios.get(`${API_PRODUCTS}/api/products?page=` + page, {
       headers: {
@@ -70,7 +70,7 @@ async function fetchCatalogo(domain, page) {
 }
 
 async function getPageByCategory(domain, nameCategory) {
-  hostname = domain.split('.')[0];
+  hostname = domain;
   try {
     const response = await axios.get(`${API_PRODUCTS}/api/products/category/` + nameCategory, {
       headers: {
@@ -84,7 +84,7 @@ async function getPageByCategory(domain, nameCategory) {
 }
 
 async function getPageByIdProduct(domain, slug) {
-  hostname = domain.split('.')[0];
+  hostname = domain;
   try {
     const response = await axios.get(`${API_PRODUCTS}/api/client/products/` + slug, {
       headers: {
