@@ -89,7 +89,7 @@ router.get('/catalog', (req, res) => {
       return res.status(404).render('error_page', { message: 'Categoría no encontrada' });
     }
 
-    const pageTitle = subcategoryData ? subcategoryData.title : categoryData.title;
+    const pageTitle = "Todos los productos";
     const subcategories = subcategoryData ? [] : categoryData || [];
 
 
