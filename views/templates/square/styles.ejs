@@ -29,6 +29,7 @@ opacity: 0.8;
 }
 .page-body{
 position:relative;
+margin-top: 7px;
 }
 .container-products-catalog>.row>div {
 padding-right: calc(var(--tblr-gutter-x) * 1.5);
@@ -50,7 +51,7 @@ padding: 0px;
 .banner-catalog {
 height: 220px;
 background-color: var(--primary-color);
-border-radius: 25px;
+
 position: relative;
 }
 
@@ -251,7 +252,7 @@ bottom: 30px;
 .hero-style {
 height: 480px;
 transition: all .4s ease;
-border-radius: 25px;
+border-radius: 0px;
 overflow: hidden;
 }
 
@@ -437,7 +438,7 @@ margin-right: 10px;
 
 
 .card {
-border-radius: 27px;
+
 background-color: #FFF;
 }
 
@@ -454,8 +455,6 @@ position: relative;
 row-gap: 5px;
 padding: 0;
 overflow: hidden;
-border-top-left-radius: 25px;
-border-top-right-radius: 25px;
 }
 
 .overlay {
@@ -493,6 +492,7 @@ width: 100%;
 .card-image .card-img {
 height: 220px;
 object-fit: cover;
+border-radius:0px !important!
 }
 
 .name {
@@ -514,7 +514,7 @@ font-size: 16px;
 color: #FFF;
 padding: 8px 16px;
 background-color: var(--primary-color);
-border-radius: 25px;
+
 
 cursor: pointer;
 transition: all 0.3s ease;
@@ -566,12 +566,12 @@ display: none;
 }
 
 .card-image .card-img {
-height: 200px;
-
+height: 135px;
+border-radius:0px !important;
 }
 
 .card-image {
-height: 200px;
+height: 135px;
 }
 }
 
@@ -581,13 +581,11 @@ height: 200px;
 
 content: "";
 height: 90px;
-background-color: #fff;
 position: absolute;
 z-index: 9999;
 top: 0px;
 width: 230px;
-border-bottom-right-radius: 20px;
-border-top-left-radius: 20px;
+
 }
 
 .logo-header::after,
@@ -595,7 +593,6 @@ border-top-left-radius: 20px;
 z-index: -1;
 content: "";
 position: absolute;
-background: radial-gradient(circle at 100% 100%, transparent 70%, #fff calc(70%)) bottom right;
 background-size: 50% 50%;
 background-repeat: no-repeat;
 width: 50px;
@@ -609,7 +606,6 @@ top: -25px;
 z-index: -1;
 content: "";
 position: absolute;
-background: radial-gradient(circle at 100% 100%, transparent 69%, #fff calc(69%)) bottom right;
 background-size: 50% 50%;
 background-repeat: no-repeat;
 width: 50px;
@@ -620,7 +616,7 @@ bottom: -25px;
 
 #categories-multiple-slides .item-cat {
 border: 1px solid var(--primary-color);
-border-radius: 20px;
+
 height: 40px;
 text-align: center;
 display: flex;
@@ -657,8 +653,8 @@ color: #888;
 text-align: center;
 background-color: #ffc004;
 color: #242d4a;
-font-size: 19px;
-height: 40px;
+font-size: 16px;
+height: 35px;
 display: flex;
 justify-content: center;
 align-items: center;
@@ -704,7 +700,7 @@ fill: #fff;
 
 .share-store{
 color: #fff;
-border-radius: 20px;
+
 width: 110px;
 text-align: center;
 padding-top: 4px;
@@ -729,7 +725,7 @@ padding:0px !important;
 display:none;
 }
 footer{
-height:50px;
+    margin-bottom: 30px;
 }
 .price-normal-sin-descuento{
     display: block;

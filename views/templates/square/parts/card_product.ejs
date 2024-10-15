@@ -1,5 +1,5 @@
 <% productsData.forEach(product => { %>
-    <div class="col-md-4 col-12 mb-3">
+    <div class="col-md-3 col-6 mb-3">
         <div class="card h-100">
             <div class="image-content">
                 <div class="card-image">
@@ -12,7 +12,7 @@
                 </h2>
 
                 <div class="card-text description"><%- product.description_short %></div>
-                <div class="price-tag  d-none hidden">
+                <div class="price-tag">
                     <% if (product.price.sale && product.price.sale !== 0 && product.price.regular !== product.price.sale) { %>
                         <!-- Mostrar ambos precios si el precio sale es diferente del regular, no es vacío y no es 0 -->
                         <div class="card-text price-off">
