@@ -117,20 +117,26 @@ router.get('/styles', (req, res) => {
 router.get('/product/:rutaDinamica', async (req, res, next) => {
   const domain = DOMAIN_LOCAL || req.hostname;
   const slug = req.params.rutaDinamica;
+
   try {
-  
+   
+    const dataProductDetail = await getPageByIdProduct(domain, slug);
+
     res.render('index', {
-      v: res.locals.version,
-      pageTitle: productPage.title,
-      api_product:res.locals.api_product,
+      v: res.locals.version, 
+      pageTitle: dataProductDetail.title,
+      api_product: res.locals.api_product, 
       printContent: getSvgContent,
-      GetInfo: res.locals.config,
+      dataProductDetail: dataProductDetail,
+      imagesProducts:dataProductDetail['image_default'],
+      GetInfo: res.locals.config, 
       contentTemplate: 'product_detail'
     });
   } catch (error) {
     next(error);
   }
 });
+
 
 router.get('/:slug', async (req, res, next) => {
   try {
