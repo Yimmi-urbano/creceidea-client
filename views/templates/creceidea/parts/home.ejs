@@ -1,6 +1,5 @@
-
-
-  <section class="hero-slider hero-style">
+<div class="home">
+<section class="hero-slider hero-style ml-3  mr-3">
   <div class="swiper-container">
     <div class="swiper-wrapper">
       <% for (let i=0; i < banners.length; i++) { %>
@@ -40,10 +39,11 @@
 
 <%- include('./navbar', { navbar: navbar}) %>
 
-<section class="container-xxl p-md-4 d-flex flex-column justify-content-center">
-  <div class="container-products-catalog">
-    <div class="row">
-      <%- include('./card_product', { productsData: dataProducts.products, GetInfo:GetInfo }) %>
+  
+    <div class="container container-products-catalog">
+      <div class="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-2 lg:gap-5 md:gap-5 gap-3 ">
+        <%- include('./card_product', { productsData: dataProducts.products, GetInfo:GetInfo }) %>
+      </div>
     </div>
-  </div>
-</section>
+
+</div>

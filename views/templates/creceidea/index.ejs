@@ -6,7 +6,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <meta http-equiv="X-UA-Compatible" content="ie=edge" />
   <title> <%- GetInfo.title %> | <%- GetInfo.slogan %> </title>
-  <link href="/dist/css/tabler.min.css?1684106062" rel="stylesheet" />
   <link rel="stylesheet" href="/styles?v=<%-v%>" />
   <link rel="stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.0.7/css/swiper.min.css">
   <link rel="stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
@@ -40,43 +39,12 @@
 </head>
 
 <body>
-  <div class="modal modal-blur fade" id="modal-large" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">Detalle de producto</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <div class="row">
-            <div class="col-lg-7">
-              <div id="carousel-indicators-thumb" class="carousel slide carousel-fade" data-bs-ride="carousel">
-                <div class="carousel-indicators carousel-indicators-thumb" id="carouselIndicators">
-                </div>
-                <div class="carousel-inner" id="carouselInner"> </div>
-              </div>
-            </div>
-            <div class="col-lg-5">
-              <h3 class="title mt-4"></h3>
-              <p class="detail-product"></p>
-              <div class="d-grid gap-2">
-
-                <button type="button" class="btn btn-primary btn-actions-catalog" data-title="" data-price=""
-                  data-action="" data-bs-dismiss="modal">Cotizar producto</button>
-              </div>
-            </div>
-          </div>
-
-        </div>
-
-      </div>
-    </div>
-  </div>
+  
   <div class="page">
     <div class="page-wrapper">
-      <div class="page-body mb-0">
-        <%- include('header') %>
-          <section class="container-fluid  d-flex flex-column justify-content-center">
+      <div class="page-body mt-3">
+        <div class="ml-3  mr-3"> <%- include('header') %></div>
+          <section class="container-fluid">
             <%- include('parts/' + contentTemplate) %>
           </section>
 
@@ -86,9 +54,8 @@
 
  
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="/dist/js/tabler.min.js?1684106062" defer></script>
     <script src="/dist/js/swiper.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.0/anime.min.js"></script>
+  
     <script>
       var menu = [];
       jQuery('.swiper-slide').each(function (index) {

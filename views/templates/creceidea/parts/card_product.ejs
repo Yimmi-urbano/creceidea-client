@@ -1,5 +1,5 @@
 <% productsData.forEach(product=> { %>
-  <div class="col-6 col-md-3 mb-5">
+
     <div class="bg-white shadow-md overflow-hidden rounded-2xl h-full ">
       <div class="relative">
         <% if (product.price.sale && product.price.sale !== 0 && product.price.regular !== product.price.sale) { %>
@@ -28,11 +28,11 @@
          
           </p>
           <% if (product.is_available) { %>
-            <%- include('./button_modal', { GetInfo: GetInfo, title: product.title, slug: product.slug, price: product.price.regular.toFixed(2) }) %>
+            <%- include('./button', { GetInfo: GetInfo, title: product.title, slug: product.slug, price: product.price.regular.toFixed(2) }) %>
         <% } else { %>
             <p class="text-danger">No disponible</p>
         <% } %>
       </div>
     </div>
-  </div>
+  
   <% }) %>
