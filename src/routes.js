@@ -121,7 +121,6 @@ router.get('/product/:rutaDinamica', async (req, res, next) => {
   try {
    
     const dataProductDetail = await getPageByIdProduct(domain, slug);
-
     res.render('index', {
       v: res.locals.version, 
       pageTitle: dataProductDetail.title,
