@@ -1,6 +1,6 @@
 <% productsData.forEach(product=> { %>
 
-    <div class="bg-white shadow-md overflow-hidden rounded-2xl h-full ">
+    <div class="bg-white shadow-md overflow-hidden card_product rounded-2xl h-full ">
       <div class="relative">
         <% if (product.price.sale && product.price.sale !== 0 && product.price.regular !== product.price.sale) { %>
           <span class="absolute top-3 left-3 capitalize text-xs text-white bg-red-500 rounded px-2 py-1">Off</span>
@@ -8,7 +8,7 @@
 
             <% } %>
         
-        <img src="<%- product.image_default[0] %>" alt="Rent Savings" class="h-[150px] md:h-56 w-full object-cover">
+        <img src="<%- product.image_default[0] %>" alt="<%= product.title %>" class="h-[180px] md:h-56 w-full object-cover">
       </div>
 
       <div class="pt-3 pb-3 px-3.5">
@@ -30,11 +30,19 @@
          
           </p>
           <% } %>
-          <div class="flex flex-col mt-3">
-       
-            <%- include('./button', { GetInfo: GetInfo, title: product.title, slug: product.slug, price: product.price.regular.toFixed(2) }) %>
-            <div class="mb-2"></div>
-            <%- include('./btn_add_cart', { GetInfo: GetInfo, title: product.title, slug: product.slug, price: product.price.regular.toFixed(2) }) %>
+          <div class="flex gap-2 flex-col lg:flex-row mt-3">
+            <div >
+            <%- include('./btn_whatsapp_direct', { GetInfo: GetInfo, title: product.title, slug: product.slug, price: product.price.regular.toFixed(2) }) %>
+          </div>
+          <% if (GetInfo.type_store=="product" ) { %>
+            <%- include('./btn_add_cart', { GetInfo: GetInfo, title: product.title, slug:
+              product.slug, price: product.price.regular.toFixed(2) }) %>
+
+              <% } else { %>
+                <%- include('./button', { GetInfo: GetInfo, title: product.title, slug:
+                  product.slug, price: product.price.regular.toFixed(2) }) %>
+
+              <% } %>
         </div>
       </div>
     </div>

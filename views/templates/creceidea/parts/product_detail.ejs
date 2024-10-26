@@ -64,13 +64,22 @@
 
             </div>
             <% } %>
+                <div class="flex flex-col gap-3">
+                    <% if (GetInfo.type_store=="product" ) { %>
+                        <%- include('./btn_add_cart', { GetInfo: GetInfo, title: dataProductDetail.title, slug:
+                            dataProductDetail.slug, price: dataProductDetail.price.regular.toFixed(2) }) %>
 
-                <% if (dataProductDetail.is_available) { %>
-                    <button class="rounded-full w-full button-catalog static text-md mt-5">
-                        <%- GetInfo.catalogo.button['text'] %> </button>
-                    <% } else { %>
-                        <p class="text-danger">No disponible</p>
-                        <% } %>
+                            <%- include('./btn_whatsapp_direct', { GetInfo: GetInfo, title: dataProductDetail.title,
+                                slug: dataProductDetail.slug, price: dataProductDetail.price.regular.toFixed(2) }) %>
+
+                                <% } else { %>
+
+                                    <%- include('./btn_whatsapp_direct', { GetInfo: GetInfo, title:
+                                        dataProductDetail.title, slug: dataProductDetail.slug, price:
+                                        dataProductDetail.price.regular.toFixed(2) }) %>
+
+                                        <% } %>
+                </div>
 
     </section>
 </div>
