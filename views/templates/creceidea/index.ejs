@@ -39,26 +39,27 @@
 </head>
 
 <body>
-  
+
   <div class="page">
-        
+
     <div class="page-wrapper">
       <div class="page-body mt-3">
         <div class="ml-3  mr-3"> <%- include('header') %></div>
-          <section class="container-fluid">
-            
-            <%- include('parts/' + contentTemplate) %>
-            
-          </section>
+        <section class="container-fluid">
 
-          <%- include('footer') %>
+          <%- include('parts/' + contentTemplate) %>
+
+        </section>
+
+        <%- include('footer') %>
       </div>
     </div>
 
- 
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="/dist/js/swiper.min.js"></script>
-  
+    <script type="module" src="/dist/js/functions.js"></script>
+
     <script>
       var menu = [];
       jQuery('.swiper-slide').each(function (index) {
@@ -179,7 +180,7 @@
         }
       });
 
-      const button_whatsapp = document.querySelectorAll('.btn-actions-catalog');
+      const button_whatsapp = document.querySelectorAll('#btn-actions-whatsapp');
 
       button_whatsapp.forEach(button => {
         button.addEventListener('click', () => {
@@ -197,6 +198,11 @@
         });
       });
 
+
+      const carouselIndicators = document.getElementById('carouselIndicators');
+      const carouselInner = document.getElementById('carouselInner');
+      const product = getQueryParam('product');
+
       function getQueryParam(param) {
         const urlParams = new URLSearchParams(window.location.search);
         return urlParams.get(param);
@@ -207,9 +213,6 @@
         url.searchParams.set(param, value);
         window.history.pushState({}, '', url);
       }
-
-      const carouselIndicators = document.getElementById('carouselIndicators');
-      const carouselInner = document.getElementById('carouselInner');
 
       function generateCarousel(images) {
         let indicatorsHTML = '';
@@ -230,12 +233,11 @@
         carouselInner.innerHTML = innerHTML;
       }
 
-
       async function fetchProduct(product) {
-   
+
         const fullHostname = window.location.hostname;
 
-        const subdomain = fullHostname; 
+        const subdomain = fullHostname;
 
         const apiUrl = `<%- api_product %>/api/client/products/${product}`;
 
@@ -288,7 +290,6 @@
         });
       });
 
-      const product = getQueryParam('product');
       if (product) {
         openModalIfProductExists(product);
       }

@@ -47,9 +47,9 @@
               <%= product.price.tag %>
                 <span class="text-xs md:text-lg text-gray-400 line-through mr-1"><%- GetInfo.catalogo.currency['symbol']
                     %>
-                    <%= product.price.sale.toFixed(2) %></span>
-                <span class="text-lg text-red-600 font-semibold"><%- GetInfo.catalogo.currency['symbol'] %>
                     <%= product.price.regular.toFixed(2) %></span>
+                <span class="text-lg text-red-600 font-semibold"><%- GetInfo.catalogo.currency['symbol'] %>
+                    <%= product.price.sale.toFixed(2) %></span>
                 <% } else { %>
                   <strong><%- GetInfo.catalogo.currency['symbol'] %></strong>
                   <span class="text-lg text-blank-600 font-semibold">
@@ -67,8 +67,12 @@
             product.price.regular.toFixed(2) }) %>
         </div>
         <% if (GetInfo.type_store=="product" ) { %>
-          <%- include('./btn_add_cart', { GetInfo: GetInfo, title: product.title, slug: product.slug, price:
-            product.price.regular.toFixed(2) }) %>
+          <%- include('./btn_add_cart', { 
+            title: product.title,
+            image: product.image_default[0],
+            id_product: product._id,
+            price_regular:product.price.regular.toFixed(2),
+            price_sale:product.price.sale.toFixed(2) }) %>
 
             <% } else { %>
               <%- include('./button', { GetInfo: GetInfo, title: product.title, slug: product.slug, price:
