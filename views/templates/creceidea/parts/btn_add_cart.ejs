@@ -1,6 +1,12 @@
-<button class="rounded-full w-[100%] button-catalog static flex justify-center gap-2 text-center" href="#"
-    data-price="<%= price %>" data-title="<%= title %>" data-number="<%- GetInfo.catalogo.whatsapp['number'] %>"
-    data-action="<%- GetInfo.catalogo.button['action'] %>">
+<button class="rounded-full w-[100%] add_to_cart button-catalog static flex justify-center gap-2 text-center" href="#"
+    data-price_regular=<%= price_regular %>
+    data-price_sale="<%= price_sale %>"
+    data-title="<%= title %>"
+    data-image="<%= image %>"
+    data-id="<%= id_product %>"
+    data-qty="0"
+
+    >
 
     <svg  width="800px" height="800px" viewBox="0 0 56 56" xmlns="http://www.w3.org/2000/svg">
         <path
