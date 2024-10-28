@@ -1,3 +1,5 @@
+// utils.js
+
 const getDataAttributes = (element) => {
     const dataAttributes = {};
     Array.from(element.attributes).forEach(attr => {
@@ -20,22 +22,22 @@ const calculateCartSummary = (items_cart) => {
         const priceSale = parseFloat(item.price_sale);
         const priceRegular = parseFloat(item.price_regular);
         const price = (priceSale > 0 && priceSale < priceRegular) ? priceSale : priceRegular;
-        total += price * parseInt(item.qty);
-        cantItems += parseInt(item.qty);
+        total += price * item.qty;
+        cantItems += item.qty;
     });
     return { total: parseFloat(total.toFixed(2)), cantItems };
 };
 
-const addToCart = (item) => {
+const addToCart = (item, quantity = 1) => {
     let cart = JSON.parse(sessionStorage.getItem('cart_tem')) || { items_cart: [], Total: 0.0, currency: "PEN", cantItems: 0 };
     let items_cart = cart.items_cart;
 
     const existingProductIndex = items_cart.findIndex(product => product.id === item.id);
 
     if (existingProductIndex !== -1) {
-        items_cart[existingProductIndex].qty = parseInt(items_cart[existingProductIndex].qty) + 1;
+        items_cart[existingProductIndex].qty += quantity;
     } else {
-        item.qty = 1;
+        item.qty = quantity;
         items_cart.push(item);
     }
 
