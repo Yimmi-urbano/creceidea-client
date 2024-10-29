@@ -54,4 +54,69 @@ const getCartItemCount = () => {
     return cart ? cart.cantItems : 0;
 };
 
-export { getDataAttributes, addToCart, getCartItemCount };
+const showModal = ({ title, content, iconHTML, onConfirm }) => {
+    const modal = document.getElementById("custom-modal");
+    const modalTitle = modal.querySelector(".modal-title");
+    const modalBody = modal.querySelector(".modal-body");
+    const iconContainer = modal.querySelector(".icon-container");
+    const confirmButton = document.getElementById("modal-confirm-btn");
+
+    // Actualizar el contenido dinámico
+    modalTitle.textContent = title;
+    modalBody.innerHTML = content;
+    iconContainer.innerHTML = iconHTML;
+
+    // Mostrar el modal
+    modal.classList.remove("hidden");
+
+    // Asignar el evento al botón de confirmación
+    confirmButton.onclick = onConfirm;
+};
+
+const closeModal = () => {
+    const modal = document.getElementById("custom-modal");
+    modal.classList.add("hidden");
+};
+
+document.getElementById("modal-cancel-btn").onclick = closeModal;
+
+const getCartItems = () => {
+    const cartData = sessionStorage.getItem("cart_tem");
+    if (!cartData) return null;
+
+    try {
+        return JSON.parse(cartData);
+    } catch (error) {
+        console.error("Error parsing cart data:", error);
+        return null;
+    }
+};
+const incrementQty = (id) => {
+    const cart = getCartItems();
+    const product = cart.items_cart.find(item => item.id === id);
+    if (product) {
+        product.qty += 1;
+        const { total, cantItems } = calculateCartSummary(cart.items_cart);
+        cart.Total = total;
+        cart.cantItems = cantItems;
+        updateSessionStorageCart(cart);
+        
+    }
+};
+
+const decrementQty = (id) => {
+    const cart = getCartItems();
+    const product = cart.items_cart.find(item => item.id === id);
+    if (product && product.qty > 1) {
+        product.qty -= 1;
+        const { total, cantItems } = calculateCartSummary(cart.items_cart);
+        cart.Total = total;
+        cart.cantItems = cantItems;
+        updateSessionStorageCart(cart);
+        
+    }
+};
+
+
+
+export { getDataAttributes, addToCart, getCartItemCount, showModal, closeModal, getCartItems, incrementQty, decrementQty, updateSessionStorageCart, calculateCartSummary };
