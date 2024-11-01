@@ -63,7 +63,7 @@ const showModal = ({ title, content, iconHTML, onConfirm }) => {
 
     // Actualizar el contenido dinámico
     modalTitle.textContent = title;
-    modalBody.innerHTML = content;
+    
     iconContainer.innerHTML = iconHTML;
 
     // Mostrar el modal
@@ -77,8 +77,6 @@ const closeModal = () => {
     const modal = document.getElementById("custom-modal");
     modal.classList.add("hidden");
 };
-
-document.getElementById("modal-cancel-btn").onclick = closeModal;
 
 const getCartItems = () => {
     const cartData = sessionStorage.getItem("cart_tem");
