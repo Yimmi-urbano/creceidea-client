@@ -58,7 +58,7 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="/dist/js/swiper.min.js"></script>
-    <script type="module" src="/dist/js/functions.js"></script>
+    <script type="module" src="/dist/js/functions.js?v=69"></script>
 
     <script>
       var menu = [];
@@ -167,12 +167,12 @@
           }
         });
       }
-      /*
+    
       document.getElementById('shareBtn').addEventListener('click', async () => {
         try {
           await navigator.share({
-            title: 'Título del contenido compartido',
-            text: 'Descripción o texto del contenido compartido',
+            title: '<%- GetInfo.title %>',
+            text: '<%- GetInfo.meta_description %>',
             url: 'URL del contenido a compartir',
           });
           console.log('Contenido compartido exitosamente');
@@ -180,7 +180,6 @@
           console.error('Error al compartir:', error.message);
         }
       });
-      */
 
       const button_whatsapp = document.querySelectorAll('#btn-actions-whatsapp');
 
@@ -201,126 +200,37 @@
       });
 
 
-      const carouselIndicators = document.getElementById('carouselIndicators');
-      const carouselInner = document.getElementById('carouselInner');
-      const product = getQueryParam('product');
-
-      function getQueryParam(param) {
-        const urlParams = new URLSearchParams(window.location.search);
-        return urlParams.get(param);
-      }
-
-      function updateURL(param, value) {
-        const url = new URL(window.location);
-        url.searchParams.set(param, value);
-        window.history.pushState({}, '', url);
-      }
-
-      function generateCarousel(images) {
-        let indicatorsHTML = '';
-        let innerHTML = '';
-
-        images.forEach((imageUrl, index) => {
-
-          indicatorsHTML += `<button type="button" data-bs-target="#carousel-indicators-thumb" data-bs-slide-to="${index}" class="ratio ratio-4x3 ${index === 0 ? 'active' : ''}" style="background-image: url(${imageUrl})"></button>`;
-
-          innerHTML += `
-                  <div class="carousel-item ${index === 0 ? 'active' : ''}">
-                    <img class="d-block w-100 image-product object-fit-cover border rounded" alt="Imagen ${index + 1}" src="${imageUrl}">
-                  </div>
-                `;
-        });
-
-        carouselIndicators.innerHTML = indicatorsHTML;
-        carouselInner.innerHTML = innerHTML;
-      }
-
-      async function fetchProduct(product) {
-
-        const fullHostname = window.location.hostname;
-
-        const subdomain = fullHostname;
-
-        const apiUrl = `<%- api_product %>/api/client/products/${product}`;
-
-        try {
-          const response = await fetch(apiUrl, {
-            method: 'GET',
-            headers: {
-              'domain': subdomain
-            }
-          });
-
-          if (!response.ok) {
-            throw new Error('Producto no encontrado');
-          }
-
-          const productData = await response.json();
-          return productData;
-        } catch (error) {
-          console.error(error);
-          return null;
-        }
-      }
-
-      async function openModalIfProductExists(product) {
-        const productData = await fetchProduct(product);
-        if (productData) {
-
-          const modalElement = document.getElementById('modal-large');
-          const modal = new bootstrap.Modal(modalElement);
-          generateCarousel(productData.image_default);
-          document.querySelector('.btn-actions-catalog').setAttribute('data-title', productData.title);
-          document.querySelector('.btn-actions-catalog').setAttribute('data-price', productData.price['regular']);
-          $('.detail-product').html(productData.description_short)
-          $('.title').text(productData.title)
-          modal.show();
-
-          updateURL('product', product);
-        } else {
-          alert('Producto no encontrado');
-        }
-      }
-
-      document.addEventListener('DOMContentLoaded', () => {
-        const buttons = document.querySelectorAll('.get_detail_product');
-        buttons.forEach(button => {
-          button.addEventListener('click', () => {
-            const slug = button.getAttribute('data-slug');
-            openModalIfProductExists(slug);
-          });
-        });
-      });
-
-      if (product) {
-        openModalIfProductExists(product);
-      }
     </script>
 </body>
 
 <!-- Modal -->
 <div id="custom-modal" class="hidden fixed inset-0 z-[99999]" aria-labelledby="modal-title" role="dialog" aria-modal="true">
-  <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
+  <div class="fixed inset-0 bg-[#005075] backdrop-blur bg-opacity-75 transition-opacity"></div>
 
   <div class="fixed inset-0 z-10 overflow-y-auto">
-    <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
-      <div class="modal-content relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
+    <div class="flex min-h-full items-end  justify-center p-4 text-center sm:items-center sm:p-0">
+      <div class="modal-content relative transform overflow-hidden w-full rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-3xl">
         <div class="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
           <div class="sm:flex sm:items-start">
-            <div class="icon-container mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">
-              <!-- Icon dynamically injected -->
+            <div class="icon-container mx-auto d-none hidden flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">
+              
             </div>
-            <div class="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
+            <div class="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left w-full">
               <h3 class="modal-title text-base font-semibold text-gray-900" id="modal-title">Modal Title</h3>
               <div class="modal-body mt-2 text-sm text-gray-500">
-                <!-- Content dynamically injected -->
+                <!-- Contenedor para la lista de productos -->
+                <div id="product-list" class="product-list w-full"></div>
+              
+                <!-- Contenedor para el resumen del carrito -->
+                <div id="cart-summary" class="cart-summary w-full"></div>
               </div>
+              
             </div>
           </div>
         </div>
         <div class="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
-          <button id="modal-confirm-btn" type="button" class="inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto">Confirm</button>
-          <button id="modal-cancel-btn" type="button" class="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto">Cancel</button>
+          <button id="modal-confirm-btn" type="button" class="inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto">Confirmar compra</button>
+          <button id="modal-cancel-btn" type="button" class="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto">Seguir comprando</button>
         </div>
       </div>
     </div>

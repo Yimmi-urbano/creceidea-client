@@ -123,6 +123,8 @@ height: 100%;
 position: absolute;
 left: 0;
 top: 0;
+border-radius: 25px;
+overflow: hidden;
 }
 
 .hero-slider .slide-inner {
@@ -259,8 +261,7 @@ bottom: 30px;
 .hero-style {
 height: 480px;
 transition: all .4s ease;
-border-radius: 25px;
-overflow: hidden;
+
 
 }
 
@@ -338,11 +339,7 @@ margin-top: 15px !important;
 .share-store span{
 display:none;
 }
-.tools-header {
 
-bottom: -5px !important;
-
-}
 }
 @media (max-width: 767px) {
 
@@ -361,11 +358,7 @@ box-sizing: border-box;
 align-items: end !important;
 flex-direction: column-reverse;
 }
-.tools-header {
 
-right: 17px !important;
-
-}
 .inner-banner {
 align-items: flex-end !important;
 padding-bottom: 10% !important;
@@ -741,15 +734,7 @@ z-index: 1;
 position:relative;
 z-index: 2;
 }
-.tools-header{
-position: absolute;
-right: 32px;
-bottom: 10px;
-z-index: 1;
-display: flex;
-gap: 15px;
-align-items: center;
-}
+
 
 .tools-elements-header{
 position: absolute;
@@ -795,12 +780,12 @@ display: flex;
 gap: 10px;
 }
 .tools-header .social-links svg * {
-fill: #fff;
+fill: #505050;
 }
 
 
 .share-store{
-color: #fff;
+color: #505050;
 border-radius: 20px;
 width: 110px;
 text-align: center;
@@ -848,6 +833,30 @@ align-items: center;
 }
 
 @media (max-width: 576px) {
+
+.logo-header, .banner-catalog .logo-header {
+
+width: 180px !important;
+
+}
+
+.tools-header::before {
+
+    width: 50px;
+    height: 50px;
+    right: 33px  !important;
+    left: initial !important;
+    bottom: 0px;
+    }
+
+.tools-header::after {
+width: 57px !important;
+height: 48px !important;
+right: -3px !important;
+top: -47px !important;
+}
+
+
 .product-card {
 flex-direction: row;
 }
@@ -882,3 +891,37 @@ margin: 0;
 input[type="number"] {
 -moz-appearance: textfield;
 }
+
+
+
+
+.tools-header::after {
+z-index: -1;
+content: "";
+position: absolute;
+background: radial-gradient(circle at 0% 0%, transparent 70%, #eff3f5 calc(70%)) bottom right;
+background-repeat: repeat;
+background-size: auto;
+background-size: 50% 50%;
+background-repeat: no-repeat;
+width: 50px;
+height: 50px;
+right: 0px;
+top: -50px;
+}
+
+.tools-header::before {
+    z-index: -1;
+    content: "";
+    position: absolute;
+    background: radial-gradient(circle at 0% 0%, transparent 70%, #eff3f5 calc(70%)) bottom right;
+    background-repeat: repeat;
+    background-size: auto;
+    background-size: 50% 50%;
+    background-repeat: no-repeat;
+    width: 50px;
+    height: 50px;
+    left: -50px;
+    right: initial;
+    bottom: 0px;
+    }
