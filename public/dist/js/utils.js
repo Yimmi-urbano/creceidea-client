@@ -54,12 +54,13 @@ const getCartItemCount = () => {
     return cart ? cart.cantItems : 0;
 };
 
-const showModal = ({ title, content, iconHTML, onConfirm }) => {
+const showModal = ({ title, content, iconHTML, onConfirm, onClosed }) => {
     const modal = document.getElementById("custom-modal");
     const modalTitle = modal.querySelector(".modal-title");
     const modalBody = modal.querySelector(".modal-body");
     const iconContainer = modal.querySelector(".icon-container");
     const confirmButton = document.getElementById("modal-confirm-btn");
+    const closedModal = document.getElementById("modal-cancel-btn");
 
     // Actualizar el contenido dinámico
     modalTitle.textContent = title;
@@ -71,6 +72,7 @@ const showModal = ({ title, content, iconHTML, onConfirm }) => {
 
     // Asignar el evento al botón de confirmación
     confirmButton.onclick = onConfirm;
+    closedModal.onclick = onClosed;
 };
 
 const closeModal = () => {
@@ -89,6 +91,7 @@ const getCartItems = () => {
         return null;
     }
 };
+
 const incrementQty = (id) => {
     const cart = getCartItems();
     const product = cart.items_cart.find(item => item.id === id);
@@ -114,6 +117,29 @@ const decrementQty = (id) => {
         
     }
 };
+
+export const showNotification = (productName, productImageUrl) => {
+    const notification = document.getElementById('notification');
+    const message = document.getElementById('notification-message');
+    const image = document.getElementById('notification-image');
+    const openCartButton = document.getElementById('open-cart-btn');
+
+    message.textContent = `${productName}`;
+    image.src = productImageUrl;
+    notification.classList.remove('hidden');
+    notification.classList.remove('translate-y-20', 'opacity-0');
+    notification.classList.add('translate-y-0', 'opacity-100');
+
+    document.querySelector('#open-cart-btn').addEventListener('click', () => {
+        document.getElementById('openCart').click();
+    });
+
+    setTimeout(() => {
+        notification.classList.add('translate-y-20', 'opacity-0');
+        notification.classList.remove('translate-y-0', 'opacity-100');
+    }, 3000);
+};
+
 
 
 

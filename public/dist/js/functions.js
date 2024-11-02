@@ -1,5 +1,5 @@
 // functions.js
-import { getDataAttributes, addToCart, getCartItemCount, showModal, closeModal, getCartItems, incrementQty, decrementQty, calculateCartSummary, updateSessionStorageCart } from './utils.js?v=10';
+import { getDataAttributes, addToCart, getCartItemCount, showModal, closeModal, getCartItems, incrementQty, decrementQty, calculateCartSummary, updateSessionStorageCart, showNotification } from './utils.js?v=19';
 
 const cantidadCartDiv = document.querySelector('.count-products');
 
@@ -14,12 +14,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const buttons = document.querySelectorAll('.add_to_cart');
     const quantityInput = document.querySelector('#quantity');
 
-
     buttons.forEach(button => {
         button.addEventListener('click', () => {
             const data = getDataAttributes(button);
             const quantity = quantityInput ? parseInt(quantityInput.value) : 1;
             addToCart(data, quantity);
+            showNotification(data.title, data.image)
             updateCartItemCount();
         });
     });
@@ -99,6 +99,9 @@ document.addEventListener('DOMContentLoaded', () => {
             onConfirm: () => {
                 console.log("Checkout process started");
                 closeModal();
+            },
+            onClosed: () => {
+                closeModal();
             }
         });
 
@@ -129,33 +132,25 @@ document.addEventListener('DOMContentLoaded', () => {
 
     modalBody.addEventListener('input', (event) => {
         const target = event.target;
-    
-        // Verificar si el elemento es un campo de cantidad
+
         if (target.type === 'number' && target.hasAttribute('data-id')) {
             const id = target.getAttribute('data-id');
             const newQty = parseInt(target.value, 10);
-    
-            console.log(newQty)
-            // Asegurarse de que la cantidad ingresada sea válida
+
             if (!isNaN(newQty) && newQty > 0) {
-                // Actualizar la cantidad en el carrito
+
                 const cart = getCartItems();
                 const product = cart.items_cart.find(item => item.id === id);
-    
+
                 if (product) {
                     product.qty = newQty;
-    
-                    // Recalcular el total y la cantidad de ítems en el carrito
+
                     const { total, cantItems } = calculateCartSummary(cart.items_cart);
                     cart.Total = total;
                     cart.cantItems = cantItems;
-    
-                    // Guardar el carrito actualizado en sessionStorage
-                    updateSessionStorageCart(cart);
-    
-                    // Refrescar el contenido del modal
-                    updateCartModalContent();
 
+                    updateSessionStorageCart(cart);
+                    updateCartModalContent();
                     updateCartItemCount();
                 }
             }
