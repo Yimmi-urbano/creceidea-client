@@ -58,7 +58,7 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="/dist/js/swiper.min.js"></script>
-    <script type="module" src="/dist/js/functions.js?v=69"></script>
+    <script type="module" src="/dist/js/functions.js?v=79"></script>
 
     <script>
       var menu = [];
@@ -235,6 +235,21 @@
       </div>
     </div>
   </div>
+</div>
+<!-- Notification Component HTML (ejemplo de estructura) -->
+<div id="notification" class="fixed bottom-4 right-4 hidden p-4 z-[9999] max-w-md bg-green-600/80 backdrop-blur-sm text-white rounded-lg shadow-lg flex items-center space-x-4 transition-transform transform translate-y-20 opacity-0">
+  <!-- Contenedor de la Imagen -->
+  <img id="notification-image" src="" alt="Producto" class="w-[50px] h-[50px] border-2 rounded-full object-cover">
+  
+  <div>
+    <strong class="block text-md font-bold">Producto añadido</strong>
+    <p id="notification-message" class="text-sm">Producto agregado al carrito.</p>
+  </div>
+  
+  <!-- Botón para abrir el carrito -->
+  <button id="open-cart-btn" class="bg-green-800 hover:bg-green-700 text-white font-semibold py-1 px-3 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
+    Ver carrito
+  </button>
 </div>
 
 
