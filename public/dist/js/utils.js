@@ -61,16 +61,13 @@ const showModal = ({ title, content, iconHTML, onConfirm, onClosed }) => {
     const iconContainer = modal.querySelector(".icon-container");
     const confirmButton = document.getElementById("modal-confirm-btn");
     const closedModal = document.getElementById("modal-cancel-btn");
+   
 
-    // Actualizar el contenido dinámico
     modalTitle.textContent = title;
-    
     iconContainer.innerHTML = iconHTML;
 
-    // Mostrar el modal
     modal.classList.remove("hidden");
 
-    // Asignar el evento al botón de confirmación
     confirmButton.onclick = onConfirm;
     closedModal.onclick = onClosed;
 };
@@ -79,6 +76,8 @@ const closeModal = () => {
     const modal = document.getElementById("custom-modal");
     modal.classList.add("hidden");
 };
+
+
 
 const getCartItems = () => {
     const cartData = sessionStorage.getItem("cart_tem");

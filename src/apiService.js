@@ -50,7 +50,7 @@ async function fetchConfig(domain) {
     });
     return response.data[0];
   } catch (error) {
-    throw new Error('Error al obtener datos de la API');
+    throw new Error('Error al obtener datos de la API', error);
   }
 }
 
