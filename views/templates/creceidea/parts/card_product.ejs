@@ -4,7 +4,7 @@
 
     <div class="relative">
       <a href="/product/<%- product.slug %>">
-        <% if (product.price.sale && product.price.sale !==0 && product.price.regular !==product.price.sale) { %>
+        <% if (product.price.sale && product.price.sale !==0 && product.price.regular !==product.price.sale && GetInfo.type_store=="product") { %>
           <span class="absolute top-3 left-3 capitalize text-xs text-white bg-red-500 rounded px-2 py-1">Off</span>
           <% } else { %>
 
