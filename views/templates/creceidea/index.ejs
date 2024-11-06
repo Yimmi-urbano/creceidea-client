@@ -52,7 +52,9 @@
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="/dist/js/swiper.min.js"></script>
+    <% if (GetInfo.type_store=="product" ) { %>
     <script type="module" src="/dist/js/functions.js?v=80"></script>
+    <% } %>
     <script>
       var menu = [];
       jQuery('.swiper-slide').each(function (index) {
@@ -160,7 +162,7 @@
           }
         });
       }
-
+/*
       document.getElementById('shareBtn').addEventListener('click', async () => {
         try {
           await navigator.share({
@@ -173,7 +175,7 @@
           console.error('Error al compartir:', error.message);
         }
       });
-
+*/
       const button_whatsapp = document.querySelectorAll('#btn-actions-whatsapp');
 
       button_whatsapp.forEach(button => {
@@ -183,7 +185,7 @@
           const price = button.getAttribute('data-price');
 
           if (phone && title && price) {
-            const message = `Hola, estoy interesado en comprar *${title}* al precio de S/ ${price}. ¿Podría proporcionar más detalles?`;
+            const message = `Hola, estoy interesado en *${title}*. ¿Podría proporcionar más detalles?`;
             const whatsappLink = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
             window.open(whatsappLink, '_blank');
           } else {

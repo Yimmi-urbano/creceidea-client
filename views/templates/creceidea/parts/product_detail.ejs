@@ -85,7 +85,9 @@
 
     </section>
 </div>
+<% if (GetInfo.type_store=="product" ) { %>
 
+  
 <script>
     const decreaseBtn = document.getElementById('decrease');
     const increaseBtn = document.getElementById('increase');
@@ -103,6 +105,7 @@
         quantityInput.value = currentValue + 1;
     });
 </script>
+<% } %>
 <style>
     .tools-header {
         display: none;
