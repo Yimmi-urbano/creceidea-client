@@ -35,7 +35,6 @@ const renderCartItems = () => {
 
     const { items_cart, Total, currency, cantItems } = cart;
 
-    // HTML para la lista de productos
     let productsContent = '';
     items_cart.forEach(item => {
         productsContent += `
@@ -60,7 +59,6 @@ const renderCartItems = () => {
         `;
     });
 
-    // HTML para el resumen del carrito
     const summaryContent = `
         <div class=" p-1 border border-b-0 border-x-0 border-zinc-500 flex w-full justify-between">
         <p class="text-xl"><strong>Total:</strong> S/ ${Total.toFixed(2)}</p>
@@ -80,40 +78,42 @@ const updateCartModalContent = () => {
     if (productListContainer && cartSummaryContainer) {
         const { productsContent, summaryContent } = renderCartItems();
 
-        // Insertar el contenido en los contenedores fijos
         productListContainer.innerHTML = productsContent;
         cartSummaryContainer.innerHTML = summaryContent;
     }
 };
 
+function openModalShopForm() {
+
+    const formShoppingData = document.getElementById("form-shopping");
+    formShoppingData.classList.remove("hidden");
+}
 
 document.addEventListener('DOMContentLoaded', () => {
     const openCart = document.querySelector('#openCart');
     const modalBody = document.querySelector('.modal-body');
+  
 
     const openCartModal = () => {
         showModal({
             title: "Lista de pedido",
-            content: '', // No se agrega contenido HTML aquí, ya está en el modal-body
+            content: '',
             iconHTML: `<svg class="h-6 w-6 text-red-600" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z" /></svg>`,
             onConfirm: () => {
                 console.log("Checkout process started");
                 closeModal();
+                openModalShopForm()
             },
             onClosed: () => {
                 closeModal();
             }
         });
-
-        // Actualizar contenido del modal
         updateCartModalContent();
     };
 
 
     openCart.addEventListener('click', openCartModal);
 
-
-    // Delegación de eventos para botones de incremento/decremento en el modal
     modalBody.addEventListener('click', (event) => {
         const target = event.target;
         const action = target.getAttribute('data-action');
