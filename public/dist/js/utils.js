@@ -77,8 +77,6 @@ const closeModal = () => {
     modal.classList.add("hidden");
 };
 
-
-
 const getCartItems = () => {
     const cartData = sessionStorage.getItem("cart_tem");
     if (!cartData) return null;
@@ -139,7 +137,17 @@ export const showNotification = (productName, productImageUrl) => {
     }, 3000);
 };
 
+export function setCookie(name, value, days) {
+    const date = new Date();
+    date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+    const expires = "expires=" + date.toUTCString();
+    document.cookie = name + "=" + value + ";" + expires + ";path=/";
+}
 
+export function getCookie(name) {
+    const match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+    return match ? match[2] : null;
+}
 
 
 export { getDataAttributes, addToCart, getCartItemCount, showModal, closeModal, getCartItems, incrementQty, decrementQty, updateSessionStorageCart, calculateCartSummary };
