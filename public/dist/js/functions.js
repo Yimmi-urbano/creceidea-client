@@ -278,7 +278,7 @@ async function createOrder(cart) {
     };
 
     try {
-        const response = await fetch("http://localhost:5400/api/orders", requestOptions);
+        const response = await fetch("https://api-orders.creceidea.pe/api/orders", requestOptions);
         if (!response.ok) {
             return { success: false, message: "Error en la solicitud" };
         }
