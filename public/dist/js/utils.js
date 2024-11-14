@@ -61,7 +61,7 @@ const showModal = ({ title, content, iconHTML, onConfirm, onClosed }) => {
     const iconContainer = modal.querySelector(".icon-container");
     const confirmButton = document.getElementById("modal-confirm-btn");
     const closedModal = document.getElementById("modal-cancel-btn");
-   
+
 
     modalTitle.textContent = title;
     iconContainer.innerHTML = iconHTML;
@@ -98,7 +98,7 @@ const incrementQty = (id) => {
         cart.Total = total;
         cart.cantItems = cantItems;
         updateSessionStorageCart(cart);
-        
+
     }
 };
 
@@ -111,7 +111,7 @@ const decrementQty = (id) => {
         cart.Total = total;
         cart.cantItems = cantItems;
         updateSessionStorageCart(cart);
-        
+
     }
 };
 
@@ -147,6 +147,51 @@ export function setCookie(name, value, days) {
 export function getCookie(name) {
     const match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
     return match ? match[2] : null;
+}
+
+function validateForm() {
+    const form = document.getElementById("orderForm");
+
+    const dni = form.querySelector("input[name='doc']");
+    const name = form.querySelector("input[name='nom']");
+    const email = form.querySelector("input[name='email']");
+    const phone = form.querySelector("input[name='celular']");
+
+    const isDniValid = /^[0-9]{8,}$/.test(dni.value.trim());
+    const isNameValid = name.value.trim().length >= 3;
+    const isEmailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value.trim());
+    const isPhoneValid = /^[0-9]{9,}$/.test(phone.value.trim());
+
+    const allValid = isDniValid && isNameValid && isEmailValid && isPhoneValid;
+    document.getElementById("send-order-end").disabled = !allValid;
+}
+
+export function initializeValidation() {
+    const form = document.getElementById("orderForm");
+    const inputs = form.querySelectorAll("input[name='doc'], input[name='nom'], input[name='email'], input[name='celular']");
+    inputs.forEach(input => input.addEventListener("input", validateForm));
+}
+
+export function getOrderData() {
+
+    const form = document.getElementById("orderForm");
+    const clientInfo = {
+        doc: form.querySelector("input[name='doc']").value,
+        name: form.querySelector("input[name='nom']").value,
+        email: form.querySelector("input[name='email']").value,
+        phone: form.querySelector("input[name='celular']").value,
+    };
+
+    const billingInfo = { ...clientInfo };
+    const shippingInfo = { ...clientInfo };
+
+    const orderData = {
+        clientInfo,
+        billingInfo,
+        shippingInfo,
+    };
+
+    return orderData;
 }
 
 

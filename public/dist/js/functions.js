@@ -1,5 +1,5 @@
 // functions.js
-import { setCookie, getCookie, getDataAttributes, addToCart, getCartItemCount, showModal, closeModal, getCartItems, incrementQty, decrementQty, calculateCartSummary, updateSessionStorageCart, showNotification } from './utils.js?v=21';
+import { setCookie, getCookie, getOrderData, initializeValidation, getDataAttributes, addToCart, getCartItemCount, showModal, closeModal, getCartItems, incrementQty, decrementQty, calculateCartSummary, updateSessionStorageCart, showNotification } from './utils.js?v=25';
 
 const cantidadCartDiv = document.querySelector('.count-products');
 
@@ -155,6 +155,7 @@ function openModalShopForm() {
 
     const formShoppingData = document.getElementById("form-shopping");
     formShoppingData.classList.remove("hidden");
+    initializeValidation()
 }
 
 function openModalShopFormPayment() {
@@ -198,19 +199,25 @@ async function checkCartSync(cart) {
     }
 }
 
-async function summaryCheckout(cart){
+async function summaryCheckout(cart) {
     const conTotal = document.querySelectorAll('.subtotal');
     const cantItems = document.querySelectorAll('.cant-items');
-    
+
     conTotal.forEach(element => {
         element.innerHTML = `<b>Subtotal:</b> S/ ${cart['Total'].toFixed(2)}`;
     });
-    
+
     cantItems.forEach(element => {
         element.innerHTML = `<b>Cantidad:</b> ${cart['cantItems']}`;
     });
 }
-const btnGetPaymentform=document.getElementById('send-order-end');
+
+
+
+const btnGetPaymentform = document.getElementById('send-order-end');
+const btnSendOrderAndCheckout = document.getElementById('modal-confirm-btn');
+const btnPaymentMethodProcess = document.getElementById('payment-process');
+
 
 btnGetPaymentform.addEventListener('click', async () => {
     const cart = getCartItems();
@@ -220,12 +227,9 @@ btnGetPaymentform.addEventListener('click', async () => {
         updateSessionStorageCart(result.cart);
         openModalShopFormPayment()
         summaryCheckout(result.cart)
-       
+
     }
 });
-
-
-const btnSendOrderAndCheckout = document.getElementById('modal-confirm-btn');
 
 btnSendOrderAndCheckout.addEventListener('click', async () => {
     const cart = getCartItems();
@@ -236,5 +240,72 @@ btnSendOrderAndCheckout.addEventListener('click', async () => {
         summaryCheckout(result.cart)
     }
 });
+
+
+async function processPayment() {
+    const cart = getCartItems();
+    const result = await checkCartSync(cart);
+
+
+    if (result) {
+        updateSessionStorageCart(result.cart);
+        summaryCheckout(result.cart)
+        return await createOrder(result.cart)
+    }
+}
+
+async function createOrder(cart) {
+    const { clientInfo, billingInfo, shippingInfo } = await getOrderData();
+    const headers = {
+        "domain": "donguston.creceidea.pe",
+        "Content-Type": "application/json"
+    };
+
+    const body = JSON.stringify({
+        "products": cart.items_cart,
+        clientInfo,
+        billingInfo,
+        shippingInfo,
+        total: cart.Total,
+        currency: cart.currency
+    });
+
+    const requestOptions = {
+        method: "POST",
+        headers: headers,
+        body: body,
+        redirect: "follow"
+    };
+
+    try {
+        const response = await fetch("http://localhost:5400/api/orders", requestOptions);
+        if (!response.ok) {
+            return { success: false, message: "Error en la solicitud" };
+        }
+
+        const data = await response.json();
+
+        return {
+            success: true,
+            total: data.total || 0,
+            currency: data.currency || "USD",
+            orderNumber: data.orderNumber,
+            statusPayment: data.paymentStatus || "pending"
+        };
+    } catch (error) {
+        console.error("Error:", error);
+        return { success: false, message: error.message };
+    }
+}
+
+btnPaymentMethodProcess.addEventListener('click', async () => {
+    const ProcessCreateOrder = await processPayment();
+    alert('Pago realizado correctamente...', ProcessCreateOrder)
+});
+
+
+
+
+
 
 
