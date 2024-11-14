@@ -1,5 +1,5 @@
 // functions.js
-import { getDataAttributes, addToCart, getCartItemCount, showModal, closeModal, getCartItems, incrementQty, decrementQty, calculateCartSummary, updateSessionStorageCart, showNotification } from './utils.js?v=19';
+import { setCookie, getCookie, getDataAttributes, addToCart, getCartItemCount, showModal, closeModal, getCartItems, incrementQty, decrementQty, calculateCartSummary, updateSessionStorageCart, showNotification } from './utils.js?v=21';
 
 const cantidadCartDiv = document.querySelector('.count-products');
 
@@ -60,7 +60,7 @@ const renderCartItems = () => {
     });
 
     const summaryContent = `
-        <div class=" p-1 border border-b-0 border-x-0 border-zinc-500 flex w-full justify-between">
+        <div class="p-1 flex w-full justify-between">
         <p class="text-xl"><strong>Total:</strong> S/ ${Total.toFixed(2)}</p>
         <p class="text-xl"><strong>Total Items:</strong> ${cantItems}</p>
             
@@ -69,7 +69,6 @@ const renderCartItems = () => {
 
     return { productsContent, summaryContent };
 };
-
 
 const updateCartModalContent = () => {
     const productListContainer = document.getElementById('product-list');
@@ -83,16 +82,9 @@ const updateCartModalContent = () => {
     }
 };
 
-function openModalShopForm() {
-
-    const formShoppingData = document.getElementById("form-shopping");
-    formShoppingData.classList.remove("hidden");
-}
-
 document.addEventListener('DOMContentLoaded', () => {
     const openCart = document.querySelector('#openCart');
     const modalBody = document.querySelector('.modal-body');
-  
 
     const openCartModal = () => {
         showModal({
@@ -158,3 +150,91 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
 });
+
+function openModalShopForm() {
+
+    const formShoppingData = document.getElementById("form-shopping");
+    formShoppingData.classList.remove("hidden");
+}
+
+function openModalShopFormPayment() {
+
+    const formShoppingPayment = document.getElementById("form-payment");
+    formShoppingPayment.classList.remove("hidden");
+}
+
+async function checkCartSync(cart) {
+    const headers = new Headers();
+    const domain = 'donguston.creceidea.pe';
+    const sessionid = getCookie("sessionid");
+
+    if (sessionid) {
+        headers.append("sessionid", sessionid);
+    }
+
+    headers.append("domain", domain);
+    headers.append("Content-Type", "application/json");
+
+    const raw = JSON.stringify(cart);
+
+    const options = {
+        method: "POST",
+        headers: headers,
+        body: raw,
+        redirect: "follow"
+    };
+
+    try {
+        const response = await fetch("https://api-sync-cart.creceidea.pe/api/cart/sync", options);
+        const result = await response.json();
+
+        if (result['cart'].sessionId) {
+            setCookie("sessionid", result['cart'].sessionId, 1);
+        }
+        return result;
+    } catch (error) {
+        console.error(error);
+        return null;
+    }
+}
+
+async function summaryCheckout(cart){
+    const conTotal = document.querySelectorAll('.subtotal');
+    const cantItems = document.querySelectorAll('.cant-items');
+    
+    conTotal.forEach(element => {
+        element.innerHTML = `<b>Subtotal:</b> S/ ${cart['Total'].toFixed(2)}`;
+    });
+    
+    cantItems.forEach(element => {
+        element.innerHTML = `<b>Cantidad:</b> ${cart['cantItems']}`;
+    });
+}
+const btnGetPaymentform=document.getElementById('send-order-end');
+
+btnGetPaymentform.addEventListener('click', async () => {
+    const cart = getCartItems();
+    const result = await checkCartSync(cart);
+
+    if (result) {
+        updateSessionStorageCart(result.cart);
+        openModalShopFormPayment()
+        summaryCheckout(result.cart)
+       
+    }
+});
+
+
+const btnSendOrderAndCheckout = document.getElementById('modal-confirm-btn');
+
+btnSendOrderAndCheckout.addEventListener('click', async () => {
+    const cart = getCartItems();
+    const result = await checkCartSync(cart);
+
+    if (result) {
+        updateSessionStorageCart(result.cart);
+        summaryCheckout(result.cart)
+    }
+});
+
+
