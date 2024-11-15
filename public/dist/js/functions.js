@@ -1,7 +1,13 @@
-// functions.js
 import { setCookie, getCookie, getOrderData, initializeValidation, getDataAttributes, addToCart, getCartItemCount, showModal, closeModal, getCartItems, incrementQty, decrementQty, calculateCartSummary, updateSessionStorageCart, showNotification } from './utils.js?v=25';
 
 const cantidadCartDiv = document.querySelector('.count-products');
+const btnGetPaymentform = document.getElementById('send-order-end');
+const btnSendOrderAndCheckout = document.getElementById('modal-confirm-btn');
+const btnPaymentMethodProcess = document.getElementById('payment-process');
+
+const domainMeta = document.querySelector("meta[name='domain']");
+const domainContent = domainMeta ? domainMeta.getAttribute("content").trim() : null;
+
 
 const updateCartItemCount = () => {
     const itemCount = getCartItemCount();
@@ -166,7 +172,7 @@ function openModalShopFormPayment() {
 
 async function checkCartSync(cart) {
     const headers = new Headers();
-    const domain = 'donguston.creceidea.pe';
+    const domain = domainContent;
     const sessionid = getCookie("sessionid");
 
     if (sessionid) {
@@ -189,8 +195,8 @@ async function checkCartSync(cart) {
         const response = await fetch("https://api-sync-cart.creceidea.pe/api/cart/sync", options);
         const result = await response.json();
 
-        if (result['cart'].sessionId) {
-            setCookie("sessionid", result['cart'].sessionId, 1);
+        if (result.sessionId) {
+            setCookie("sessionid", result.sessionId, 1);
         }
         return result;
     } catch (error) {
@@ -211,13 +217,6 @@ async function summaryCheckout(cart) {
         element.innerHTML = `<b>Cantidad:</b> ${cart['cantItems']}`;
     });
 }
-
-
-
-const btnGetPaymentform = document.getElementById('send-order-end');
-const btnSendOrderAndCheckout = document.getElementById('modal-confirm-btn');
-const btnPaymentMethodProcess = document.getElementById('payment-process');
-
 
 btnGetPaymentform.addEventListener('click', async () => {
     const cart = getCartItems();
@@ -241,7 +240,6 @@ btnSendOrderAndCheckout.addEventListener('click', async () => {
     }
 });
 
-
 async function processPayment() {
     const cart = getCartItems();
     const result = await checkCartSync(cart);
@@ -254,10 +252,38 @@ async function processPayment() {
     }
 }
 
+async function resetCart() {
+    const sessionid = getCookie("sessionid");
+    try {
+        const myHeaders = new Headers();
+        myHeaders.append("domain", domainContent);
+        myHeaders.append("sessionid", sessionid);
+
+        const requestOptions = {
+            method: "DELETE",
+            headers: myHeaders,
+            redirect: "follow"
+        };
+
+        const response = await fetch("https://api-sync-cart.creceidea.pe/api/cart/delete", requestOptions);
+
+        if (response.ok) {
+            document.cookie = "sessionid=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+            return true;
+        } else {
+            return false;
+        }
+    } catch (error) {
+        console.error("Error en la solicitud:", error);
+        return false;
+    }
+}
+
+
 async function createOrder(cart) {
     const { clientInfo, billingInfo, shippingInfo } = await getOrderData();
     const headers = {
-        "domain": "donguston.creceidea.pe",
+        "domain": domainContent,
         "Content-Type": "application/json"
     };
 
@@ -300,7 +326,10 @@ async function createOrder(cart) {
 
 btnPaymentMethodProcess.addEventListener('click', async () => {
     const ProcessCreateOrder = await processPayment();
-    alert('Pago realizado correctamente...', ProcessCreateOrder)
+    sessionStorage.removeItem("cart_tem");
+    resetCart();
+    alert('Pago realizado correctamente...', ProcessCreateOrder);
+    location.reload();
 });
 
 

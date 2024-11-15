@@ -14,7 +14,9 @@
   <meta name="author" content="<%- GetInfo.title %>">
   <meta name="robots" content="index, follow">
   <meta name="referrer" content="no-referrer-when-downgrade">
-  <meta name="theme" content="theme-002">
+  <meta name="theme" content="<%- GetInfo.theme %> ">
+  <meta name="domain" content="<%- GetInfo.domain %> ">
+
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-3S40H8Q0BG"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -53,7 +55,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="/dist/js/swiper.min.js"></script>
     <% if (GetInfo.type_store=="product" ) { %>
-      <script type="module" src="/dist/js/functions.js?v=140"></script>
+      <script type="module" src="/dist/js/functions.js?v=143"></script>
       <% } %>
         <script>
           var menu = [];
