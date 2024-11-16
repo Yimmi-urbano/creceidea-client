@@ -324,12 +324,42 @@ async function createOrder(cart) {
     }
 }
 
+function sendWhatsappOrder() {
+    
+    const ticketDetails = `
+                ¡Hola! Aquí está mi ticket de compra:
+                
+                Producto 1 - Cantidad: 10
+                Producto 2 - Cantidad: 15
+
+                Total: S/ 25
+
+                Método de pago: WhatsApp
+            `;
+            
+            // Codificar el mensaje para la URL
+            const encodedMessage = encodeURIComponent(ticketDetails);
+
+            // Crear el enlace a WhatsApp
+            const phoneNumber = '51993762400'; // Cambia al número de teléfono destino en formato internacional
+            const whatsappLink = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
+
+            // Redirigir al enlace de WhatsApp
+            window.open(whatsappLink, '_blank');
+}
+
 btnPaymentMethodProcess.addEventListener('click', async () => {
     const ProcessCreateOrder = await processPayment();
-    sessionStorage.removeItem("cart_tem");
-    resetCart();
-    alert('Pago realizado correctamente...', ProcessCreateOrder);
-    location.reload();
+
+    if (ProcessCreateOrder.success) {
+        console.log(ProcessCreateOrder)
+        sessionStorage.removeItem("cart_tem");
+       await resetCart();
+        window.location.href = "/order/thanks";
+
+    }
+
+
 });
 
 
