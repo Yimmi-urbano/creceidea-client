@@ -136,19 +136,16 @@ router.get('/product/:rutaDinamica', async (req, res, next) => {
   }
 });
 
-router.get('/:slug', async (req, res, next) => {
+router.get('/order/thanks', async (req, res, next) => {
+
   try {
-    const slug = req.params.slug;
-    const page = await fetchPageBySlug(res.locals.domain, slug);
 
     res.render('index', {
-      v: res.locals.version,
-      infoPage: page,
-      pageTitle: 'Servicios',
-      GetInfo: res.locals.config,
-      api_product:res.locals.api_product,
+      v: res.locals.version, 
+      api_product: res.locals.api_product, 
       printContent: getSvgContent,
-      contentTemplate: 'page'
+      GetInfo: res.locals.config, 
+      contentTemplate: 'thanks'
     });
   } catch (error) {
     next(error);
@@ -195,6 +192,28 @@ router.get('/category/:category', async (req, res, next) => {
     next(error);
   }
 });
+
+/*
+router.get('/:slug', async (req, res, next) => {
+  try {
+    const slug = req.params.slug;
+    const page = await fetchPageBySlug(res.locals.domain, slug);
+
+    res.render('index', {
+      v: res.locals.version,
+      infoPage: page,
+      pageTitle: 'Servicios',
+      GetInfo: res.locals.config,
+      api_product:res.locals.api_product,
+      printContent: getSvgContent,
+      contentTemplate: 'page'
+    });
+  } catch (error) {
+    next(error);
+  }
+});
+*/
+
 
 router.use(errorHandler);
 
