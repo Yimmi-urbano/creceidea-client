@@ -1,5 +1,3 @@
-// utils.js
-
 const getDataAttributes = (element) => {
     const dataAttributes = {};
     Array.from(element.attributes).forEach(attr => {
@@ -194,5 +192,22 @@ export function getOrderData() {
     return orderData;
 }
 
+export function loaderProcess(status) {
+
+
+    const showModalLoader = document.getElementById("loader");
+
+    if (status) {
+        showModalLoader.classList.remove("hidden");
+    }else{
+        showModalLoader.classList.add("hidden");
+
+    }
+
+   
+
+
+    
+}
 
 export { getDataAttributes, addToCart, getCartItemCount, showModal, closeModal, getCartItems, incrementQty, decrementQty, updateSessionStorageCart, calculateCartSummary };
