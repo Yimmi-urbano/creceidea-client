@@ -1,10 +1,27 @@
-import { setCookie, getCookie, getOrderData, initializeValidation, getDataAttributes, addToCart, getCartItemCount, showModal, closeModal, getCartItems, incrementQty, decrementQty, calculateCartSummary, updateSessionStorageCart, showNotification } from './utils.js?v=25';
+import {
+    setCookie,
+    getCookie,
+    getOrderData,
+    initializeValidation,
+    getDataAttributes,
+    addToCart,
+    getCartItemCount,
+    showModal,
+    closeModal,
+    getCartItems,
+    incrementQty,
+    decrementQty,
+    calculateCartSummary,
+    updateSessionStorageCart,
+    showNotification,
+    loaderProcess
+
+} from './utils.js?v=27';
 
 const cantidadCartDiv = document.querySelector('.count-products');
 const btnGetPaymentform = document.getElementById('send-order-end');
 const btnSendOrderAndCheckout = document.getElementById('modal-confirm-btn');
 const btnPaymentMethodProcess = document.getElementById('payment-process');
-
 const domainMeta = document.querySelector("meta[name='domain']");
 const domainContent = domainMeta ? domainMeta.getAttribute("content").trim() : null;
 
@@ -171,6 +188,9 @@ function openModalShopFormPayment() {
 }
 
 async function checkCartSync(cart) {
+
+    loaderProcess(true)
+
     const headers = new Headers();
     const domain = domainContent;
     const sessionid = getCookie("sessionid");
@@ -198,6 +218,7 @@ async function checkCartSync(cart) {
         if (result.sessionId) {
             setCookie("sessionid", result.sessionId, 1);
         }
+        loaderProcess(false)
         return result;
     } catch (error) {
         console.error(error);
@@ -217,28 +238,6 @@ async function summaryCheckout(cart) {
         element.innerHTML = `<b>Cantidad:</b> ${cart['cantItems']}`;
     });
 }
-
-btnGetPaymentform.addEventListener('click', async () => {
-    const cart = getCartItems();
-    const result = await checkCartSync(cart);
-
-    if (result) {
-        updateSessionStorageCart(result.cart);
-        openModalShopFormPayment()
-        summaryCheckout(result.cart)
-
-    }
-});
-
-btnSendOrderAndCheckout.addEventListener('click', async () => {
-    const cart = getCartItems();
-    const result = await checkCartSync(cart);
-
-    if (result) {
-        updateSessionStorageCart(result.cart);
-        summaryCheckout(result.cart)
-    }
-});
 
 async function processPayment() {
     const cart = getCartItems();
@@ -279,8 +278,10 @@ async function resetCart() {
     }
 }
 
-
 async function createOrder(cart) {
+
+    loaderProcess(true)
+
     const { clientInfo, billingInfo, shippingInfo } = await getOrderData();
     const headers = {
         "domain": domainContent,
@@ -310,7 +311,6 @@ async function createOrder(cart) {
         }
 
         const data = await response.json();
-
         return {
             success: true,
             total: data.total || 0,
@@ -318,53 +318,87 @@ async function createOrder(cart) {
             orderNumber: data.orderNumber,
             statusPayment: data.paymentStatus || "pending"
         };
+       
     } catch (error) {
         console.error("Error:", error);
+        loaderProcess(false)
         return { success: false, message: error.message };
     }
 }
 
-function sendWhatsappOrder() {
-    
-    const ticketDetails = `
-                ¡Hola! Aquí está mi ticket de compra:
-                
-                Producto 1 - Cantidad: 10
-                Producto 2 - Cantidad: 15
+btnGetPaymentform.addEventListener('click', async () => {
+    const cart = getCartItems();
+    const result = await checkCartSync(cart);
 
-                Total: S/ 25
-
-                Método de pago: WhatsApp
-            `;
-            
-            // Codificar el mensaje para la URL
-            const encodedMessage = encodeURIComponent(ticketDetails);
-
-            // Crear el enlace a WhatsApp
-            const phoneNumber = '51993762400'; // Cambia al número de teléfono destino en formato internacional
-            const whatsappLink = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
-
-            // Redirigir al enlace de WhatsApp
-            window.open(whatsappLink, '_blank');
-}
-
-btnPaymentMethodProcess.addEventListener('click', async () => {
-    const ProcessCreateOrder = await processPayment();
-
-    if (ProcessCreateOrder.success) {
-        console.log(ProcessCreateOrder)
-        sessionStorage.removeItem("cart_tem");
-       await resetCart();
-        window.location.href = "/order/thanks";
+    if (result) {
+        updateSessionStorageCart(result.cart);
+        openModalShopFormPayment()
+        summaryCheckout(result.cart)
 
     }
-
-
 });
 
+btnSendOrderAndCheckout.addEventListener('click', async () => {
+    const cart = getCartItems();
+    const result = await checkCartSync(cart);
 
+    if (result) {
+        updateSessionStorageCart(result.cart);
+        summaryCheckout(result.cart)
+    }
+});
 
+document.addEventListener("DOMContentLoaded", () => {
+    const paymentMethods = document.querySelectorAll('input[name="paymentMethod"]');
+    const payButton = document.querySelector("#payment-process");
 
+    payButton.disabled = true;
 
+    const updatePayButtonState = () => {
+        const isSelected = Array.from(paymentMethods).some((method) => method.checked);
+        payButton.disabled = !isSelected;
+    };
 
+    paymentMethods.forEach((method) => {
+        method.addEventListener("change", updatePayButtonState);
+    });
 
+    const executePayment = () => {
+        const selectedMethod = Array.from(paymentMethods).find((method) => method.checked)?.value;
+
+        if (!selectedMethod) {
+            alert("Por favor, selecciona un método de pago.");
+            return;
+        }
+
+        switch (selectedMethod) {
+            case "whatsapp":
+                handleWhatsAppPayment();
+                break;
+            case "creditCard":
+                handleCreditCardPayment();
+                break;
+            default:
+                alert("Método de pago no soportado.");
+        }
+    };
+
+    const handleWhatsAppPayment = async () => {
+
+        const ProcessCreateOrder = await processPayment();
+
+        if (ProcessCreateOrder.success) {
+            sessionStorage.removeItem("cart_tem");
+            await resetCart();
+            window.location.href = `/order/thanks?orderID=${ProcessCreateOrder.orderNumber}&methodPay=whatsapp`;
+        }
+
+    };
+
+    const handleCreditCardPayment = () => {
+        alert("Procesando pago con tarjeta de crédito...");
+        console.log("Abriendo pasarela de pago...");
+    };
+
+    payButton.addEventListener("click", executePayment);
+});
