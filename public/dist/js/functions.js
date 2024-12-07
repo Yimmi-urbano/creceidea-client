@@ -294,7 +294,20 @@ async function createOrder(cart) {
         billingInfo,
         shippingInfo,
         total: cart.Total,
-        currency: cart.currency
+        currency: cart.currency,
+            paymentStatus: {
+              typeStatus: 'pending',
+              message: '',
+              data: '',
+              methodPayment: ''
+            },
+            orderStatus: {
+              typeStatus: 'pending',
+              message: '',
+              date: ''
+            }
+          
+          
     });
 
     const requestOptions = {
