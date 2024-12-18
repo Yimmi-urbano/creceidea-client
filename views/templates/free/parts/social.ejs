@@ -1,7 +1,7 @@
 <% socialLinks.forEach(social => { %>
   <% if (social.is_active) { %>
     <div class="<%= social.title %>">
-      <a href="<%= social.url %>">
+      <a href="<%= social.url %>" target="_blank">
         <%- printContent(social.icon) %>
       </a>
     </div>

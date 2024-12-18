@@ -1,6 +1,5 @@
-
-
-  <section class="hero-slider hero-style">
+<div class="home">
+<section class="hero-slider hero-style ml-3  mr-3">
   <div class="swiper-container">
     <div class="swiper-wrapper">
       <% for (let i=0; i < banners.length; i++) { %>
@@ -19,7 +18,7 @@
                         <%= button.text_button %>
                       </button>
                       <% } else if (button.action==="href" ) { %>
-                        <a href="<%- button.destino %>" class="button">
+                        <a href="<%- button.destino %>" class="rounded-full  button-catalog  text-center static button text-md">
                           <%- button.text_button %>
                         </a>
                         <% } %>
@@ -29,7 +28,6 @@
 
             </div>
           </div>
-          <!-- end slide-inner -->
         </div>
         <% } %>
     </div>
@@ -37,14 +35,31 @@
     <div class="swiper-button-next"></div>
     <div class="swiper-button-prev"></div>
   </div>
+
+  <div class="tools-header bg-[#eff3f5]  absolute right-0 rounded-tl-3xl flex gap-3 bottom-0 z-10 lg:pl-4 lg:pt-0  pl-2 pt-2.5 lg:pr-4 lg:h-[50px] items-center">
+
+    <div class="social-links">
+
+      <%- include('../parts/social', {socialLinks: GetInfo.social_links}) %>
+
+    </div>
+    <div class="share-store hidden" id="shareBtn"><svg width="800px" height="800px" viewBox="0 0 24 24" fill="none"
+        xmlns="http://www.w3.org/2000/svg">
+        <path d="M13.5 10.5L21 3" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+        <path d="M16 3L21 3L21 8" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+        <path d="M21 14V19C21 20.1046 20.1046 21 19 21H12H5C3.89543 21 3 20.1046 3 19V5C3 3.89543 3.89543 3 5 3H10"
+          stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+      </svg><span>Compartir</span></div>
+  </div>
 </section>
 
 <%- include('./navbar', { navbar: navbar}) %>
 
-<section class="container-xxl p-md-4 d-flex flex-column justify-content-center">
-  <div class="container-products-catalog">
-    <div class="row">
-      <%- include('./card_product', { productsData: dataProducts.products, GetInfo:GetInfo }) %>
+  
+    <div class="container container-products-catalog">
+      <div class="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-2 lg:gap-5 md:gap-5 gap-3 ">
+        <%- include('./card_product', { productsData: dataProducts.products, GetInfo:GetInfo }) %>
+      </div>
     </div>
-  </div>
-</section>
+
+</div>

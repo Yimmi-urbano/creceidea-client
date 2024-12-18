@@ -1,0 +1,259 @@
+<section class="banner-catalog ml-3  mr-3" style="height: 185px;">
+    <div class="logo-header">
+        <a href="/">
+            <img style="height: 70px;display: block;margin: auto;margin-top: 10px;object-fit: cover;width: 160px;"
+                src="<%- GetInfo.logo %>" alt="">
+        </a>
+    </div>
+    <div class="banner-container">
+        <div class="inner-banner">
+            <span class="text-2xl text-white">Gracias por tu compra </span>
+        </div>
+
+    </div>
+</section>
+<div class="order-thanks">
+
+    <div class="flex items-center justify-center p-4">
+        <div>
+            <div class="flex flex-col items-center space-y-2">
+
+                <div class="flex flex-col items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-green-600 hidden element-order"
+                        fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+
+                    <p class="text-center element-order hidden">Gracias por tu compra los detalles de tu compra estan en
+                        tu Whatsapp.</p>
+
+                    <div
+                        class="rounded-md content-voucher hidden relative mt-4 w-full sm:w-[32rem] shadow-md p-3 bg-white">
+                        <div class="py-2">
+                            <div class="text-center text-xl font-bold">TICKET DE PEDIDO</div>
+                            <div class="text-center text-xs font-bold">Detalle del pedido</div>
+                        </div>
+                        <div class="text-center text-xs font-bold mb-1">~~~~~~~~~~~~~~~~~~~~~~~~~~~~</div>
+                        <div class="text-xs pl-2">
+                            <div id="detailCustomer">
+
+                            </div>
+                        </div>
+                        <div class="border-double border-t-4 border-b-4 border-l-0 border-r-0 border-gray-900 my-3">
+                            <div class="flex text-sm pt-1 px-1">
+                                <span class="w-2/6">Producto</span>
+                                <span class="w-2/6 text-right">Precio</span>
+                                <span class="w-2/6 text-right">Cant.</span>
+                            </div>
+                            <div id="contentProducts"
+                                class="border-dashed border-t border-b border-l-0 border-r-0 border-gray-900 mt-1 my-2 py-2 px-1">
+
+                            </div>
+                        </div>
+                        <div class="text-xs">
+                            <div id="discountAndImpuestos">
+
+                            </div>
+
+                            <div class="text-right">
+                                <div id="totalAndDateOrder">
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <a href="/"
+                    class="button-catalog inline-flex items-center rounded  px-4 py-2 text-white hover:bg-indigo-700 focus:outline-none focus:ring">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="mr-2 h-3 w-3" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M7 16l-4-4m0 0l4-4m-4 4h18" />
+                    </svg>
+                    <span class="text-sm font-medium"> Home </span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<script>
+
+    let cachedOrderData = null;
+
+    function showOrderNotFoundMessage() {
+        const container = document.querySelector(".content-voucher");
+        if (container) {
+            container.innerHTML = `<p class="text-center text-red-600">Pedido no encontrado. Por favor, verifique el número de pedido.</p>`;
+        }
+    }
+
+    async function fetchOrderData(orderId) {
+
+        const domainMeta = document.querySelector("meta[name='domain']");
+        const domainContent = domainMeta ? domainMeta.getAttribute("content").trim() : null;
+
+        const myHeaders = new Headers();
+        myHeaders.append("domain", domainContent);
+
+        const requestOptions = {
+            method: "GET",
+            headers: myHeaders,
+            redirect: "follow"
+        };
+
+
+        try {
+            const response = await fetch(`https://api-orders.creceidea.pe/api/orders/id/${orderId}`, requestOptions);
+            const data = await response.json();
+
+            if (!data) {
+                throw new Error('Pedido no encontrado');
+            }
+            return data;
+        } catch (error) {
+            console.error("Error fetching order data:", error);
+            return null;
+        }
+    }
+
+    function renderOrderData(order) {
+        if (!order) {
+            console.error("No order data to render");
+            return;
+        }
+
+        const container = document.querySelector(".content-voucher");
+        if (!container) {
+            console.error("Container not found in the DOM");
+            return;
+        }
+
+        container.querySelector("#detailCustomer").innerHTML = `
+    <div class="text-xs mb-1">Cliente: ${order.clientInfo.name}</div>
+    <div class="text-xs mb-1">Celular: ${order.clientInfo.phone}</div>
+    <div>N. Pedido: ${order.orderNumber}</div>
+  `;
+
+        const productsContainer = container.querySelector("#contentProducts");
+        productsContainer.innerHTML = order.products.map(product => `
+    <div class="flex justify-between text-sm">
+      <span class="w-2/6 truncate">${product.title}</span>
+      <span class="w-2/6 text-right">S/${product.valid_price}</span>
+      <span class="w-2/6 text-right">${product.qty}</span>
+    </div>
+  `).join("");
+
+        const discount = order.products.reduce((acc, product) => acc + (product.price_regular - product.valid_price) * product.qty, 0);
+        const discountContainer = container.querySelector("#discountAndImpuestos");
+        discountContainer.innerHTML = `
+    <div class="mb-1">Descuento: S/${discount.toFixed(2)}</div>
+    <div class="mb-52">IGV: --</div>
+  `;
+
+        const totalContainer = container.querySelector("#totalAndDateOrder");
+        totalContainer.innerHTML = `
+      <div class="text-right">
+      <div>Fecha: ${order.createdAt}</div>
+      <div class="font-bold text-sm">Total: S/${order.total}</div>
+      </div>
+  `;
+    }
+
+    async function loadOrder(orderId) {
+        try {
+
+            const orderData = await fetchOrderData(orderId);
+
+            if (orderData) {
+                
+                cachedOrderData = orderData;
+                renderOrderData(orderData);
+
+                document.querySelectorAll('.element-order').forEach(element => {
+                    element.classList.remove('hidden');
+                });
+
+                document.querySelector('.content-voucher').classList.remove('hidden');
+
+            } else {
+
+                showOrderNotFoundMessage();
+                document.querySelector('.content-voucher').classList.remove('hidden');
+            }
+        } catch (error) {
+            console.error("Error loading order:", error);
+            showOrderNotFoundMessage();
+            document.querySelector('.content-voucher').classList.remove('hidden');
+        }
+    }
+
+    async function sendWhatsappOrder(orderId) {
+
+        if (!cachedOrderData) {
+            await loadOrder(orderId);
+        }
+
+        const order = cachedOrderData;
+
+        if (!order) {
+            console.error("No cached order data available for WhatsApp");
+            return;
+        }
+
+        const productsDetails = order.products.map(product => `
+            - ${product.title} 
+            Cantidad: ${product.qty}
+            Precio Unitario: S/${product.valid_price}
+            Subtotal: S/${(product.valid_price * product.qty).toFixed(2)}
+        `).join("\n");
+
+        const ticketDetails = `
+        ¡Hola! Aquí está mi ticket de compra:
+
+        Cliente: ${order.clientInfo.name}
+        Teléfono: ${order.clientInfo.phone}
+        Número de Pedido: ${order.orderNumber}
+
+        Productos:
+        ${productsDetails}
+
+        Descuento Total: S/${order.products.reduce((acc, product) => acc + (product.price_regular - product.valid_price) * product.qty, 0).toFixed(2)}
+        Total: S/${order.total.toFixed(2)}
+
+        Método de pago: WhatsApp
+        Fecha: ${order.createdAt}
+        `;
+
+        const encodedMessage = encodeURIComponent(ticketDetails);
+
+        const phoneNumber = '51993762400';
+        const whatsappLink = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
+
+        window.open(whatsappLink, '_blank');
+    }
+
+    async function init() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const orderId = urlParams.get("orderID");
+        const methodPay = urlParams.get("methodPay");
+
+        if (!orderId) {
+            console.error("No order ID found in the URL");
+            return;
+        }
+
+        await loadOrder(orderId);
+
+        if (methodPay && methodPay.toLowerCase() === "whatsapp") {
+            sendWhatsappOrder(orderId);
+        }
+    }
+
+    init();
+
+</script>

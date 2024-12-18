@@ -1,4 +1,4 @@
-<section class="banner-catalog">
+<section class="banner-catalog ml-3  mr-3">
     <div class="logo-header">
         <a href="/">
             <img style="height: 70px;display: block;margin: auto;margin-top: 10px;object-fit: cover;width: 160px;"
@@ -13,15 +13,15 @@
     </div>
 </section>
 <%- include('./navbar', { navbar: navbar}) %>
-    <div class="container-xxl pt-4">
-        <div class="row">
-            <div class="col-md-2 col-12  mb-4">
+    <div class="container pt-4">
+        <div class="grid lg:grid-cols-5 md:grid-cols-3 grid-cols-2 lg:gap-5 md:gap-5 gap-3 ">
+            <div class="mb-4">
                 <section class="sidebar-filter">
-                    <div class="card">
+                    <div class="bg-white shadow-md overflow-hidden rounded-2xl p-3">
                         <div class="card-header">
-                            <h3 class="card-title">Categorías</h3>
+                            <h3 class="font-semibold text-lg">Categorías</h3>
                         </div>
-                        <div class="list-group list-group-flush">
+                        <div class="flex flex-col">
 
                             <% if (subcategories.length === 0) { %>
                                 <a href="javascript:history.back()" class="list-group-item list-group-item-action">Volver</a>
@@ -39,7 +39,7 @@
                 </section>
             </div>
 
-            <div class="col-md-10 col-12">
+            <div class="col-span-4">
                 <section class="">
                     <% function generatePagination(dataProducts) { %>
                         <% const totalPages=dataProducts.totalPages; %>
@@ -81,7 +81,7 @@
                                 </ul>
                                 <% } %>
                                     <div class="container-products-catalog">
-                                        <div class="row">
+                                        <div class="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-2 lg:gap-5 md:gap-5 gap-3 ">
                                             <% if (dataProducts.products.length===0) { %>
                                                 <section class="no-products">
                                                     <h2>No hay productos disponibles en este momento</h2>
