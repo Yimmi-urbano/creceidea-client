@@ -190,7 +190,13 @@
               if (phone && title && price) {
                 const message = `Hola, estoy interesado en *${title}*. ¿Podría proporcionar más detalles?`;
                 const whatsappLink = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
-                window.open(whatsappLink, '_blank');
+
+                let a = document.createElement('a');
+                a.href = whatsappLink;
+                a.target = '_blank';
+                document.body.appendChild(a);
+                a.click();
+
               } else {
                 console.error('Required data attributes not found');
               }
@@ -211,8 +217,9 @@
 
       <div class="modal-content relative transform  w-full  transition-all sm:my-8 sm:w-full sm:max-w-3xl">
         <h3 class="modal-title text-base font-semibold text-gray-900" id="modal-title"></h3>
-        <div class="px-4 pb-4 pt-5 sm:p-6 sm:pb-4 rounded-lg bg-gradient-to-r from-orange-600 to-sky-900 text-left shadow-sm overflow-hidden mb-3">
-      
+        <div
+          class="px-4 pb-4 pt-5 sm:p-6 sm:pb-4 rounded-lg bg-gradient-to-r from-orange-600 to-sky-900 text-left shadow-sm overflow-hidden mb-3">
+
           <div id="cart-summary" class="cart-summary text-white w-full"></div>
 
         </div>
@@ -352,12 +359,12 @@
 
           <div class="modal-body mt-2 text-sm ">
             <div
-                class="px-4 pb-4 pt-5 sm:p-6 sm:pb-4 rounded-lg bg-gradient-to-r from-orange-600 to-sky-900 text-left shadow-sm overflow-hidden mb-3">
-                <div class="summary-checkout flex text-xl justify-between">
-                  <div class="subtotal text-white"></div>
-                  <div class="cant-items text-white"></div>
-                </div>
+              class="px-4 pb-4 pt-5 sm:p-6 sm:pb-4 rounded-lg bg-gradient-to-r from-orange-600 to-sky-900 text-left shadow-sm overflow-hidden mb-3">
+              <div class="summary-checkout flex text-xl justify-between">
+                <div class="subtotal text-white"></div>
+                <div class="cant-items text-white"></div>
               </div>
+            </div>
             <div class="w-full rounded-lg text-left bg-white shadow-xl overflow-hidden px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
 
 
@@ -395,7 +402,8 @@
                 </label>
 
                 <!-- Opción de Pago con Tarjeta de Crédito -->
-                <label style="display: none !important;" class="flex items-center none d-none  space-x-3 p-4 border border-gray-200 rounded-lg shadow-md cursor-pointer hover:bg-gray-50">
+                <label style="display: none !important;"
+                  class="flex items-center none d-none  space-x-3 p-4 border border-gray-200 rounded-lg shadow-md cursor-pointer hover:bg-gray-50">
                   <input type="radio" name="paymentMethod" value="creditCard"
                     class="form-radio text-blue-500 focus:ring-blue-400" />
                   <img src="https://upload.wikimedia.org/wikipedia/commons/4/41/Visa_Logo.png" alt="Visa"
