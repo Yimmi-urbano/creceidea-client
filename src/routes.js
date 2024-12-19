@@ -73,7 +73,7 @@ router.get('/catalog', (req, res) => {
     const navbar = res.locals.navbar;
     let categoryData = navbar;
     let subcategoryData = null;
-    console.log(categoryData)
+  
 
     if (!categoryData) {
       for (const category of navbar) {
@@ -157,6 +157,7 @@ router.get('/category/:category', async (req, res, next) => {
     const domain = DOMAIN_LOCAL || req.hostname;
     const categorySlug = req.params.category;
     const navbar = res.locals.navbar;
+    const page = req.query.page;
     let categoryData = navbar.find(cat => cat.slug === categorySlug);
     let subcategoryData = null;
 
@@ -176,7 +177,7 @@ router.get('/category/:category', async (req, res, next) => {
 
     const pageTitle = subcategoryData ? subcategoryData.title : categoryData.title;
     const subcategories = subcategoryData ? [] : categoryData.children || [];
-    const categoryProducts = await getPageByCategory(domain, categorySlug);
+    const categoryProducts = await getPageByCategory(domain, categorySlug,page);
 
     res.render('index', {
       v: res.locals.version,
