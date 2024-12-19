@@ -43,11 +43,11 @@
                 <section class="">
                     <% function generatePagination(dataProducts) { %>
                         <% const totalPages=dataProducts.totalPages; %>
-                            <% const currentPage=dataProducts.page; %>
-                                <ul class="pagination m-5 d-flex justify-content-center">
+                            <% const currentPage=dataProducts.currentPage; %>
+                                <ul id="pagination" class="pagination m-5 d-flex justify-content-center">
                                     <!-- Botón "Anterior" -->
                                     <% if (currentPage> 1) { %>
-                                        <li class="page-item disabled"> <a href="" class="page-link"> <svg
+                                        <li class="page-item disabled "> <a href="?page=<%= currentPage - 1 %>" class="page-link" style="display: inline-flex;"> <svg
                                                     xmlns="http://www.w3.org/2000/svg" class="icon" width="24"
                                                     height="24" viewBox="0 0 24 24" stroke-width="2"
                                                     stroke="currentColor" fill="none" stroke-linecap="round"
@@ -59,15 +59,16 @@
 
                                             <!-- Botones de páginas -->
                                             <% for (let i=1; i <=totalPages; i++) { %>
-                                                <li class="page-item <%= i === currentPage ? 'active' : '' %>"> <a
-                                                        href="/catalog?page=<%= i %>" class="page-link">
+                                                <li class="page-item">
+                                                     <a
+                                                        href="?page=<%= i %>" class="page-link <%= i === currentPage ? 'active' : '' %>">
                                                         <%= i %>
                                                     </a></li>
                                                 <% } %>
 
                                                     <!-- Botón "Siguiente" -->
                                                     <% if (currentPage < totalPages) { %>
-                                                        <li class="page-item disabled"> <a href="" class="page-link">
+                                                        <li class="page-item disabled"> <a href="?page=<%= currentPage + 1 %>" class="page-link" style="display: inline-flex;">
                                                                 Siguiente <svg xmlns="http://www.w3.org/2000/svg"
                                                                     class="icon" width="24" height="24"
                                                                     viewBox="0 0 24 24" stroke-width="2"

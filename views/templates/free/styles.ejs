@@ -513,7 +513,7 @@ color: #707070;
 text-align: left;
 display: -webkit-box;
 -webkit-box-orient: vertical;
--webkit-line-clamp: 3;
+-webkit-line-clamp: 1;
 overflow: hidden;
 text-overflow: ellipsis;
 max-height: 50px;
@@ -931,3 +931,37 @@ background-color: #cccccc;
 cursor: not-allowed; /* Opcional: cambia el cursor cuando el botón está deshabilitado */
 opacity: 0.6; /* Opcional: reduce la opacidad para indicar un estado deshabilitado */
 }
+
+
+
+#pagination {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    gap:6px;
+  }
+  #pagination li {
+    display: inline
+  }
+  #pagination li a {
+    display: inline-block;
+    text-decoration: none;
+    padding: 5px 10px;
+    color: #000
+  }
+  
+  /* Active and Hoverable Pagination */
+  #pagination li a {
+    border-radius: 5px;
+    -webkit-transition: background-color 0.3s;
+    transition: background-color 0.3s
+      
+  }
+  #pagination li a.active {
+    background-color: var(--primary-color);
+    color: #fff
+  }
+  #pagination li a:hover:not(.active) {
+    background-color: #ddd;
+  } 
+  

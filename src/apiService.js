@@ -69,14 +69,15 @@ async function fetchCatalogo(domain, page) {
   }
 }
 
-async function getPageByCategory(domain, nameCategory) {
+async function getPageByCategory(domain, nameCategory, page) {
   hostname = domain;
   try {
-    const response = await axios.get(`${API_PRODUCTS}/api/products/category/` + nameCategory, {
+    const response = await axios.get(`${API_PRODUCTS}/api/products/category/${nameCategory}?page=${page}`, {
       headers: {
         'domain': hostname
       }
     });
+    console.log(response.data)
     return response.data;
   } catch (error) {
     throw new Error('Error al obtener datos de la API');
