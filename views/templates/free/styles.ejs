@@ -753,6 +753,8 @@ height: 35px;
 
 .tools-elements-header .icon-cart-mini {
 position:relative;
+border-radius: 100%;
+background-color: var(--primary-color);
 }
 .tools-elements-header .icon-cart-mini .count-products{
 position:absolute;
@@ -965,3 +967,21 @@ opacity: 0.6; /* Opcional: reduce la opacidad para indicar un estado deshabilita
     background-color: #ddd;
   } 
   
+    .product-item {
+      position: relative;
+      transition: transform 0.3s ease-in-out;
+    }
+  
+    .product-item.swiped {
+      transform: translateX(-100px);
+    }
+  
+    .delete-button {
+      transition: opacity 0.3s ease-in-out;
+      opacity: 0;
+    }
+  
+    .product-item.swiped .delete-button {
+      opacity: 1;
+      display: block;
+    }

@@ -52,6 +52,24 @@ const getCartItemCount = () => {
     return cart ? cart.cantItems : 0;
 };
 
+const removeFromCart = (id) => {
+    let cart = getCartItems();
+    if (!cart) return;
+
+    const items_cart = cart.items_cart.filter(item => item.id !== id);
+
+    const { total, cantItems } = calculateCartSummary(items_cart);
+    cart.Total = total;
+    cart.cantItems = cantItems;
+    cart.items_cart = items_cart;
+
+    updateSessionStorageCart(cart);
+
+     if (items_cart.length === 0) {
+        closeModal();
+    }
+};
+
 const showModal = ({ title, content, iconHTML, onConfirm, onClosed }) => {
     const modal = document.getElementById("custom-modal");
     const modalTitle = modal.querySelector(".modal-title");
@@ -210,4 +228,4 @@ export function loaderProcess(status) {
     
 }
 
-export { getDataAttributes, addToCart, getCartItemCount, showModal, closeModal, getCartItems, incrementQty, decrementQty, updateSessionStorageCart, calculateCartSummary };
+export { removeFromCart, getDataAttributes, addToCart, getCartItemCount, showModal, closeModal, getCartItems, incrementQty, decrementQty, updateSessionStorageCart, calculateCartSummary };
