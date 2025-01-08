@@ -14,9 +14,10 @@ import {
     calculateCartSummary,
     updateSessionStorageCart,
     showNotification,
-    loaderProcess
+    loaderProcess,
+    removeFromCart
 
-} from './utils.js?v=27';
+} from './utils.js?v=31';
 
 const cantidadCartDiv = document.querySelector('.count-products');
 const btnGetPaymentform = document.getElementById('send-order-end');
@@ -61,24 +62,35 @@ const renderCartItems = () => {
     let productsContent = '';
     items_cart.forEach(item => {
         productsContent += `
+        
             <div class="bg-white p-2 rounded-lg mb-3 border border-zinc-200">
-                <div class="flex items-baseline justify-between">
+                <div class="flex items-center justify-between">
                      <div class="flex gap-3">
-                            <div class="product-image w-[70px]">
-                                <img src="${item.image}" alt="${item.title}" class="w-[70px] h-[70px] rounded inline-block mr-2">
+                            <div class="product-image w-[50px]">
+                                <img src="${item.image}" alt="${item.title}" class="w-[50px] h-[50px] cover rounded inline-block mr-2">
                             </div>
-                            <div class="product-price ">
+                            <div class="product-price text-left">
                                 <span class="lg:text-lg text-md"><strong>${item.title}</strong></span>
                                 <p>Precio: S/ ${item.price_sale || item.price_regular}</p>
                             </div>
                      </div>
-                    <div class="product-qty flex">
-                        <button data-action="decrement" data-id="${item.id}" class="px-2 py-1 bg-gray-300 rounded">-</button>
+                    <div class="product-qty flex-row row">
+                        <div class="flex">
+                        <button data-action="decrement" data-id="${item.id}" class="px-2 py-1 bg-gray-300 rounded-l-md">-</button>
                         <input type="number" id="qty-${item.id}" data-id="${item.id}" value="${item.qty}" min="1" class="w-12 text-center border">
-                        <button data-action="increment" data-id="${item.id}" class="px-2 py-1 bg-gray-300 rounded">+</button>
+                        <button data-action="increment" data-id="${item.id}" class="px-2 py-1 bg-gray-300 rounded-r-md">+</button>
+                        </div>
+                        <div class="flex justify-center text-red-600">
+                        <button data-id="${item.id}" data-action="delete" class="flex h-[25px] items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 16 16" width="16px" height="16px"><path fill="rgb(220 38 38)" d="M 6.496094 1 C 5.675781 1 5 1.675781 5 2.496094 L 5 3 L 2 3 L 2 4 L 3 4 L 3 12.5 C 3 13.324219 3.675781 14 4.5 14 L 10.5 14 C 11.324219 14 12 13.324219 12 12.5 L 12 4 L 13 4 L 13 3 L 10 3 L 10 2.496094 C 10 1.675781 9.324219 1 8.503906 1 Z M 6.496094 2 L 8.503906 2 C 8.785156 2 9 2.214844 9 2.496094 L 9 3 L 6 3 L 6 2.496094 C 6 2.214844 6.214844 2 6.496094 2 Z M 4 4 L 11 4 L 11 12.5 C 11 12.78125 10.78125 13 10.5 13 L 4.5 13 C 4.21875 13 4 12.78125 4 12.5 Z M 5 5 L 5 12 L 6 12 L 6 5 Z M 7 5 L 7 12 L 8 12 L 8 5 Z M 9 5 L 9 12 L 10 12 L 10 5 Z"/></svg>
+                        Eliminar
+                        </button>
+                        </div>
                     </div>
                  </div>
+                
             </div>
+          
         `;
     });
 
@@ -111,7 +123,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const openCartModal = () => {
         showModal({
-            title: "Lista de pedido",
+            title: "",
             content: '',
             iconHTML: `<svg class="h-6 w-6 text-red-600" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z" /></svg>`,
             onConfirm: () => {
@@ -133,14 +145,24 @@ document.addEventListener('DOMContentLoaded', () => {
         const target = event.target;
         const action = target.getAttribute('data-action');
         const id = target.getAttribute('data-id');
-
-        if (action === 'increment') {
-            incrementQty(id);
-            updateCartModalContent()
-        } else if (action === 'decrement') {
-            decrementQty(id);
-            updateCartModalContent()
+    
+        if (!action || !id) return;
+    
+        switch (action) {
+            case 'increment':
+                incrementQty(id);
+                break;
+            case 'decrement':
+                decrementQty(id);
+                break;
+            case 'delete':
+                removeFromCart(id);
+                break;
+            default:
+                console.warn(`Unknown action: ${action}`);
         }
+    
+        updateCartModalContent();
         updateCartItemCount();
     });
 

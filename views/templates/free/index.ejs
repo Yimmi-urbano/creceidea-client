@@ -37,10 +37,17 @@
     .social-links svg {
       width: 25px;
     }
+    .product_detail .icon-cart-mini svg {
+      fill: var(--primary-color);
+    }
+    .product_detail .icon-cart-mini {
+      background-color: transparent;
+    }
+
   </style>
 </head>
 
-<body>
+<body class="<%- contentTemplate %>">
 
   <div class="page">
 
@@ -268,7 +275,7 @@
             class="icon-container mx-auto d-none hidden flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full sm:mx-0 sm:h-10 sm:w-10">
           </div>
           <div class="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left w-full">
-            <h3 class="modal-title text-xl font-semibold text-gray-900" id="modal-title">Datos personales</h3>
+            <h3 class="modal-title text-xl font-semibold text-gray-900" id="modal-title"></h3>
             <div class="modal-body mt-2 text-sm ">
 
               <div

@@ -231,7 +231,7 @@
 
         const encodedMessage = encodeURIComponent(ticketDetails);
 
-        const phoneNumber = '51993762400';
+        const phoneNumber = "<%- GetInfo.catalogo.whatsapp['number'] %>";
         const whatsappLink = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
 
         window.open(whatsappLink, '_blank');
