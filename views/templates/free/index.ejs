@@ -32,6 +32,10 @@
       --primary-color: <%- GetInfo.colors[0] %>;
       --secondary-color: <%- GetInfo.colors[1] %>;
       --accent-color: <%- GetInfo.colors[2] %>;
+
+      --primary-chat: #f16808;
+      --second-chat: #f16808;
+      --accent-chat: #ffffff;
     }
 
     .social-links svg {
@@ -43,6 +47,14 @@
     .product_detail .icon-cart-mini {
       background-color: transparent;
     }
+
+   #chatContainer img{
+    width: 70px;
+  height: 70px;
+  object-fit: cover;
+  border-radius: 10px;
+  border: 3px solid #c4dae6;
+   }
 
   </style>
 </head>
@@ -466,4 +478,171 @@
   </button>
 </div>
 
+<div class="bubble-chat fixed bottom-10 z-[50] right-4" id="openChatIa">
+  <svg fill="var(--primary-chat)" height="65px" width="65px" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="-7.98 -7.98 88.50 88.50" xml:space="preserve" transform="matrix(1, 0, 0, 1, 0, 0)rotate(0)" stroke="var(--primary-chat)" stroke-width="0">
+    <g id="SVGRepo_bgCarrier" stroke-width="0" transform="translate(11.606559999999998,11.606559999999998), scale(0.68)">
+      <rect x="-8.98" y="-7.98" width="88.50" height="88.50" rx="27.435" fill="var(--second-chat)" strokewidth="0"></rect>
+    </g>
+    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" stroke="#e1e1e1" stroke-width="0"></g>
+    <g id="SVGRepo_iconCarrier">
+      <g>
+        <!-- Burbuja de chat -->
+        <path d="M44.487,67.087H22c-12.131,0-22-9.868-22-22V27.453c0-12.131,9.869-22,22-22h22.487c12.131,0,22,9.869,22,22v17.636 c0,3.08-0.633,6.061-1.884,8.875c0.765,2.647,2.226,5.007,4.352,7.021l3.586,3.397l-4.668,1.614 c-1.787,0.618-3.682,0.933-5.633,0.933l0,0c-2.766,0-5.646-0.619-8.582-1.843C50.795,66.4,47.653,67.087,44.487,67.087z M22,11.453 c-8.822,0-16,7.178-16,16v17.636c0,8.822,7.178,16,16,16h22.487c2.675,0,5.323-0.676,7.659-1.951l1.347-0.735l1.384,0.661 c2.196,1.048,4.309,1.659,6.295,1.822c-1.256-2.022-2.149-4.225-2.67-6.585l-0.23-1.046l0.482-0.957 c1.15-2.271,1.733-4.695,1.733-7.209V27.453c0-8.822-7.179-16-16-16H22z"></path>
+        
+        <!-- Círculos con animación -->
+        <circle cx="16.436" cy="36.271" r="4.454" fill="var(--accent-chat)">
+          <animate attributeName="opacity" values="0;1;0" dur="1.5s" repeatCount="indefinite" begin="0s" />
+        </circle>
+        <circle cx="32.945" cy="36.271" r="4.454" fill="var(--accent-chat)">
+          <animate attributeName="opacity" values="0;1;0" dur="1.5s" repeatCount="indefinite" begin="0.5s" />
+        </circle>
+        <circle cx="49.455" cy="36.271" r="4.454" fill="var(--accent-chat)">
+          <animate attributeName="opacity" values="0;1;0" dur="1.5s" repeatCount="indefinite" begin="1s" />
+        </circle>
+      </g>
+    </g>
+  </svg>
+  </div>
+
+	<div id="chat-content" class="w-full max-w-md bg-white rounded-xl hidden shadow-lg fixed bottom-4 right-4 z-[9999]">
+
+    <div class="divide-y divide-white">
+      <div class="flex p-5 relative">
+
+        <!-- back -->
+        <div class="cursor-pointer my-auto hidden">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 12h-15m0 0l6.75 6.75M4.5 12l6.75-6.75" />
+          </svg>
+        </div>
+
+        <!-- avatar -->
+        <div class="select-none flex-shrink-0 my-auto rounded-full">
+          <img src="<%- GetInfo.logo %>"" class="w-10 object-contain rounded-full">
+        </div>
+
+        <!-- name & status -->
+        <div class="flex flex-col ml-3 my-auto">
+          <div class="font-medium text-md"><%- GetInfo.title %></div>
+          <div class="text-green-600 text-sm"><%- GetInfo.slogan %></div>
+        </div>
+      </div>
+
+      <div>
+        <button id="closedChatIa" class="absolute right-2 top-2">
+          <svg width="40px" height="40px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#2d6684"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M3 7C3 4.79086 4.79086 3 7 3H17C19.2091 3 21 4.79086 21 7V17C21 19.2091 19.2091 21 17 21H7C4.79086 21 3 19.2091 3 17V7Z" stroke="#2d6684" stroke-width="2"></path> <path d="M9 9L15 15M15 9L9 15" stroke="#2d6684" stroke-width="2" stroke-linecap="round"></path> </g></svg>
+        </button>
+      </div>
+
+      <!-- messages -->
+      <div class="bg-[#e5e7eb] p-5 space-y-3 shadow-inner h-[70vh] overflow-y-auto" id="chatContainer">
+    
+      </div>
+
+      <!-- message box -->
+      <div class="p-5">
+        <div class="flex w-full">
+          <input id="userInput" class="w-full outline-none border border-gray-200 px-3 py-1.5 rounded-l-md" placeholder="Escribir...">
+          <button type="button" id="sendButton" class="bg-[#333333] px-2.5 rounded-r-md">
+            <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#FFFFFF" version="1.1" id="Layer_1" viewBox="796 707.122 200 200" enable-background="new 796 707.122 200 200" xml:space="preserve">
+              <path d="M798.671,800.534c-1.559,0.651-2.6,2.148-2.667,3.837s0.849,3.264,2.351,4.039l49.397,25.494l10.707,58.754  c0.312,1.707,1.608,3.066,3.3,3.457s3.453-0.262,4.481-1.66l27.193-36.976l65.524,33.817c1.226,0.633,2.679,0.646,3.916,0.037  c1.237-0.61,2.112-1.771,2.358-3.128L996,718.017L798.671,800.534z M869.045,844.893l-21.294-10.99l112.881-81.413L869.045,844.893z  "/>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+ // Selecciona el contenedor donde se insertarán los mensajes
+const chatContainerGlobal = document.getElementById("chat-content");
+const chatContainer = document.getElementById("chatContainer");
+const openChatIa = document.getElementById("openChatIa");
+const closedChatIa = document.getElementById("closedChatIa");
+
+// Variable para rastrear si el chat ya fue abierto
+let chatOpenedBefore = false;
+
+// Función para agregar mensajes al contenedor
+function addMessage(sender, message) {
+  const messageDiv = document.createElement("div");
+
+  if (sender === "client") {
+    messageDiv.className = "flex justify-end";
+    messageDiv.innerHTML = `
+      <div class="bg-[#333333] px-3 py-2 text-white rounded-2xl rounded-br-none shadow-md">${message}</div>
+    `;
+  } else if (sender === "chatbot") {
+    messageDiv.className = "flex justify-start";
+    messageDiv.innerHTML = `
+      <div class="bg-white px-3 py-2 text-gray-700 rounded-2xl rounded-bl-none shadow-md">${message}</div>
+    `;
+  }
+
+  chatContainer.appendChild(messageDiv);
+
+  // Scroll automático hacia el final
+  chatContainer.scrollTop = chatContainer.scrollHeight;
+}
+
+// Función para enviar un mensaje y manejar la respuesta del chatbot
+async function sendMessage(userMessage) {
+  try {
+    addMessage("client", userMessage);
+
+    const response = await fetch("http://localhost:3000/chat", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        domain: "<%- GetInfo.domain %>",
+        userMessage: userMessage,
+      }),
+    });
+
+    const data = await response.json();
+    addMessage("chatbot", data.assistantMessage);
+  } catch (error) {
+    console.error("Error al enviar el mensaje:", error);
+  }
+}
+
+// Manejo del botón para enviar mensajes
+document.getElementById("sendButton").addEventListener("click", () => {
+  const userInput = document.getElementById("userInput").value;
+  if (userInput.trim() !== "") {
+    sendMessage(userInput);
+    document.getElementById("userInput").value = "";
+  }
+});
+
+// Evento para abrir el chat
+openChatIa.addEventListener("click", () => {
+  chatContainerGlobal.classList.remove("hidden");
+
+  // Enviar mensaje inicial solo la primera vez
+  if (!chatOpenedBefore) {
+    sendMessage('Hola, tengo unas consultas.');
+    chatOpenedBefore = true; // Marcar que ya se abrió el chat
+  }
+});
+
+// Evento para cerrar el chat
+closedChatIa.addEventListener("click", () => {
+  chatContainerGlobal.classList.add("hidden");
+});
+
+// Ocultar el chat al hacer clic fuera de él
+document.addEventListener("click", (event) => {
+  if (
+    !chatContainerGlobal.contains(event.target) &&
+    !openChatIa.contains(event.target) &&
+    !closedChatIa.contains(event.target)
+  ) {
+    chatContainerGlobal.classList.add("hidden");
+  }
+});
+
+  </script>
 </html>
