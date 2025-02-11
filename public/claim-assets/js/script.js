@@ -19,7 +19,7 @@ async function obtenerUltimoCorrelativo() {
     }
 
     try {
-        const response = await fetch('http://localhost:3000/api/reclamos/ultimo-correlativo', {
+        const response = await fetch('https://api-claim-books.creceidea.pe/api/reclamos/ultimo-correlativo', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -130,7 +130,7 @@ document.getElementById('formularioReclamos').addEventListener('submit', async f
     }
 
     try {
-        const response = await fetch('http://localhost:3000/api/reclamos', {
+        const response = await fetch('https://api-claim-books.creceidea.pe/api/reclamos', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
