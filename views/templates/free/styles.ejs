@@ -13,10 +13,7 @@ margin: 0 auto; /* Esto centra el contenido */
 }
 
 .adds-creceidea-pe {
-position: fixed;
 width: 100%;
-bottom: 0px;
-z-index: 9999;
 }
 
 .btn-actions-catalog {
@@ -341,6 +338,7 @@ display:none;
 }
 
 }
+
 @media (max-width: 767px) {
 
 .social-links{
@@ -348,8 +346,10 @@ flex-direction: column;
 flex-wrap: wrap;
 }
 
-
-
+footer .social-links{
+  flex-direction: initial !important;
+  flex-wrap: initial !important;
+  }
 
 .social-links>div{
 box-sizing: border-box;
@@ -706,14 +706,22 @@ color: #888;
 
 .adds-creceidea-pe {
 text-align: center;
-background-color: #ffc004;
-color: #242d4a;
-font-size: 19px;
+background: #FF512F;  /* fallback for old browsers */
+background: -webkit-linear-gradient(to right, #F09819, #FF512F);  /* Chrome 10-25, Safari 5.1-6 */
+background: linear-gradient(to right, #F09819, #FF512F); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+color: #ffffff;
+font-size: 17px;
 height: 40px;
 display: flex;
 justify-content: center;
 align-items: center;
-font-weight: 900;
+font-weight: normal;
+gap:10px;
+}
+
+.adds-creceidea-pe  svg{
+
+  width:25px;
 }
 
 .product_detail.swiper-container .slide-inner:after{
@@ -985,3 +993,59 @@ opacity: 0.6; /* Opcional: reduce la opacidad para indicar un estado deshabilita
       opacity: 1;
       display: block;
     }
+
+  
+
+.floating_btn {
+  position: fixed;
+  bottom: 210px;
+  right: 5px;
+  width: 100px;
+  height: 100px;
+  display: flex;
+  flex-direction: column;
+  align-items:center;
+  justify-content:center;
+  z-index: 1000;
+}
+
+@keyframes pulsing {
+  to {
+    box-shadow: 0 0 0 30px rgba(232, 76, 61, 0);
+  }
+}
+
+.contact_icon {
+  background-color: #42db87;
+  color: #fff;
+  width: 50px;
+  height: 50px;
+  font-size:30px;
+  border-radius: 50px;
+  text-align: center;
+  box-shadow: 2px 2px 3px #999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: translatey(0px);
+  animation: pulse 1.5s infinite;
+  box-shadow: 0 0 0 0 #42db87;
+  -webkit-animation: pulsing 1.25s infinite cubic-bezier(0.66, 0, 0, 1);
+  -moz-animation: pulsing 1.25s infinite cubic-bezier(0.66, 0, 0, 1);
+  -ms-animation: pulsing 1.25s infinite cubic-bezier(0.66, 0, 0, 1);
+  animation: pulsing 1.25s infinite cubic-bezier(0.66, 0, 0, 1);
+  font-weight: normal;
+  font-family: sans-serif;
+  text-decoration: none !important;
+  transition: all 300ms ease-in-out;
+}
+
+.contact_icon svg{
+  width:32px;
+}
+
+.text_icon {
+  margin-top: 8px;
+  color: #707070;
+  font-size: 13px;
+}

@@ -1,0 +1,289 @@
+<link href="/claim-assets/css/cutestrap.css?v=38092122399422" rel="stylesheet">
+<link href="/claim-assets/css/kss.css?=21990902238215" rel="stylesheet">
+
+<style>
+    #enviar_datos, #cancelar{
+    width: 100%;
+  height: 50px !important;
+  min-height: 50px !important;
+  line-height: normal !important;
+  padding: 0px !important;
+  font-size: 18px !important;
+}
+footer p {
+    margin: 0px !important;
+}
+</style>
+
+<section class="banner-catalog ml-3  mr-3" style="height: 185px;">
+    <div class="logo-header">
+        <a href="/">
+            <img style="height: 70px;display: block;margin: auto;margin-top: 10px;object-fit: cover;width: 160px;"
+                src="<%- GetInfo.logo %>" alt="">
+        </a>
+    </div>
+    <div class="banner-container">
+        <div class="inner-banner">
+            <span class="text-2xl text-white">Libro de Reclamaciones</span>
+        </div>
+
+    </div>
+</section>
+
+<main class="page-content wrapper">
+     <div class="loading"></div>
+    <section class="page" itemscope="" itemtype="https://schema.org/BlogPosting">
+        <div class="page-content">
+            <div class="wrapper -thin registro-exitoso hidden" id="registro-exitoso">
+                <h4 class="mt-zero">Datos registrados correctamente</h4>
+                <div class="respuesta_ticket">
+                    <div class="grid -medium ta-right" style="--columns: 2;">
+                        <label class="field">
+                            <span class="label"><strong>Cod. Reclamo</strong></span>
+                        </label>
+                        <label class="field">
+                            <div id="CODReclamo"></div>
+                        </label>
+
+                        <label class="field">
+                            <span class="label"><strong>Dirección</strong></span>
+                        </label>
+                        <label class="field">
+                            <div id="em_direccion"></div>
+                        </label>
+                    </div>
+
+                    <p>* La formulación del reclamo no impide acudir a otras vías de solución de controversias y no es requisito previo para imponer una denuncia ante el INDECOPI.</p>
+
+                    <p>   * El proveedor deberá dar respuesta al reclamo en un plazo no mayor a treinta (30) días calendario, pudiendo ampliar el plazo hasta por treinta (30) días más, previa comunicación al consumidor.</p>
+                    
+                        <p>  <strong> NOTA: </strong>La respuesta a la presente queja o reclamo será brindada mediante comunicación electrónica enviada a la dirección que usted ha consignado en la presente Hoja de Reclamación. En caso de que usted desee que la respuesta le sea enviada a su domicilio deberá expresar ello en el detalle del reclamo o queja.</p>
+           
+
+                </div>
+
+                    </div>
+
+            <form class="wrapper -thin" id="formularioReclamos" >
+            <div class="headerTicked"><span class="numReclamo"> N° <span id="numReclamo"></span> </span>
+            
+            <span class="fechaActual pr-4" id="fechaActual"></span></div>
+                <h4 class="mt-zero">Datos Personales</h4>
+
+
+                <div class="grid -medium ta-right" style="--columns: 2;">
+                    <label class="field">
+                        <input type="radio" checked="checked"  name="tipo_consumidor" value="persona natural"
+                            class="tipo_consumidor" />
+                        <span class="label">Persona Natural</span>
+                    </label>
+
+                    <label class="field">
+                        <input type="radio" name="tipo_consumidor"  value="empresa" class="tipo_consumidor" />
+                        <span class="label">Empresa</span>
+                    </label>
+                </div>
+
+
+                <div class="grid -medium ta-right dato_empresa hidden" style="--columns: 2;">
+                    <label class="field">
+                        <input type="text" value="" name="ruc" id="ruc"  />
+                        <span class="label">R.U.C.</span>
+                    </label>
+
+                    <label class="field">
+                        <input type="text" value="" name="razon_social" id="razon_social" />
+                        <span class="label">Razón Social</span>
+                    </label>
+                </div>
+
+
+
+                <label class="field">
+                    <input type="text" value="" name="nombres_completos" required id="nombres_completos" />
+                    <span class="label">Nombes Completos</span>
+                </label>
+
+                <div class="grid -medium ta-right" style="--columns: 2;">
+                    <label class="field">
+                        <input type="text" value="" name="apellido_paterno" required id="apellido_paterno" />
+                        <span class="label">Apellido Paterno</span>
+                    </label>
+
+                    <label class="field">
+                        <input type="text" value="" name="apellido_materno" required id="apellido_materno" />
+                        <span class="label">Apellido Materno</span>
+                    </label>
+                </div>
+
+                <label class="field -inline">
+                    <input type="checkbox" name="menor_edad" id="menor_edad"  value="si" />
+                    <span class="label">¿Menor de Edad?</span>
+                </label>
+
+                <label class="field hidden nom_apoderado">
+                    <input type="text" value="" name="nombre_apoderado" id="nombre_apoderado" />
+                    <span class="label">Nombres Completos del Apoderado</span>
+                </label>
+
+
+                <div class="grid -medium ta-right" style="--columns: 2;">
+                    <label class="field">
+                        <select name="tipo_doc" id="tipo_doc" required>
+                            <option selected="selected" value="dni">DNI</option>
+                            <option value="ce">CE</option>
+                        </select>
+                        <span class="label" for="select">Tipo de Documento</span>
+                    </label>
+
+                    <label class="field">
+                        <input type="text" value="" name="num_doc" required id="num_doc" />
+                        <span class="label">Número de Documento</span>
+                    </label>
+                </div>
+
+
+                <div class="grid -medium ta-right" style="--columns: 2;">
+                    <label class="field">
+                        <input type="text" value="" required name="telf_fijo" id="telf_fijo" />
+                        <span class="label">Telf. Fijo</span>
+                    </label>
+
+                    <label class="field">
+                        <input type="text" value="" required name="celular" id="celular" />
+                        <span class="label">Celular</span>
+                    </label>
+                </div>
+
+                <label class="field">
+                    <input type="text" value="" name="correo" required id="correo" />
+                    <span class="label">Correo</span>
+                </label>
+
+                <label class="field">
+                    <input type="text" value="" name="direccion" required id="direccion" />
+                    <span class="label">Dirección</span>
+                </label>
+
+                <div class="grid -medium ta-right" style="--columns: 3;">
+
+                    <label class="field">
+                        <select name="departamento" id="departamento" required>
+                            <option value="" selected="selected">Seleccionar...</option>
+                            
+                        </select>
+                        <span class="label" for="select">Departamento</span>
+                    </label>
+                    <label class="field">
+                        <select name="provincia" id="provincia" required>
+                            <option value="" selected="selected">Seleccionar...</option>
+                            
+                        </select>
+                        <span class="label" for="select">Provincia</span>
+                    </label>
+
+                    <label class="field">
+                        <select name="distrito" id="distrito" required>
+                            <option value="" selected="selected">Seleccionar...</option>
+                            
+                        </select>
+                        <span class="label" for="select">Distrito</span>
+                    </label>
+                </div>
+
+                <h4 class="mt-zero">Información del Bien/Servicio Contratado</h4>
+                <div class="grid -medium ta-right" style="--columns: 2;">
+                    <label class="field">
+                        <input type="radio" checked="checked" name="tipo_servicio" required class="tipo_servicio"
+                            id="tipo_servicio" value="producto" />
+                        <span class="label">Producto</span>
+                    </label>
+
+                    <label class="field">
+                        <input type="radio" name="tipo_servicio" id="tipo_servicio" required class="tipo_servicio"
+                            value="servicio" />
+                        <span class="label">Servicio</span>
+                    </label>
+                </div>
+
+                <div class="grid -medium ta-right" style="--columns: 2;">
+                    <label class="field">
+                        <select name="tipo_moneda" id="tipo_moneda" required>
+                            <option selected="selected" value="soles">(S/.) Soles</option>
+                            <option value="dolares">($) Dolares</option>
+                        </select>
+                        <span class="label" for="select">Tipo de Moneda</span>
+                    </label>
+
+                    <label class="field">
+                        <input type="text" value="" name="monto" id="monto" required />
+                        <span class="label">Monto</span>
+                    </label>
+                </div>
+
+                <label class="field">
+                    <textarea id="descripcion" name="descripcion" required></textarea>
+                    <span class="label">Descripción* - Número de caracteres: 0 (400 máx.)</span>
+                </label>
+                <h4 class="mt-zero">3. Detalle del Reclamo</h4>
+
+
+                <label class="field ">
+                    <input type="radio" name="reclamo_detalle" id="reclamo_detalle" checked="checked" />
+                    <span class="label"> Reclamo (Disconformidad relacionada a los productos o servicios)</span>
+                </label>
+
+                <label class="field ">
+                    <input type="radio" name="reclamo_detalle" id="reclamo_detalle"  />
+                    <span class="label">Queja (Disconformidad no relacionada a los productos o servicios; o,
+                        malestar o descontento respecto a la atención al público)</span>
+                </label>
+                <label class="field">
+                    <textarea id="detalle_reclamo" name="detalle_reclamo" required></textarea>
+                    <span class="label">Detalle - Número de caracteres: 0 (1200 máx.) </span>
+                </label>
+                <label class="field">
+                    <textarea id="detalle_pedido" name="detalle_pedido" required></textarea>
+                    <span class="label">Pedido - Número de caracteres: 0 (300 máx.) </span>
+                </label>
+                <h4 class="mt-zero">4. Observaciones y acciones adoptadas por el proveedor</h4>
+
+                <label class="field">
+                    <textarea id="observaciones" required></textarea>
+                    <span class="label">Observaciones</span>
+                </label>
+
+                <label class="field">
+                    <input type="checkbox" name="acepta_term" id="acepta_term"  />
+                    <span class="label">
+                        Declaro haber leído las políticas de privacidad y autorizo el tratamiento de mis datos
+                        conforme a ella.
+                    </span>
+                </label>
+                <p>
+                    * La formulación del reclamo no impide acudir a otras vías de solución de controversias y no es
+                    requisito previo para imponer una denuncia ante el INDECOPI
+                </p>
+                <p>
+                    * El proveedor deberá dar respuesta al reclamo en un plazo no mayor a treinta (30) días
+                    calendario, pudiendo ampliar el plazo hasta por treinta (30) días más, previa comunicación al
+                    consumidor.
+                </p>
+                <p>
+                    <strong> NOTA: </strong>La respuesta a la presente queja o reclamo será brindada mediante
+                    comunicación electrónica enviada a la dirección que usted ha consignado en la presente Hoja de
+                    Reclamación. En caso de que usted desee que la respuesta le sea enviada a su domicilio deberá
+                    expresar ello en el detalle del reclamo o queja.
+                </p>
+
+                <div class="grid -medium ta-right" style="--columns: 2;">
+                    <a href="/" id="cancelar" class="button -secondary" /> Cancelar </a>
+                    <input type="submit" id="enviar_datos" class="button" value="Registrar Reclamo" />
+                </div>
+            </form>
+        </div>
+    </section>
+</main>
+
+<script src="/claim-assets/js/script.js?v=000992"></script>
+
