@@ -152,6 +152,22 @@ router.get('/order/thanks', async (req, res, next) => {
   }
 });
 
+router.get('/customer/claimbook', async (req, res, next) => {
+
+  try {
+
+    res.render('index', {
+      v: res.locals.version, 
+      api_product: res.locals.api_product, 
+      printContent: getSvgContent,
+      GetInfo: res.locals.config, 
+      contentTemplate: 'claim-book'
+    });
+  } catch (error) {
+    next(error);
+  }
+});
+
 router.get('/category/:category', async (req, res, next) => {
   try {
     const domain = DOMAIN_LOCAL || req.hostname;
