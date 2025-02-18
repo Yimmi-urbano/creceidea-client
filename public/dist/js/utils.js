@@ -70,29 +70,6 @@ const removeFromCart = (id) => {
     }
 };
 
-const showModal = ({ title, content, iconHTML, onConfirm, onClosed }) => {
-    const modal = document.getElementById("custom-modal");
-    const modalTitle = modal.querySelector(".modal-title");
-    const modalBody = modal.querySelector(".modal-body");
-    const iconContainer = modal.querySelector(".icon-container");
-    const confirmButton = document.getElementById("modal-confirm-btn");
-    const closedModal = document.getElementById("modal-cancel-btn");
-
-
-    modalTitle.textContent = title;
-    iconContainer.innerHTML = iconHTML;
-
-    modal.classList.remove("hidden");
-
-    confirmButton.onclick = onConfirm;
-    closedModal.onclick = onClosed;
-};
-
-const closeModal = () => {
-    const modal = document.getElementById("custom-modal");
-    modal.classList.add("hidden");
-};
-
 const getCartItems = () => {
     const cartData = sessionStorage.getItem("cart_tem");
     if (!cartData) return null;
@@ -165,28 +142,44 @@ export function getCookie(name) {
     return match ? match[2] : null;
 }
 
-function validateForm() {
+function debounce(fn, delay) {
+    let timeout;
+    return function (...args) {
+        clearTimeout(timeout);
+        timeout = setTimeout(() => fn(...args), delay);
+    };
+}
+
+let dni, name, email, phone, sendButton;
+
+export function initializeValidation() {
     const form = document.getElementById("orderForm");
+    if (!form) return; 
 
-    const dni = form.querySelector("input[name='doc']");
-    const name = form.querySelector("input[name='nom']");
-    const email = form.querySelector("input[name='email']");
-    const phone = form.querySelector("input[name='celular']");
+    dni = form.querySelector("input[name='doc']");
+    name = form.querySelector("input[name='nom']");
+    email = form.querySelector("input[name='email']");
+    phone = form.querySelector("input[name='celular']");
+    sendButton = document.getElementById("send-order-end");
 
+    const inputs = [dni, name, email, phone];
+    inputs.forEach(input => {
+        input.removeEventListener("input", validateFormDebounced);
+        input.addEventListener("input", validateFormDebounced);
+    });
+}
+
+const validateFormDebounced = debounce(validateForm, 300);
+
+function validateForm() {
     const isDniValid = /^[0-9]{8,}$/.test(dni.value.trim());
     const isNameValid = name.value.trim().length >= 3;
     const isEmailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value.trim());
     const isPhoneValid = /^[0-9]{9,}$/.test(phone.value.trim());
 
-    const allValid = isDniValid && isNameValid && isEmailValid && isPhoneValid;
-    document.getElementById("send-order-end").disabled = !allValid;
+    sendButton.disabled = !(isDniValid && isNameValid && isEmailValid && isPhoneValid);
 }
 
-export function initializeValidation() {
-    const form = document.getElementById("orderForm");
-    const inputs = form.querySelectorAll("input[name='doc'], input[name='nom'], input[name='email'], input[name='celular']");
-    inputs.forEach(input => input.addEventListener("input", validateForm));
-}
 
 export function getOrderData() {
 
@@ -228,4 +221,4 @@ export function loaderProcess(status) {
     
 }
 
-export { removeFromCart, getDataAttributes, addToCart, getCartItemCount, showModal, closeModal, getCartItems, incrementQty, decrementQty, updateSessionStorageCart, calculateCartSummary };
+export { removeFromCart, getDataAttributes, addToCart, getCartItemCount, getCartItems, incrementQty, decrementQty, updateSessionStorageCart, calculateCartSummary };
