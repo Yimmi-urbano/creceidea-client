@@ -1,12 +1,13 @@
-@import
-url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
 body {
 font-feature-settings: "cv03", "cv04", "cv11";
 margin: 0;
-font-family: "Lato", sans-serif;
+font-family: "Poppins", serif;
 font-optical-sizing: auto;
 background-color: #eff3f5 !important;
 }
+
 #editorjs .ce-block__content {
 max-width: 100%; /* Cambia este valor según tus necesidades */
 margin: 0 auto; /* Esto centra el contenido */
@@ -467,7 +468,6 @@ top: 0;
 height: 100%;
 width: 100%;
 background-color: #4070F4;
-border-radius: 25px 25px 0 25px;
 }
 
 .overlay::before,
@@ -1052,4 +1052,79 @@ opacity: 0.6; /* Opcional: reduce la opacidad para indicar un estado deshabilita
   margin-top: 8px;
   color: #707070;
   font-size: 13px;
+}
+
+   
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: none;
+  transition: opacity 0.3s ease;
+  z-index:9999;
+}
+
+.overlay.active {
+  display: block;
+}
+
+.sidebar {
+  width: 440px;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  right: -460px;
+  transition: right 0.3s ease;
+  box-sizing: border-box;
+  padding: 10px;
+  opacity: 0;
+  z-index:99999;
+  
+}
+
+.sidebar.active {
+  right: 0;
+  opacity: 1;
+}
+
+.toggle-btn {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: #007BFF;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.close-btn {
+  background: red;
+  color: white;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  width: 100%;
+  text-align: center;
+  margin-top: 20px;
+  border-radius: 5px;
+}
+
+.content-min-cart {
+  background-color: #ffffff;
+  border-radius: 20px;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+@media screen and (max-width: 430px) {
+  .sidebar {
+      width: 100%;
+      right: -100%;
+  }
 }
