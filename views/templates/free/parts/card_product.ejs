@@ -65,7 +65,8 @@
             image: product.image_default[0],
             id_product: product._id,
             price_regular: product.price.regular.toFixed(2),
-            price_sale: product.price.sale.toFixed(2)
+            price_sale: product.price.sale.toFixed(2),
+            slug: product.slug
           }) %>
         <% } else { %>
           <%- include('./button', { GetInfo: GetInfo, title: product.title, slug: product.slug, price: product.price.regular.toFixed(2) }) %>
