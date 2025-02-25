@@ -69,7 +69,7 @@
                         <%- include('./btn_add_cart', { title: dataProductDetail.title, image:
                             dataProductDetail.image_default[0], id_product: dataProductDetail._id, price_regular:
                             dataProductDetail.price.regular.toFixed(2), price_sale:
-                            dataProductDetail.price.sale.toFixed(2) }) %>
+                            dataProductDetail.price.sale.toFixed(2),slug:dataProductDetail.slug }) %>
 
                             <%- include('./btn_whatsapp_direct', { GetInfo: GetInfo, title: dataProductDetail.title,
                                 slug: dataProductDetail.slug, price: dataProductDetail.price.regular.toFixed(2) }) %>
