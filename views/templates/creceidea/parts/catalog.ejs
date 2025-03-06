@@ -1,0 +1,109 @@
+<section class="banner-catalog ml-3  mr-3">
+    <div class="logo-header">
+        <a href="/">
+            <img style="height: 70px;display: block;margin: auto;margin-top: 10px;object-fit: cover;width: 160px;"
+                src="<%- GetInfo.logo %>" alt="">
+        </a>
+    </div>
+    <div class="banner-container">
+        <div class="inner-banner">
+            <h2 class="titulo-catalog"><%- pageTitle %> </h2>
+        </div>
+
+    </div>
+</section>
+<%- include('./navbar', { navbar: navbar}) %>
+    <div class="container pt-4">
+        <div class="grid lg:grid-cols-5 md:grid-cols-3 grid-cols-2 lg:gap-5 md:gap-5 gap-3 ">
+            <div class="mb-4">
+                <section class="sidebar-filter">
+                    <div class="bg-white shadow-md overflow-hidden rounded-2xl p-3">
+                        <div class="card-header">
+                            <h3 class="font-semibold text-lg">Categorías</h3>
+                        </div>
+                        <div class="flex flex-col">
+
+                            <% if (subcategories.length === 0) { %>
+                                <a href="javascript:history.back()" class="list-group-item list-group-item-action">Volver</a>
+                              <% } else { %>
+                                <% subcategories.forEach(item => { %>
+                                  <a href="/category/<%- item.slug %>" target="<%- item.target || '_self' %>" class="list-group-item list-group-item-action">
+                                    <%- item.title %>
+                                  </a>
+                                <% }); %>
+                              <% } %>
+                              
+                        </div>
+                    </div>
+
+                </section>
+            </div>
+
+            <div class="col-span-4">
+                <section class="">
+                    <% function generatePagination(dataProducts) { %>
+                        <% const totalPages=dataProducts.totalPages; %>
+                            <% const currentPage=dataProducts.currentPage; %>
+                                <ul id="pagination" class="pagination m-5 d-flex justify-content-center">
+                                    <!-- Botón "Anterior" -->
+                                    <% if (currentPage> 1) { %>
+                                        <li class="page-item disabled "> <a href="?page=<%= currentPage - 1 %>" class="page-link" style="display: inline-flex;"> <svg
+                                                    xmlns="http://www.w3.org/2000/svg" class="icon" width="24"
+                                                    height="24" viewBox="0 0 24 24" stroke-width="2"
+                                                    stroke="currentColor" fill="none" stroke-linecap="round"
+                                                    stroke-linejoin="round">
+                                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                                    <path d="M15 6l-6 6l6 6"></path>
+                                                </svg> Anterior</a></li>
+                                        <% } %>
+
+                                            <!-- Botones de páginas -->
+                                            <% for (let i=1; i <=totalPages; i++) { %>
+                                                <li class="page-item">
+                                                     <a
+                                                        href="?page=<%= i %>" class="page-link <%= i === currentPage ? 'active' : '' %>">
+                                                        <%= i %>
+                                                    </a></li>
+                                                <% } %>
+
+                                                    <!-- Botón "Siguiente" -->
+                                                    <% if (currentPage < totalPages) { %>
+                                                        <li class="page-item disabled"> <a href="?page=<%= currentPage + 1 %>" class="page-link" style="display: inline-flex;">
+                                                                Siguiente <svg xmlns="http://www.w3.org/2000/svg"
+                                                                    class="icon" width="24" height="24"
+                                                                    viewBox="0 0 24 24" stroke-width="2"
+                                                                    stroke="currentColor" fill="none"
+                                                                    stroke-linecap="round" stroke-linejoin="round">
+                                                                    <path stroke="none" d="M0 0h24v24H0z" fill="none">
+                                                                    </path>
+                                                                    <path d="M9 6l6 6l-6 6"></path>
+                                                                </svg></a></li>
+                                                        <% } %>
+                                </ul>
+                                <% } %>
+                                    <div class="container-products-catalog">
+                                        <div class="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-2 lg:gap-5 md:gap-5 gap-3 ">
+                                            <% if (dataProducts.products.length===0) { %>
+                                                <section class="no-products">
+                                                    <h2>No hay productos disponibles en este momento</h2>
+                                                </section>
+
+                                                <% } else { %>
+
+                                                    <%- include('./card_product', { productsData: dataProducts.products,
+                                                        GetInfo:GetInfo }) %>
+                                                        <% } %>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-12">
+
+                                                <%- generatePagination(dataProducts) %>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                </section>
+
+            </div>
+        </div>
+    </div>
