@@ -3,7 +3,7 @@
   <div class="swiper-container">
     <div class="swiper-wrapper">
       <% for (let i=0; i < banners.length; i++) { %>
-        <div class="swiper-slide">
+        <div class="swiper-slide <%= (banners[i].text || '').trim() === '' ? 'noTextBanner' : '' %>">
           <div class="slide-inner slide-bg-image" data-background="<%- banners[i].image %>">
             <div class="container">
               <div data-swiper-parallax="300" class="slide-title">
