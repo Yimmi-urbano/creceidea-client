@@ -13,12 +13,12 @@
                 <% const button=banners[i].button[j]; %>
                   <% if (button.show) { %>
                     <% if (button.action==="modal" ) { %>
-                      <button type="button" class="button" data-bs-toggle="modal"
+                      <button type="button" class="button <%= (button.text_button || '').trim() === '' ? 'hidden' : '' %>" data-bs-toggle="modal"
                         data-bs-target="<%- button.destino %>">
                         <%= button.text_button %>
                       </button>
                       <% } else if (button.action==="href" ) { %>
-                        <a href="<%- button.destino %>" class="rounded-full  button-catalog  text-center static button text-md">
+                        <a href="<%- button.destino %>" class="rounded-full <%= (button.text_button || '').trim() === '' ? 'hidden' : '' %> button-catalog  text-center static button text-md">
                           <%- button.text_button %>
                         </a>
                         <% } %>
