@@ -13,9 +13,31 @@
     </div>
 </section>
 <%- include('./navbar', { navbar: navbar}) %>
+    <div class="flex justify-center ml-3  mr-3 sm:hidden block">
+        <button
+            class="text-[var(--primary-color)] flex items-center border-2 border-[var(--primary-color)] justify-center gap-3  w-full bg-transparent hover:bg-sky-500 focus:ring-4 focus:ring-primary-300 font-medium rounded-2xl text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800"
+            type="button" data-drawer-target="drawer-example" data-drawer-show="drawer-example"
+            aria-controls="drawer-example">
+
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" id="Filter-2-Fill--Streamline-Mingcute-Fill"
+                height="16" width="16">
+                <desc>Filter 2 Fill Streamline Icon: https://streamlinehq.com</desc>
+                <g fill="none" fill-rule="nonzero">
+                    <path
+                        d="M16 0v16H0V0h16ZM8.395333333333333 15.505333333333333l-0.007333333333333332 0.0013333333333333333 -0.047333333333333324 0.023333333333333334 -0.013333333333333332 0.0026666666666666666 -0.009333333333333332 -0.0026666666666666666 -0.047333333333333324 -0.023333333333333334c-0.006666666666666666 -0.0026666666666666666 -0.012666666666666666 -0.0006666666666666666 -0.016 0.003333333333333333l-0.0026666666666666666 0.006666666666666666 -0.011333333333333334 0.2853333333333333 0.003333333333333333 0.013333333333333332 0.006666666666666666 0.008666666666666666 0.06933333333333333 0.049333333333333326 0.009999999999999998 0.0026666666666666666 0.008 -0.0026666666666666666 0.06933333333333333 -0.049333333333333326 0.008 -0.010666666666666666 0.0026666666666666666 -0.011333333333333334 -0.011333333333333334 -0.2846666666666666c-0.0013333333333333333 -0.006666666666666666 -0.005999999999999999 -0.011333333333333334 -0.011333333333333334 -0.011999999999999999Zm0.17666666666666667 -0.07533333333333334 -0.008666666666666666 0.0013333333333333333 -0.12333333333333332 0.062 -0.006666666666666666 0.006666666666666666 -0.002 0.007333333333333332 0.011999999999999999 0.2866666666666666 0.003333333333333333 0.008 0.005333333333333333 0.004666666666666666 0.134 0.062c0.008 0.0026666666666666666 0.015333333333333332 0 0.019333333333333334 -0.005333333333333333l0.0026666666666666666 -0.009333333333333332 -0.02266666666666667 -0.4093333333333333c-0.002 -0.008 -0.006666666666666666 -0.013333333333333332 -0.013333333333333332 -0.014666666666666665Zm-0.4766666666666666 0.0013333333333333333a0.015333333333333332 0.015333333333333332 0 0 0 -0.018 0.004l-0.004 0.009333333333333332 -0.02266666666666667 0.4093333333333333c0 0.008 0.004666666666666666 0.013333333333333332 0.011333333333333334 0.016l0.009999999999999998 -0.0013333333333333333 0.134 -0.062 0.006666666666666666 -0.005333333333333333 0.0026666666666666666 -0.007333333333333332 0.011333333333333334 -0.2866666666666666 -0.002 -0.008 -0.006666666666666666 -0.006666666666666666 -0.12266666666666666 -0.06133333333333333Z"
+                        stroke-width="0.6667"></path>
+                    <path fill="var(--primary-color)"
+                        d="M9.333333333333332 11a1 1 0 0 1 0.09599999999999999 1.9953333333333332L9.333333333333332 13h-2.6666666666666665a1 1 0 0 1 -0.09599999999999999 -1.9953333333333332L6.666666666666666 11h2.6666666666666665Zm2 -4a1 1 0 0 1 0 2H4.666666666666666a1 1 0 0 1 0 -2h6.666666666666666Zm2 -4a1 1 0 0 1 0 2H2.6666666666666665a1 1 0 1 1 0 -2h10.666666666666666Z"
+                        stroke-width="0.6667"></path>
+                </g>
+            </svg>
+
+            Filtrar por categoría
+        </button>
+    </div>
     <div class="container pt-4">
         <div class="grid lg:grid-cols-5 md:grid-cols-3 grid-cols-2 lg:gap-5 md:gap-5 gap-3 ">
-            <div class="mb-4">
+            <div class="mb-4 sm:block hidden">
                 <section class="sidebar-filter">
                     <div class="bg-white shadow-md overflow-hidden rounded-2xl p-3">
                         <div class="card-header">
@@ -23,16 +45,18 @@
                         </div>
                         <div class="flex flex-col">
 
-                            <% if (subcategories.length === 0) { %>
-                                <a href="javascript:history.back()" class="list-group-item list-group-item-action">Volver</a>
-                              <% } else { %>
-                                <% subcategories.forEach(item => { %>
-                                  <a href="/category/<%- item.slug %>" target="<%- item.target || '_self' %>" class="list-group-item list-group-item-action">
-                                    <%- item.title %>
-                                  </a>
-                                <% }); %>
-                              <% } %>
-                              
+                            <% if (subcategories.length===0) { %>
+                                <a href="javascript:history.back()"
+                                    class="list-group-item list-group-item-action">Volver</a>
+                                <% } else { %>
+                                    <% subcategories.forEach(item=> { %>
+                                        <a href="/category/<%- item.slug %>" target="<%- item.target || '_self' %>"
+                                            class="list-group-item list-group-item-action">
+                                            <%- item.title %>
+                                        </a>
+                                        <% }); %>
+                                            <% } %>
+
                         </div>
                     </div>
 
@@ -47,7 +71,8 @@
                                 <ul id="pagination" class="pagination m-5 d-flex justify-content-center">
                                     <!-- Botón "Anterior" -->
                                     <% if (currentPage> 1) { %>
-                                        <li class="page-item disabled "> <a href="?page=<%= currentPage - 1 %>" class="page-link" style="display: inline-flex;"> <svg
+                                        <li class="page-item disabled "> <a href="?page=<%= currentPage - 1 %>"
+                                                class="page-link" style="display: inline-flex;"> <svg
                                                     xmlns="http://www.w3.org/2000/svg" class="icon" width="24"
                                                     height="24" viewBox="0 0 24 24" stroke-width="2"
                                                     stroke="currentColor" fill="none" stroke-linecap="round"
@@ -60,15 +85,18 @@
                                             <!-- Botones de páginas -->
                                             <% for (let i=1; i <=totalPages; i++) { %>
                                                 <li class="page-item">
-                                                     <a
-                                                        href="?page=<%= i %>" class="page-link <%= i === currentPage ? 'active' : '' %>">
+                                                    <a href="?page=<%= i %>"
+                                                        class="page-link <%= i === currentPage ? 'active' : '' %>">
                                                         <%= i %>
-                                                    </a></li>
+                                                    </a>
+                                                </li>
                                                 <% } %>
 
                                                     <!-- Botón "Siguiente" -->
                                                     <% if (currentPage < totalPages) { %>
-                                                        <li class="page-item disabled"> <a href="?page=<%= currentPage + 1 %>" class="page-link" style="display: inline-flex;">
+                                                        <li class="page-item disabled"> <a
+                                                                href="?page=<%= currentPage + 1 %>" class="page-link"
+                                                                style="display: inline-flex;">
                                                                 Siguiente <svg xmlns="http://www.w3.org/2000/svg"
                                                                     class="icon" width="24" height="24"
                                                                     viewBox="0 0 24 24" stroke-width="2"
@@ -82,7 +110,8 @@
                                 </ul>
                                 <% } %>
                                     <div class="container-products-catalog">
-                                        <div class="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-2 lg:gap-5 md:gap-5 gap-3 ">
+                                        <div
+                                            class="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-2 lg:gap-5 md:gap-5 gap-3 ">
                                             <% if (dataProducts.products.length===0) { %>
                                                 <section class="no-products">
                                                     <h2>No hay productos disponibles en este momento</h2>
@@ -107,3 +136,67 @@
             </div>
         </div>
     </div>
+
+    <!-- drawer component -->
+    <form action="#" method="get" id="drawer-example"
+        class="fixed top-0 left-0 z-[999999] w-full h-full max-w-xs p-4 overflow-y-auto transition-transform -translate-x-full bg-white dark:bg-gray-800"
+        tabindex="-1" aria-labelledby="drawer-label">
+        <h5 id="drawer-label"
+            class="inline-flex items-center mb-4 text-base font-semibold text-[var(--primary-color)] uppercase dark:text-gray-400">
+            Categorías
+        </h5>
+        <button type="button" data-drawer-dismiss="drawer-example" aria-controls="drawer-example"
+            class="text-[var(--primary-color)] bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 absolute top-2.5 right-2.5 inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white">
+            <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
+                xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd"
+                    d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                    clip-rule="evenodd"></path>
+            </svg>
+            <span class="sr-only">Close menu</span>
+        </button>
+
+        <div class="flex flex-col justify-between flex-1 h-full">
+            <div class="space-y-6">
+                <!-- Categories -->
+                <div class="space-y-2">
+                    <% if (subcategories.length===0) { %>
+                        <a href="javascript:history.back()" class="list-group-item list-group-item-action">Volver</a>
+                        <% } else { %>
+                            <% subcategories.forEach(item=> { %>
+
+                                <div class="flex items-center">
+                                    <label for="tv" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+                                        <a href="/category/<%- item.slug %>" target="<%- item.target || '_self' %>"
+                                            class="list-group-item list-group-item-action">
+                                            <%- item.title %>
+                                        </a>
+                                    </label>
+                                </div>
+                                <% }); %>
+                                    <% } %>
+
+                </div>
+
+            </div>
+            <footer class="footer mt-5 d-print-none p-2">
+
+                <div
+                    class="container-fluid rounded-2xl min-h-[200px] py-5 text-center flex justify-center items-center bg-[#ffffff]">
+                    <div>
+                        <a href="/">
+                            <img style="height: 70px;display: block;margin: auto; object-fit: contain;width: 160px;"
+                                src=" <%- GetInfo.logo %>" alt="">
+                        </a>
+
+                        <hr class="border-[var(--primary-color)] m-2">
+                        <div class="social-links flex gap-3 justify-center mt-3">
+                            <%- include('./social', {socialLinks: GetInfo.social_links}) %>
+                        </div>
+                    </div>
+                </div>
+
+            </footer>
+        </div>
+
+    </form>
