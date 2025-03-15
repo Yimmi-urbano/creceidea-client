@@ -6,7 +6,6 @@
         <div class="swiper-slide <%= (banners[i].text || '').trim() === '' ? 'noTextBanner' : '' %>">
           <div class="slide-inner slide-bg-image" data-background="<%- banners[i].image %>">
             <div class="container">
-
               <div data-swiper-parallax="300" class="slide-title">
                 <h2><%- banners[i].text %> </h2>
               </div>
@@ -26,7 +25,6 @@
                           <% } %>
                             <% } %>
                               <div class="clearfix"></div>
-
             </div>
           </div>
         </div>
@@ -36,13 +34,9 @@
     <div class="swiper-button-next"></div>
     <div class="swiper-button-prev"></div>
   </div>
-
   <div class="tools-header bg-[#eff3f5]  absolute right-0 rounded-tl-3xl flex gap-3 bottom-0 z-10 lg:pl-4 lg:pt-0  pl-2 pt-2.5 lg:pr-4 lg:h-[50px] items-center">
-
     <div class="social-links">
-
       <%- include('../parts/social', {socialLinks: GetInfo.social_links}) %>
-
     </div>
     <div class="share-store hidden" id="shareBtn"><svg width="800px" height="800px" viewBox="0 0 24 24" fill="none"
         xmlns="http://www.w3.org/2000/svg">
@@ -53,14 +47,10 @@
       </svg><span>Compartir</span></div>
   </div>
 </section>
-
 <%- include('./navbar', { navbar: navbar}) %>
-
-  
     <div class="container container-products-catalog">
       <div class="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-2 lg:gap-5 md:gap-5 gap-3 ">
         <%- include('./card_product', { productsData: dataProducts.products, GetInfo:GetInfo }) %>
       </div>
     </div>
-
 </div>
