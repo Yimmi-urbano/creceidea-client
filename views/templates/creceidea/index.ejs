@@ -435,9 +435,9 @@
   </button>
 </div>
 
-<div class="floating_btn  <%- GetInfo.whatsapp_home['isActive'] ? 'block' : 'hidden' %>">
+<div class="floating_btn <%- GetInfo.whatsapp_home['isActive'] ? 'block' : 'hidden' %>">
   <a target="_blank"
-    href="https://wa.me/<%- GetInfo.catalogo.whatsapp['number'] %>?text=Hola,%20quiero%20más%20información">
+    href="https://wa.me/<%- GetInfo.whatsapp_home['number'] %>?text=<%- GetInfo.whatsapp_home['message_custom'] %>">
     <div class="contact_icon">
       <svg xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision" text-rendering="geometricPrecision"
         image-rendering="optimizeQuality" fill-rule="evenodd" clip-rule="evenodd" viewBox="0 0 510 512.459">
