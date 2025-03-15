@@ -228,7 +228,7 @@
               const price = button.getAttribute('data-price');
 
               if (phone && title && price) {
-                const message = `<%- GetInfo.catalogo.whatapp['message_custom'] %>`;
+                const message = `<%= GetInfo.catalogo.whatsapp['message_custom'].replace('{title}', '${title}') %>`;
                 const whatsappLink = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
 
                 let a = document.createElement('a');
