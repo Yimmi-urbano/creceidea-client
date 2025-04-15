@@ -1,0 +1,333 @@
+<style>
+    header,
+    footer,
+    .adds-creceidea-pe {
+        display: none;
+    }
+
+    .page-body {
+        margin-top: 0px !important;
+    }
+
+    .page-body>.px-2,
+    .page-body>.mb-3 {
+        padding: 0px !important;
+        margin: 0px !important;
+    }
+
+    .page,
+    .page-wrapper,
+    .page-body,
+    .container-fluid {
+
+        height: 100%;
+
+    }
+</style>
+
+<main class="page-content global-content-payment pb-16 mb-4">
+
+    <div
+        class="w-full max-w-[600px] mx-auto rounded-b-3xl bg-white/80 overflow-hidden shadow-md backdrop-blur-sm sticky top-0">
+
+        <div
+            class="relative overflow-hidden pb-3 pt-2 pr-2 pl-2 m-2 mt-0 rounded-b-2xl z-0 before:content-[''] before:opacity-[.08] before:absolute before:inset-0 before:bg-[var(--primary-color)] before:z-[-1]">
+
+            <div class="flex justify-between items-start">
+                <div class="flex gap-1">
+                    <svg width="25px" height="25px" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+                        <polygon fill="var(--ci-primary-color, #000000)"
+                            points="497.333 239.999 80.092 239.999 176.087 144.004 153.46 121.377 18.837 256 153.46 390.623 176.087 367.996 80.09 271.999 497.333 271.999 497.333 239.999"
+                            class="ci-primary" />
+                    </svg>
+
+                </div>
+                <button id="toggleVisibility" class="text-gray-600">
+                    <div class="">
+                        <img style="height: 55px; display: block;object-fit: contain;" src="<%- GetInfo.logo %>" alt="">
+                    </div>
+                </button>
+            </div>
+            <p class="text-sm text-gray-700 mt-1  text-center">Total a pagar</p>
+            <h1 id="balance" class="text-3xl font-bold text-black mt-1  text-center"> S/ <span id="totalAmount"></span> </h1>
+            <p class="text-green-600 font-medium mt-1  text-center">items <span class="cant-items"></span></p>
+        </div>
+
+        <!-- Actions -->
+        <div class="flex justify-around py-2">
+            <div class="flex flex-col items-center text-xs text-gray-700 cursor-pointer">
+                <span class="text-xl mb-1">
+                    <svg width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M19 6.34267C17.35 4.30367 14.8273 3 12 3C7.02944 3 3 7.02944 3 12C3 13.8501 3.55827 15.5699 4.51555 17M21 12C21 16.9706 16.9706 21 12 21C10.961 21 9.96308 20.8239 9.03452 20.5M12 16H13C13.6667 16 15 15.6 15 14C15 12.4 13.6667 12 13 12H11C10.3333 12 9 11.6 9 10C9 8.4 10.3333 8 11 8H12M12 16H9M12 16V18M15 8H12M12 8V6"
+                            stroke="#000000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                </span>
+                Metodo de pago
+            </div>
+
+            <div class="flex flex-col items-center text-xs text-gray-700 cursor-pointer">
+                <span class="text-xl mb-1">
+                    <svg width="20px" height="20px" viewBox="0 0 1024 1024" fill="#000000" class="icon" version="1.1"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path d="M300 462.4h424.8v48H300v-48zM300 673.6H560v48H300v-48z" fill="" />
+                        <path
+                            d="M818.4 981.6H205.6c-12.8 0-24.8-2.4-36.8-7.2-11.2-4.8-21.6-11.2-29.6-20-8.8-8.8-15.2-18.4-20-29.6-4.8-12-7.2-24-7.2-36.8V250.4c0-12.8 2.4-24.8 7.2-36.8 4.8-11.2 11.2-21.6 20-29.6 8.8-8.8 18.4-15.2 29.6-20 12-4.8 24-7.2 36.8-7.2h92.8v47.2H205.6c-25.6 0-47.2 20.8-47.2 47.2v637.6c0 25.6 20.8 47.2 47.2 47.2h612c25.6 0 47.2-20.8 47.2-47.2V250.4c0-25.6-20.8-47.2-47.2-47.2H725.6v-47.2h92.8c12.8 0 24.8 2.4 36.8 7.2 11.2 4.8 21.6 11.2 29.6 20 8.8 8.8 15.2 18.4 20 29.6 4.8 12 7.2 24 7.2 36.8v637.6c0 12.8-2.4 24.8-7.2 36.8-4.8 11.2-11.2 21.6-20 29.6-8.8 8.8-18.4 15.2-29.6 20-12 5.6-24 8-36.8 8z"
+                            fill="" />
+                        <path
+                            d="M747.2 297.6H276.8V144c0-32.8 26.4-59.2 59.2-59.2h60.8c21.6-43.2 66.4-71.2 116-71.2 49.6 0 94.4 28 116 71.2h60.8c32.8 0 59.2 26.4 59.2 59.2l-1.6 153.6z m-423.2-47.2h376.8V144c0-6.4-5.6-12-12-12H595.2l-5.6-16c-11.2-32.8-42.4-55.2-77.6-55.2-35.2 0-66.4 22.4-77.6 55.2l-5.6 16H335.2c-6.4 0-12 5.6-12 12v106.4z"
+                            fill="" />
+                    </svg>
+                </span>
+                Informacion de contacto
+            </div>
+            <div class="flex flex-col items-center text-xs text-gray-700 cursor-pointer">
+                <span class="text-xl mb-1">
+                    <svg width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M14.4301 5.92993L20.5001 11.9999L14.4301 18.0699" stroke="#292D32" stroke-width="1.5"
+                            stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M3.5 12H20.33" stroke="#292D32" stroke-width="1.5" stroke-miterlimit="10"
+                            stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                </span>
+                Gracias
+            </div>
+        </div>
+    </div>
+
+    <div
+        class="w-full max-w-[600px] mx-auto rounded-3xl bg-white/40 overflow-hidden shadow-md mt-2 backdrop-blur-lg sticky z-10">
+        <div class="mx-auto p-6" id="method-payments">
+            <h2 class="text-base/7 font-semibold text-gray-900">Metodo de pago</h2>
+            <p class="mt-1 text-sm/6 text-gray-600">Seleccione un metodo de pago para continuar.</p>
+            <%- include('../../../modules/payments_v1/index') %>
+        </div>
+
+
+        <div class="border-b border-gray-900/10 mx-auto p-6  hidden form"  id="orderForm">
+            <h2 class="text-base/7 font-semibold text-gray-900">Informacion de contacto</h2>
+            <p class="mt-1 text-sm/6 text-gray-600">Ingrese sus datos personales para el contacto.</p>
+
+            <div class="mt-10 grid grid-cols-1 gap-x-3 gap-y-2 sm:grid-cols-6">
+
+                <div class="sm:col-span-6">
+                    <label for="email" class="block text-sm/6 font-medium text-gray-900">Correo</label>
+                    <div class="mt-2">
+                        <input id="email" name="email" type="email" autocomplete="email"
+                            class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6">
+                    </div>
+                </div>
+
+
+                <div class="sm:col-span-3">
+                    <label for="first-name" class="block text-sm/6 font-medium text-gray-900">Nombres completos</label>
+                    <div class="mt-2">
+                        <input type="text" name="first_name" id="first-name" autocomplete="given-name"
+                            class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6">
+                    </div>
+                </div>
+
+                <div class="sm:col-span-3">
+                    <label for="last-name" class="block text-sm/6 font-medium text-gray-900">Apellidos completos</label>
+                    <div class="mt-2">
+                        <input type="text" name="last_name" id="last-name" autocomplete="family-name"
+                            class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6">
+                    </div>
+                </div>
+
+
+                <div class="sm:col-span-3">
+                    
+                        <label class="block text-sm/6 font-medium text-gray-900">
+                            Documento *
+                        </label>
+                        <div class="relative mt-2">
+                            <div class="absolute top-2 left-0 flex items-center pl-3">
+                                <button id="button_type_document"
+                                    class="h-full text-sm flex justify-center items-center bg-transparent text-slate-700 focus:outline-none">
+                                    <span id="label_type_document">D.N.I.</span>
+
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                        stroke-width="1.5" stroke="currentColor" class="h-4 w-4 ml-1">
+                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                            d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+                                    </svg>
+                                </button>
+                                <div class="h-6 border-l border-gray-800 ml-2"></div>
+                                <div id="menu_type_document"
+                                    class="min-w-[80px] overflow-hidden absolute left-0 w-full mt-10 hidden w-full bg-white border border-slate-200 rounded-md shadow-lg z-10">
+                                    <ul id="list_type_document">
+                                        <li
+                                            class="px-4 py-2 text-slate-600 hover:bg-slate-50 text-sm cursor-pointer">
+                                            D.N.I. </li>
+                                        <li
+                                            class="px-4 py-2 text-slate-600 hover:bg-slate-50 text-sm cursor-pointer">
+                                            C.E. </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <input type="text" name="number_doc"
+                                class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6 pl-20 pr-3"
+                                placeholder="" />
+                        </div>
+                    
+                </div>
+
+                <div class="sm:col-span-3">
+                    <label for="last-name" class="block text-sm/6 font-medium text-gray-900">Celular de contacto</label>
+                    <div class="mt-2">
+                        <input type="text" name="celular" id="celular" autocomplete="family-name"
+                            class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6">
+                    </div>
+                </div>
+
+                <div class="col-span-full">
+                    <label for="street-address" class="block text-sm/6 font-medium text-gray-900">Direccion</label>
+                    <div class="mt-2">
+                        <input type="text" name="street_address" id="street-address" autocomplete="street-address"
+                            class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6">
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+
+        <div class="border-b border-gray-900/10 mx-auto p-6  hidden" id="summary-pay">
+
+
+            <form action="">
+                <button id="btnPayNow" class="buttonPay" type="button" disabled>
+                  loading...
+                </button>
+                <pre id="payment-message"></pre>
+              </form>
+
+
+        </div>
+
+    </div>
+
+    <div class="fixed bottom-0 w-full z-10">
+        <div class="w-full max-w-[600px] mx-auto rounded-t-3xl bg-white/80 overflow-hidden shadow-md mt-2">
+            <div class="mx-auto p-2">
+                <button id="payment-btn" type="button"
+                    class="transition-colors payment-btn duration-300 bg-[var(--primary-color)] w-full justify-center hover:brightness-90 focus:ring-4 focus:outline-none font-medium rounded-3xl text-md px-5 py-2.5 text-center inline-flex items-center me-2">
+                    <svg class="w-3.5 h-3.5 me-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                        fill="currentColor" viewBox="0 0 18 21">
+                        <path
+                            d="M15 12a1 1 0 0 0 .962-.726l2-7A1 1 0 0 0 17 3H3.77L3.175.745A1 1 0 0 0 2.208 0H1a1 1 0 0 0 0 2h.438l.6 2.255v.019l2 7 .746 2.986A3 3 0 1 0 9 17a2.966 2.966 0 0 0-.184-1h2.368c-.118.32-.18.659-.184 1a3 3 0 1 0 3-3H6.78l-.5-2H15Z" />
+                    </svg>
+                    Continuar
+                </button>
+
+            
+                <button id="create-order" type="button"
+                class="transition-colors hidden payment-btn duration-300 bg-[var(--primary-color)] w-full justify-center hover:brightness-90 focus:ring-4 focus:outline-none font-medium rounded-3xl text-md px-5 py-2.5 text-center inline-flex items-center me-2">
+                <svg class="w-3.5 h-3.5 me-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                    fill="currentColor" viewBox="0 0 18 21">
+                    <path
+                        d="M15 12a1 1 0 0 0 .962-.726l2-7A1 1 0 0 0 17 3H3.77L3.175.745A1 1 0 0 0 2.208 0H1a1 1 0 0 0 0 2h.438l.6 2.255v.019l2 7 .746 2.986A3 3 0 1 0 9 17a2.966 2.966 0 0 0-.184-1h2.368c-.118.32-.18.659-.184 1a3 3 0 1 0 3-3H6.78l-.5-2H15Z" />
+                </svg>
+                Realizar pago
+            </button>
+
+
+            </div>
+        </div>
+    </div>
+
+    <div class="w-full max-w-[600px] hidden mx-auto rounded-3xl bg-white overflow-hidden shadow-md mt-2">
+        <div
+            class="relative overflow-hidden p-6 m-2 hidden rounded-2xl z-0 before:content-[''] before:opacity-[.08] before:absolute before:inset-0 before:bg-gray-600 before:z-[-1]">
+
+            <div class="relative h-60">
+                <!-- Sombra superior con degradado radial -->
+                <div id="top-shadow"
+                    class="absolute top-0 left-0 right-0 h-8 pointer-events-none z-10 opacity-0 transition-opacity duration-300 bg-[radial-gradient(ellipse_at_top,rgba(0,0,0,0.08),transparent_70%)]">
+                </div>
+
+                <!-- Lista con scroll -->
+                <div id="product-list" class="h-60 overflow-auto overscroll-none px-2 space-y-2">
+                    <!-- ... tu lista de productos aquí ... -->
+                </div>
+                <!-- Sombra inferior con degradado radial -->
+                <div id="bottom-shadow"
+                    class="absolute bottom-0 left-0 right-0 h-8 pointer-events-none z-10 opacity-0 transition-opacity duration-300 bg-[radial-gradient(ellipse_at_bottom,rgba(0,0,0,0.08),transparent_70%)]">
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</main>
+
+
+<script>
+    const toggleBtn = document.getElementById('toggleVisibility');
+    const balanceText = document.getElementById('balance');
+    let visible = true;
+    toggleBtn.addEventListener('click', () => {
+        visible = !visible;
+        balanceText.textContent = visible ? '$26,887.09' : '•••••••••';
+    });
+</script>
+
+<script>
+    const list = document.getElementById('product-list');
+    const topShadow = document.getElementById('top-shadow');
+    const bottomShadow = document.getElementById('bottom-shadow');
+
+    function updateShadows() {
+        const scrollTop = list.scrollTop;
+        const scrollBottom = list.scrollHeight - list.scrollTop - list.clientHeight;
+
+        topShadow.style.opacity = scrollTop > 0 ? '1' : '0';
+        bottomShadow.style.opacity = scrollBottom > 0 ? '1' : '0';
+    }
+
+    list.addEventListener('scroll', updateShadows);
+    window.addEventListener('load', updateShadows);
+</script>
+
+<script>
+    function isColorDark(cssVarName) {
+        const cssValue = getComputedStyle(document.documentElement)
+            .getPropertyValue(cssVarName)
+            .trim();
+
+        let r, g, b;
+
+        if (cssValue.startsWith('#')) {
+            const hex = cssValue.slice(1);
+            r = parseInt(hex.substring(0, 2), 16);
+            g = parseInt(hex.substring(2, 4), 16);
+            b = parseInt(hex.substring(4, 6), 16);
+        }
+
+        else if (cssValue.startsWith('rgb')) {
+            [r, g, b] = cssValue.match(/\d+/g).map(Number);
+        } else {
+
+            const temp = document.createElement("div");
+            temp.style.color = cssValue;
+            document.body.appendChild(temp);
+            const computed = getComputedStyle(temp).color;
+            [r, g, b] = computed.match(/\d+/g).map(Number);
+            document.body.removeChild(temp);
+        }
+
+        const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+        return luminance < 0.5;
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+    const btns = document.querySelectorAll('.payment-btn');
+    const isDark = isColorDark('--primary-color');
+
+    btns.forEach(btn => {
+        btn.classList.add(isDark ? 'text-white' : 'text-black');
+    });
+});
+
+</script>

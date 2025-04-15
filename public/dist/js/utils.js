@@ -150,19 +150,21 @@ function debounce(fn, delay) {
     };
 }
 
-let dni, name, email, phone, sendButton;
+let dni, first_name, email, phone, sendButton;
 
 export function initializeValidation() {
     const form = document.getElementById("orderForm");
     if (!form) return; 
 
-    dni = form.querySelector("input[name='doc']");
-    name = form.querySelector("input[name='nom']");
+    dni = form.querySelector("input[name='number_doc']");
+    first_name = form.querySelector("input[name='first_name']");
+    last_name = form.querySelector("input[name='last_name']");
     email = form.querySelector("input[name='email']");
     phone = form.querySelector("input[name='celular']");
+    street_address = form.querySelector("input[name='street_address']");
     sendButton = document.getElementById("send-order-end");
 
-    const inputs = [dni, name, email, phone];
+    const inputs = [dni, first_name, last_name, email, phone];
     inputs.forEach(input => {
         input.removeEventListener("input", validateFormDebounced);
         input.addEventListener("input", validateFormDebounced);
@@ -185,10 +187,12 @@ export function getOrderData() {
 
     const form = document.getElementById("orderForm");
     const clientInfo = {
-        doc: form.querySelector("input[name='doc']").value,
-        name: form.querySelector("input[name='nom']").value,
+        number_doc: form.querySelector("input[name='number_doc']").value,
+        first_name: form.querySelector("input[name='first_name']").value,
+        last_name: form.querySelector("input[name='last_name']").value,
         email: form.querySelector("input[name='email']").value,
         phone: form.querySelector("input[name='celular']").value,
+        street_address: form.querySelector("input[name='street_address']").value,
     };
 
     const billingInfo = { ...clientInfo };

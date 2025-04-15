@@ -93,7 +93,6 @@ const renderCartItems = () => {
     return { productsContent, summaryContent };
 };
 
-
 const updateCartModalContent = () => {
     const productListContainer = document.getElementById('product-list');
     const cartSummaryContainer = document.getElementById('cart-summary');
@@ -103,7 +102,6 @@ const updateCartModalContent = () => {
     productListContainer.innerHTML = productsContent;
     cartSummaryContainer.innerHTML = summaryContent;
 };
-
 
 const openCart = document.querySelector('#openCart');
 const modalBody = document.querySelector('.content-min-cart');
@@ -121,7 +119,6 @@ const openCartModal = () => {
     toggleMiniCart();
     updateCartModalContent();
 };
-
 
 openCart.addEventListener('click', openCartModal);
 confirmShop.addEventListener('click', openModalShopForm);
@@ -152,7 +149,6 @@ modalBody.addEventListener('click', (event) => {
     updateCartItemCount();
 });
 
-
 modalBody.addEventListener('input', (event) => {
     const target = event.target;
 
@@ -179,7 +175,6 @@ modalBody.addEventListener('input', (event) => {
         }
     }
 });
-
 
 function openModalShopForm() {
 

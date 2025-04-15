@@ -1,5 +1,6 @@
 const express = require('express');
 const path = require('path');
+const https = require('https');
 require('dotenv').config();
 
 const {
@@ -7,7 +8,8 @@ const {
   fetchNavBar,
   fetchPageBySlug,
   getPageByIdProduct,
-  getPageByCategory
+  getPageByCategory,
+  getPaymentsMethods
 } = require('./apiService');
 const { generarCodigoVersion } = require('./helpers');
 const {
@@ -34,14 +36,15 @@ const fetchDataMiddleware = async (req, res, next) => {
     res.locals.api_product= api_product;
     res.locals.version = version;
 
-    const [banners, config, navbar, catalog] = await Promise.all([
+    const [banners, config, navbar, catalog, get_payments] = await Promise.all([
       getBanners(domain),
       getConfig(domain),
       fetchNavBar(domain),
-      fetchCatalogo(domain,page)
+      fetchCatalogo(domain,page),
+      getPaymentsMethods(domain)
     ]);
 
-    res.locals = { ...res.locals, banners, config, navbar, catalog, api_product };
+    res.locals = { ...res.locals, banners, config, navbar, catalog, api_product, get_payments };
     next();
   } catch (error) {
     next(error);
@@ -92,7 +95,6 @@ router.get('/catalog', (req, res) => {
     const pageTitle = "Todos los productos";
     const subcategories = subcategoryData ? [] : categoryData || [];
 
-
   res.render('index', {
     v: res.locals.version,
     dataProducts: res.locals.catalog,
@@ -108,6 +110,25 @@ router.get('/catalog', (req, res) => {
   next(error);
 }
 });
+
+router.get('/checkout', (req, res) => {
+
+  try {
+
+    res.render('index', {
+      v: res.locals.version, 
+      api_product: res.locals.api_product, 
+      printContent: getSvgContent,
+      GetInfo: res.locals.config, 
+      getPayments: res.locals.get_payments,
+      contentTemplate: 'checkout'
+    });
+  } catch (error) {
+    next(error);
+  }
+
+});
+
 
 router.get('/styles', (req, res) => {
   res.set('Content-Type', 'text/css');
