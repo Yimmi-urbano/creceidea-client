@@ -7,6 +7,7 @@ let hostname = [];
 const API_PRODUCTS = process.env.API_PRODUCTS;
 const API_CATEGORIES = process.env.API_CATEGORIES;
 const API_CONFIGURATION = process.env.API_CONFIGURATION;
+const API_PAYMENTS_METHOD = process.env.API_PAYMENTS_METHOD;
 
 async function fetchHome(domain) {
 
@@ -125,6 +126,25 @@ async function fetchPageBySlug(domain, slugSearch) {
   }
 }
 
+async function getPaymentsMethods(domain) {
+  
+  hostname = domain;
+
+  try {
+    const response = await axios.get(`${API_PAYMENTS_METHOD}/api/payments`, {
+
+      headers: {
+        'domain': hostname
+      }
+
+    });
+    return response.data;
+  } catch (error) {
+    throw new Error('Error al obtener datos de la API');
+  }
+
+}
+
 module.exports = {
   getPageByIdProduct,
   fetchHome,
@@ -133,5 +153,6 @@ module.exports = {
   fetchNavBar,
   fetchPageBySlug,
   getPageByCategory,
-  fetchBanners
+  fetchBanners,
+  getPaymentsMethods
 };

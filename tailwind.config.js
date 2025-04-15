@@ -3,10 +3,13 @@ module.exports = {
   mode: "jit",
   content: [
     "./views/**/*.ejs", // Ruta a tus archivos EJS
-    "./public/**/*.js"
+    "./public/**/*.js",
+    "./node_modules/flowbite/**/*.js" // <- Agregado para Flowbite
   ],
   theme: {
     extend: {},
   },
-  plugins: [],
+  plugins: [
+    require('flowbite/plugin') // <- Agregado para Flowbite
+  ],
 };
