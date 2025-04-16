@@ -10,6 +10,8 @@ const btnContinuePayment = document.getElementById('payment-btn');
 const btnCreateOrder = document.getElementById('create-order');
 const contentSummaryPay = document.getElementById('summary-pay');
 const contentInformationContact = document.getElementById('orderForm');
+const btnSaveInformation = document.getElementById('save-information');
+const containerSummaryProducts = document.getElementById('summary-products');
 
 document.addEventListener('DOMContentLoaded', () => {
     const buttonTypeDocument = document.getElementById('button_type_document');
@@ -181,6 +183,7 @@ async function createOrder(cart) {
     const domainContent = getMetaDom('domain');
 
     const { clientInfo, billingInfo, shippingInfo } = await getOrderData();
+
     const headers = {
         "domain": domainContent,
         "Content-Type": "application/json"
@@ -352,12 +355,12 @@ async function activaBtnIzipay(authorization, resultOrder, resultMetod) {
             }
         };
 
-        document.querySelector('#btnPayNow').addEventListener('click', async (event) => {
-            event.preventDefault();
-            handleLoadForm();
-        });
+       // document.querySelector('#btnPayNow').addEventListener('click', async (event) => {
+            //event.preventDefault();
+           // handleLoadForm();
+       // });
 
-        //handleLoadForm();
+        handleLoadForm();
 
     } else if (error) {
         console.log('error-->', error);
@@ -389,7 +392,7 @@ btnContinuePayment.addEventListener('click', async function () {
             contentInformationContact.classList.remove('hidden');
             methodPayments.classList.add('hidden');
             btnContinuePayment.classList.add('hidden');
-            btnCreateOrder.classList.remove('hidden');
+            btnSaveInformation.classList.remove('hidden');
 
 
         } catch (error) {
@@ -401,6 +404,40 @@ btnContinuePayment.addEventListener('click', async function () {
 
 });
 
+btnSaveInformation.addEventListener('click', async function () {
+    
+    const cart = getCartItems();
+    const result = await checkCartSync(cart);
+    const { clientInfo } = await getOrderData();
+
+    const metodPayment = obtenerMetodoDePagoSeleccionado();
+    const resultMetod = await fetchPaymentMethod(metodPayment);
+ 
+    document.querySelector('.detail-customer .text-name-full').innerHTML = clientInfo.first_name+' '+clientInfo.last_name;
+    document.querySelector('.detail-customer .text-documento').innerHTML = clientInfo.number_doc;
+    document.querySelector('.detail-customer .text-correo').innerHTML = clientInfo.email;
+    document.querySelector('.detail-customer .text-celular').innerHTML = clientInfo.phone;
+    document.querySelector('.detail-customer .text-direccion').innerHTML = clientInfo.street_address;
+
+    if (result) {
+
+        try {
+
+            contentSummaryPay.classList.remove('hidden');
+            contentInformationContact.classList.add('hidden');
+            btnCreateOrder.classList.remove('hidden');
+            btnSaveInformation.classList.add('hidden');
+            containerSummaryProducts.classList.remove('hidden');
+            injectCheckoutPayment(resultMetod);
+
+        } catch (error) {
+            console.error("Error al continuar con el pago:", error.message);
+        }
+
+    }
+
+})
+
 btnCreateOrder.addEventListener('click', async function () {
 
     const cart = getCartItems();
@@ -408,19 +445,13 @@ btnCreateOrder.addEventListener('click', async function () {
 
     const metodPayment = obtenerMetodoDePagoSeleccionado();
     const resultMetod = await fetchPaymentMethod(metodPayment);
-    console.log(resultMetod)
-    injectCheckoutPayment(resultMetod);
+
 
     if (result) {
 
         try {
 
             const resultOrder = await createOrder(result.cart);
-
-            console.log(resultOrder)
-
-            contentSummaryPay.classList.remove('hidden');
-            contentInformationContact.classList.add('hidden');
 
             const authorization = await generateIzipayToken(resultOrder);
 

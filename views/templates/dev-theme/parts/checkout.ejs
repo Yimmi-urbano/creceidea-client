@@ -49,7 +49,8 @@
                 </button>
             </div>
             <p class="text-sm text-gray-700 mt-1  text-center">Total a pagar</p>
-            <h1 id="balance" class="text-3xl font-bold text-black mt-1  text-center"> S/ <span id="totalAmount"></span> </h1>
+            <h1 id="balance" class="text-3xl font-bold text-black mt-1  text-center"> S/ <span id="totalAmount"></span>
+            </h1>
             <p class="text-green-600 font-medium mt-1  text-center">items <span class="cant-items"></span></p>
         </div>
 
@@ -104,7 +105,7 @@
         </div>
 
 
-        <div class="border-b border-gray-900/10 mx-auto p-6  hidden form"  id="orderForm">
+        <div class="border-b border-gray-900/10 mx-auto p-6  hidden form" id="orderForm">
             <h2 class="text-base/7 font-semibold text-gray-900">Informacion de contacto</h2>
             <p class="mt-1 text-sm/6 text-gray-600">Ingrese sus datos personales para el contacto.</p>
 
@@ -137,40 +138,38 @@
 
 
                 <div class="sm:col-span-3">
-                    
-                        <label class="block text-sm/6 font-medium text-gray-900">
-                            Documento *
-                        </label>
-                        <div class="relative mt-2">
-                            <div class="absolute top-2 left-0 flex items-center pl-3">
-                                <button id="button_type_document"
-                                    class="h-full text-sm flex justify-center items-center bg-transparent text-slate-700 focus:outline-none">
-                                    <span id="label_type_document">D.N.I.</span>
 
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                        stroke-width="1.5" stroke="currentColor" class="h-4 w-4 ml-1">
-                                        <path stroke-linecap="round" stroke-linejoin="round"
-                                            d="m19.5 8.25-7.5 7.5-7.5-7.5" />
-                                    </svg>
-                                </button>
-                                <div class="h-6 border-l border-gray-800 ml-2"></div>
-                                <div id="menu_type_document"
-                                    class="min-w-[80px] overflow-hidden absolute left-0 w-full mt-10 hidden w-full bg-white border border-slate-200 rounded-md shadow-lg z-10">
-                                    <ul id="list_type_document">
-                                        <li
-                                            class="px-4 py-2 text-slate-600 hover:bg-slate-50 text-sm cursor-pointer">
-                                            D.N.I. </li>
-                                        <li
-                                            class="px-4 py-2 text-slate-600 hover:bg-slate-50 text-sm cursor-pointer">
-                                            C.E. </li>
-                                    </ul>
-                                </div>
+                    <label class="block text-sm/6 font-medium text-gray-900">
+                        Documento *
+                    </label>
+                    <div class="relative mt-2">
+                        <div class="absolute top-2 left-0 flex items-center pl-3">
+                            <button id="button_type_document"
+                                class="h-full text-sm flex justify-center items-center bg-transparent text-slate-700 focus:outline-none">
+                                <span id="label_type_document">D.N.I.</span>
+
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                    stroke-width="1.5" stroke="currentColor" class="h-4 w-4 ml-1">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+                                </svg>
+                            </button>
+                            <div class="h-6 border-l border-gray-800 ml-2"></div>
+                            <div id="menu_type_document"
+                                class="min-w-[80px] overflow-hidden absolute left-0 w-full mt-10 hidden w-full bg-white border border-slate-200 rounded-md shadow-lg z-10">
+                                <ul id="list_type_document">
+                                    <li class="px-4 py-2 text-slate-600 hover:bg-slate-50 text-sm cursor-pointer">
+                                        D.N.I. </li>
+                                    <li class="px-4 py-2 text-slate-600 hover:bg-slate-50 text-sm cursor-pointer">
+                                        C.E. </li>
+                                </ul>
                             </div>
-                            <input type="text" name="number_doc"
-                                class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6 pl-20 pr-3"
-                                placeholder="" />
                         </div>
-                    
+                        <input type="text" name="number_doc"
+                            class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6 pl-20 pr-3"
+                            placeholder="" />
+                    </div>
+
                 </div>
 
                 <div class="sm:col-span-3">
@@ -196,12 +195,41 @@
         <div class="border-b border-gray-900/10 mx-auto p-6  hidden" id="summary-pay">
 
 
-            <form action="">
-                <button id="btnPayNow" class="buttonPay" type="button" disabled>
-                  loading...
-                </button>
+            <h2 class="text-base/7 font-semibold text-gray-900">Resumen de pedido</h2>
+            <p class="text-sm/6 text-gray-600">Verifique los datos de su compra para continuar con el pago.</p>
+
+            <div class="detail-customer">
+
+                <div class="label-customer flex gap-2">
+                    <div class="icon-name">Nombres:</div>
+                    <div class="text-name-full"></div>
+                </div>
+
+                <div class="label-customer flex gap-2">
+                    <div class="icon-name">Documento:</div>
+                    <div class="text-documento"></div>
+                </div>
+
+                <div class="label-customer flex gap-2">
+                    <div class="icon-name">Correo:</div>
+                    <div class="text-correo"></div>
+                </div>
+
+                <div class="label-customer flex gap-2">
+                    <div class="icon-name">Celular:</div>
+                    <div class="text-celular"></div>
+                </div>
+
+                <div class="label-customer flex gap-2">
+                    <div class="icon-name">Direccion:</div>
+                    <div class="text-direccion"></div>
+                </div>
+
+            </div>
+
+      
                 <pre id="payment-message"></pre>
-              </form>
+ 
 
 
         </div>
@@ -221,37 +249,42 @@
                     Continuar
                 </button>
 
-            
+
+                <button id="save-information" type="button"
+                    class="transition-colors hidden payment-btn duration-300 bg-[var(--primary-color)] w-full justify-center hover:brightness-90 focus:ring-4 focus:outline-none font-medium rounded-3xl text-md px-5 py-2.5 text-center inline-flex items-center me-2">
+                    <svg class="w-3.5 h-3.5 me-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                        fill="currentColor" viewBox="0 0 18 21">
+                        <path
+                            d="M15 12a1 1 0 0 0 .962-.726l2-7A1 1 0 0 0 17 3H3.77L3.175.745A1 1 0 0 0 2.208 0H1a1 1 0 0 0 0 2h.438l.6 2.255v.019l2 7 .746 2.986A3 3 0 1 0 9 17a2.966 2.966 0 0 0-.184-1h2.368c-.118.32-.18.659-.184 1a3 3 0 1 0 3-3H6.78l-.5-2H15Z" />
+                    </svg>
+                    Continuar
+                </button>
+
+
                 <button id="create-order" type="button"
-                class="transition-colors hidden payment-btn duration-300 bg-[var(--primary-color)] w-full justify-center hover:brightness-90 focus:ring-4 focus:outline-none font-medium rounded-3xl text-md px-5 py-2.5 text-center inline-flex items-center me-2">
-                <svg class="w-3.5 h-3.5 me-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                    fill="currentColor" viewBox="0 0 18 21">
-                    <path
-                        d="M15 12a1 1 0 0 0 .962-.726l2-7A1 1 0 0 0 17 3H3.77L3.175.745A1 1 0 0 0 2.208 0H1a1 1 0 0 0 0 2h.438l.6 2.255v.019l2 7 .746 2.986A3 3 0 1 0 9 17a2.966 2.966 0 0 0-.184-1h2.368c-.118.32-.18.659-.184 1a3 3 0 1 0 3-3H6.78l-.5-2H15Z" />
-                </svg>
-                Realizar pago
-            </button>
+                    class="transition-colors hidden payment-btn duration-300 bg-[var(--primary-color)] w-full justify-center hover:brightness-90 focus:ring-4 focus:outline-none font-medium rounded-3xl text-md px-5 py-2.5 text-center inline-flex items-center me-2">
+                    <svg class="w-3.5 h-3.5 me-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                        fill="currentColor" viewBox="0 0 18 21">
+                        <path
+                            d="M15 12a1 1 0 0 0 .962-.726l2-7A1 1 0 0 0 17 3H3.77L3.175.745A1 1 0 0 0 2.208 0H1a1 1 0 0 0 0 2h.438l.6 2.255v.019l2 7 .746 2.986A3 3 0 1 0 9 17a2.966 2.966 0 0 0-.184-1h2.368c-.118.32-.18.659-.184 1a3 3 0 1 0 3-3H6.78l-.5-2H15Z" />
+                    </svg>
+                    Realizar pago
+                </button>
 
 
             </div>
         </div>
     </div>
 
-    <div class="w-full max-w-[600px] hidden mx-auto rounded-3xl bg-white overflow-hidden shadow-md mt-2">
+    <div class="w-full max-w-[600px]  mx-auto rounded-3xl bg-white overflow-hidden shadow-md mt-2 hidden" id="summary-products">
         <div
-            class="relative overflow-hidden p-6 m-2 hidden rounded-2xl z-0 before:content-[''] before:opacity-[.08] before:absolute before:inset-0 before:bg-gray-600 before:z-[-1]">
-
+            class="relative overflow-hidden p-6 m-2 rounded-2xl z-0 before:content-[''] before:opacity-[.08] before:absolute before:inset-0 before:bg-gray-600 before:z-[-1]">
             <div class="relative h-60">
-                <!-- Sombra superior con degradado radial -->
                 <div id="top-shadow"
                     class="absolute top-0 left-0 right-0 h-8 pointer-events-none z-10 opacity-0 transition-opacity duration-300 bg-[radial-gradient(ellipse_at_top,rgba(0,0,0,0.08),transparent_70%)]">
                 </div>
-
-                <!-- Lista con scroll -->
                 <div id="product-list" class="h-60 overflow-auto overscroll-none px-2 space-y-2">
-                    <!-- ... tu lista de productos aquí ... -->
                 </div>
-                <!-- Sombra inferior con degradado radial -->
                 <div id="bottom-shadow"
                     class="absolute bottom-0 left-0 right-0 h-8 pointer-events-none z-10 opacity-0 transition-opacity duration-300 bg-[radial-gradient(ellipse_at_bottom,rgba(0,0,0,0.08),transparent_70%)]">
                 </div>
@@ -322,12 +355,12 @@
     }
 
     window.addEventListener('DOMContentLoaded', () => {
-    const btns = document.querySelectorAll('.payment-btn');
-    const isDark = isColorDark('--primary-color');
+        const btns = document.querySelectorAll('.payment-btn');
+        const isDark = isColorDark('--primary-color');
 
-    btns.forEach(btn => {
-        btn.classList.add(isDark ? 'text-white' : 'text-black');
+        btns.forEach(btn => {
+            btn.classList.add(isDark ? 'text-white' : 'text-black');
+        });
     });
-});
 
 </script>
