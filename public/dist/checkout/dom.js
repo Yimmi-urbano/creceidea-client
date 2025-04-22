@@ -2,19 +2,16 @@ import {
     getCartItems,
     updateSessionStorageCart,
     getOrderData
-} from '../js/utils.js';
+} from '../js/utils.js?v=2322243322';
 
 import {
     checkCartSync,
     fetchPaymentMethod,
     createOrder,
-    generateIzipayToken
-} from './api.js';
+    resetCart
+} from './api.js?v=232222322334';
 
-import {
-    activaBtnIzipay,
-    injectCheckoutPayment
-} from './payment.js?v=22';
+import * as paymentHandlers from './payment-handlers/index.js?v=223332223322';
 
 const btnContinuePayment = document.getElementById('payment-btn');
 const btnCreateOrder = document.getElementById('create-order');
@@ -71,9 +68,6 @@ export function handleSaveInformation() {
         const result = await checkCartSync(cart);
         const { clientInfo } = await getOrderData();
 
-        const metodPayment = obtenerMetodoDePagoSeleccionado();
-        const resultMetod = await fetchPaymentMethod(metodPayment);
-
         document.querySelector('.detail-customer .text-name-full').textContent = `${clientInfo.first_name} ${clientInfo.last_name}`;
         document.querySelector('.detail-customer .text-documento').textContent = clientInfo.number_doc;
         document.querySelector('.detail-customer .text-correo').textContent = clientInfo.email;
@@ -86,23 +80,39 @@ export function handleSaveInformation() {
             btnCreateOrder.classList.remove('hidden');
             btnSaveInformation.classList.add('hidden');
             containerSummaryProducts.classList.remove('hidden');
-            injectCheckoutPayment(resultMetod);
+            
         }
     });
 }
 
 export function handleCreateOrder() {
+
     btnCreateOrder.addEventListener('click', async () => {
+
         const cart = getCartItems();
-        const result = await checkCartSync(cart);
 
-        const metodPayment = obtenerMetodoDePagoSeleccionado();
-        const resultMetod = await fetchPaymentMethod(metodPayment);
+        const cartSync = await checkCartSync(cart);
 
-        if (result) {
-            const resultOrder = await createOrder(result.cart);
-            const authorization = await generateIzipayToken(resultOrder);
-            activaBtnIzipay(authorization, resultOrder, resultMetod);
+        if (!cartSync) return;
+
+        const methodId = obtenerMetodoDePagoSeleccionado();
+
+        const methodData = await fetchPaymentMethod(methodId);
+
+        if (!methodData) return;
+
+        const order = await createOrder(cartSync.cart);
+
+        if (!order) return;
+
+        const handler = paymentHandlers[methodData.nameId];
+
+        if (handler) {
+            await handler(order, methodData);
+        } else {
+            sessionStorage.removeItem("cart_tem");
+            await resetCart();
+            
         }
     });
 }
