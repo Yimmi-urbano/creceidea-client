@@ -1,10 +1,6 @@
 import {
     injectModalYapeQR
-} from '../payment.js?v=23222www2222222223';
-
-import {
-    generateIzipayToken,
-} from '../api.js?v=2322232';
+} from '../payment.js?v=67333w222233222222222222222';
 
 export default async function izipayHandler(order, methodData) {
 

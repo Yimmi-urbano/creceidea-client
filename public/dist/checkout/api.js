@@ -63,11 +63,11 @@ export async function createOrder(cart) {
     return await response.json();
 }
 
-export async function generateIzipayToken(order) {
+export async function generateIzipayToken(order, transaccionId) {
     const domainContent = getMetaDom("domain");
 
     const headers = new Headers({
-        transactionid: order.orderNumber,
+        transactionid: transaccionId,
         domain: domainContent,
         ordernumber: order.orderNumber,
         amount: order.total.toFixed(2),

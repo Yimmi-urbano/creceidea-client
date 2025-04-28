@@ -58,8 +58,25 @@ async function fetchConfig(domain) {
 async function fetchCatalogo(domain, page) {
 
   hostname = domain;
+
   try {
     const response = await axios.get(`${API_PRODUCTS}/api/products?page=` + page, {
+      headers: {
+        'domain': hostname
+      }
+    });
+    return response.data;
+  } catch (error) {
+    throw new Error('Error al obtener datos de la API');
+  }
+}
+
+async function getProductsByTitle(domain, page, query) {
+
+  hostname = domain;
+  
+  try {
+    const response = await axios.get(`${API_PRODUCTS}/products/search?page=${page}&query=${query}`, {
       headers: {
         'domain': hostname
       }
@@ -154,5 +171,6 @@ module.exports = {
   fetchPageBySlug,
   getPageByCategory,
   fetchBanners,
-  getPaymentsMethods
+  getPaymentsMethods,
+  getProductsByTitle
 };

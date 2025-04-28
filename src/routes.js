@@ -1,6 +1,5 @@
 const express = require('express');
 const path = require('path');
-const https = require('https');
 require('dotenv').config();
 
 const {
@@ -9,181 +8,145 @@ const {
   fetchPageBySlug,
   getPageByIdProduct,
   getPageByCategory,
-  getPaymentsMethods
+  getPaymentsMethods,
+  getProductsByTitle
 } = require('./apiService');
+
 const { generarCodigoVersion } = require('./helpers');
-const {
-  getBanners,
-  getConfig,
-  getSvgContent
-} = require('./functions');
+const { getBanners, getConfig, getSvgContent } = require('./functions');
 
 const router = express.Router();
+
 const { DOMAIN_LOCAL, API_PRODUCTS } = process.env;
 const version = generarCodigoVersion();
 
 const errorHandler = (err, req, res, next) => {
-  console.error('Error al manejar la solicitud:', err);
+  console.error('Error en la solicitud:', err);
   res.status(500).render('error_page');
 };
 
 const fetchDataMiddleware = async (req, res, next) => {
   try {
     const domain = DOMAIN_LOCAL || req.hostname;
-    const api_product= API_PRODUCTS;
     const page = req.query.page;
-    res.locals.domain = domain;
-    res.locals.api_product= api_product;
-    res.locals.version = version;
 
-    const [banners, config, navbar, catalog, get_payments] = await Promise.all([
+    const [banners, config, navbar, catalog, paymentMethods] = await Promise.all([
       getBanners(domain),
       getConfig(domain),
       fetchNavBar(domain),
-      fetchCatalogo(domain,page),
+      fetchCatalogo(domain, page),
       getPaymentsMethods(domain)
     ]);
 
-    res.locals = { ...res.locals, banners, config, navbar, catalog, api_product, get_payments };
+    res.locals = {
+      domain,
+      version,
+      api_product: API_PRODUCTS,
+      banners,
+      config,
+      navbar,
+      catalog,
+      paymentMethods
+    };
+
     next();
   } catch (error) {
     next(error);
   }
 };
 
-const fetchDataForRoutes = ['/', '/catalog', '/:slug'];
-router.use(fetchDataForRoutes, fetchDataMiddleware);
+const fetchDataRoutes = ['/', '/catalog', '/:slug'];
+router.use(fetchDataRoutes, fetchDataMiddleware);
+
+// Utilidad para renderizar
+const renderPage = (res, contentTemplate, extraData = {}) => {
+  res.render('index', {
+    v: res.locals.version,
+    api_product: res.locals.api_product,
+    printContent: getSvgContent,
+    GetInfo: res.locals.config,
+    ...extraData,
+    contentTemplate
+  });
+};
 
 router.get('/', (req, res) => {
-  res.render('index', {
-    v: res.locals.version,
+  renderPage(res, 'home', {
     dataProducts: res.locals.catalog,
-    banners: res.locals.banners,
-    GetInfo: res.locals.config,
-    api_product:res.locals.api_product,
-    printContent: getSvgContent,
-    contentTemplate: 'home'
+    banners: res.locals.banners
   });
-
-
 });
 
-router.get('/catalog', (req, res) => {
-
+router.get('/catalog', (req, res, next) => {
   try {
-    const domain = DOMAIN_LOCAL || req.hostname;
-    const categorySlug = req.params.category;
-    const navbar = res.locals.navbar;
-    let categoryData = navbar;
-    let subcategoryData = null;
-  
-
-    if (!categoryData) {
-      for (const category of navbar) {
-        subcategoryData = category.children.find(subcat => subcat.slug === categorySlug);
-        if (subcategoryData) {
-          categoryData = category; 
-          break;
-        }
-      }
-    }
-
-    if (!categoryData && !subcategoryData) {
-      return res.status(404).render('error_page', { message: 'Categoría no encontrada' });
-    }
-
-    const pageTitle = "Todos los productos";
-    const subcategories = subcategoryData ? [] : categoryData || [];
-
-  res.render('index', {
-    v: res.locals.version,
-    dataProducts: res.locals.catalog,
-    subcategories,
-    pageTitle,
-    GetInfo: res.locals.config,
-    api_product:res.locals.api_product,
-    printContent: getSvgContent,
-    contentTemplate: 'catalog'
-  });
-} catch (error) {
-
-  next(error);
-}
-});
-
-router.get('/checkout', (req, res) => {
-
-  try {
-
-    res.render('index', {
-      v: res.locals.version, 
-      api_product: res.locals.api_product, 
-      printContent: getSvgContent,
-      GetInfo: res.locals.config, 
-      getPayments: res.locals.get_payments,
-      contentTemplate: 'checkout'
+    renderPage(res, 'catalog', {
+      dataProducts: res.locals.catalog,
+      subcategories: res.locals.navbar,
+      pageTitle: 'Todos los productos'
     });
   } catch (error) {
     next(error);
   }
-
 });
 
+router.get('/checkout', (req, res, next) => {
+  try {
+    renderPage(res, 'checkout', {
+      getPayments: res.locals.paymentMethods
+    });
+  } catch (error) {
+    next(error);
+  }
+});
 
 router.get('/styles', (req, res) => {
   res.set('Content-Type', 'text/css');
   res.render('styles');
 });
 
-router.get('/product/:rutaDinamica', async (req, res, next) => {
-  const domain = DOMAIN_LOCAL || req.hostname;
-  const slug = req.params.rutaDinamica;
-
+router.get('/search', async (req, res, next) => {
   try {
-   
-    const dataProductDetail = await getPageByIdProduct(domain, slug);
-    res.render('index', {
-      v: res.locals.version, 
-      pageTitle: dataProductDetail.title,
-      api_product: res.locals.api_product, 
-      printContent: getSvgContent,
-      dataProductDetail: dataProductDetail,
-      imagesProducts:dataProductDetail['image_default'],
-      GetInfo: res.locals.config, 
-      contentTemplate: 'product_detail'
+    const { page, query } = req.query;
+    const domain = res.locals.domain;
+    const results = await getProductsByTitle(domain, page, query);
+
+    renderPage(res, 'catalog', {
+      dataProducts: results,
+      subcategories: res.locals.navbar,
+      pageTitle: `Resultados de búsqueda: ${query}`
     });
   } catch (error) {
     next(error);
   }
 });
 
-router.get('/order/thanks', async (req, res, next) => {
-
+router.get('/product/:slug', async (req, res, next) => {
   try {
+    const domain = res.locals.domain;
+    const { slug } = req.params;
+    const product = await getPageByIdProduct(domain, slug);
 
-    res.render('index', {
-      v: res.locals.version, 
-      api_product: res.locals.api_product, 
-      printContent: getSvgContent,
-      GetInfo: res.locals.config, 
-      contentTemplate: 'thanks'
+    renderPage(res, 'product_detail', {
+      pageTitle: product.title,
+      dataProductDetail: product,
+      imagesProducts: product.image_default
     });
   } catch (error) {
     next(error);
   }
 });
 
-router.get('/customer/claimbook', async (req, res, next) => {
-
+router.get('/order/thanks', (req, res, next) => {
   try {
+    renderPage(res, 'thanks');
+  } catch (error) {
+    next(error);
+  }
+});
 
-    res.render('index', {
-      v: res.locals.version, 
-      api_product: res.locals.api_product, 
-      printContent: getSvgContent,
-      GetInfo: res.locals.config, 
-      contentTemplate: 'claim-book'
-    });
+router.get('/customer/claimbook', (req, res, next) => {
+  try {
+    renderPage(res, 'claim-book');
   } catch (error) {
     next(error);
   }
@@ -191,40 +154,36 @@ router.get('/customer/claimbook', async (req, res, next) => {
 
 router.get('/category/:category', async (req, res, next) => {
   try {
-    const domain = DOMAIN_LOCAL || req.hostname;
-    const categorySlug = req.params.category;
-    const navbar = res.locals.navbar;
+    const domain = res.locals.domain;
+    const { category: slug } = req.params;
+    const { navbar } = res.locals;
     const page = req.query.page;
-    let categoryData = navbar.find(cat => cat.slug === categorySlug);
-    let subcategoryData = null;
 
-    if (!categoryData) {
-      for (const category of navbar) {
-        subcategoryData = category.children.find(subcat => subcat.slug === categorySlug);
-        if (subcategoryData) {
-          categoryData = category; 
+    let category = navbar.find(cat => cat.slug === slug);
+    let subcategory = null;
+
+    if (!category) {
+      for (const cat of navbar) {
+        subcategory = cat.children.find(sub => sub.slug === slug);
+        if (subcategory) {
+          category = cat;
           break;
         }
       }
     }
 
-    if (!categoryData && !subcategoryData) {
+    if (!category && !subcategory) {
       return res.status(404).render('error_page', { message: 'Categoría no encontrada' });
     }
 
-    const pageTitle = subcategoryData ? subcategoryData.title : categoryData.title;
-    const subcategories = subcategoryData ? [] : categoryData.children || [];
-    const categoryProducts = await getPageByCategory(domain, categorySlug,page);
+    const pageTitle = subcategory?.title || category.title;
+    const subcategories = subcategory ? [] : category.children || [];
+    const products = await getPageByCategory(domain, slug, page);
 
-    res.render('index', {
-      v: res.locals.version,
-      dataProducts: categoryProducts,
+    renderPage(res, 'catalog', {
+      dataProducts: products,
       pageTitle,
-      subcategories,
-      GetInfo: res.locals.config,
-      api_product: res.locals.api_product,
-      printContent: getSvgContent,
-      contentTemplate: 'catalog'
+      subcategories
     });
   } catch (error) {
     next(error);
@@ -232,26 +191,20 @@ router.get('/category/:category', async (req, res, next) => {
 });
 
 /*
+// Si luego quieres usar páginas por slug, descomenta esto
 router.get('/:slug', async (req, res, next) => {
   try {
-    const slug = req.params.slug;
-    const page = await fetchPageBySlug(res.locals.domain, slug);
+    const page = await fetchPageBySlug(res.locals.domain, req.params.slug);
 
-    res.render('index', {
-      v: res.locals.version,
+    renderPage(res, 'page', {
       infoPage: page,
-      pageTitle: 'Servicios',
-      GetInfo: res.locals.config,
-      api_product:res.locals.api_product,
-      printContent: getSvgContent,
-      contentTemplate: 'page'
+      pageTitle: 'Servicios'
     });
   } catch (error) {
     next(error);
   }
 });
 */
-
 
 router.use(errorHandler);
 
