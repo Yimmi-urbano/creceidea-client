@@ -1141,3 +1141,37 @@ opacity: 0.6; /* Opcional: reduce la opacidad para indicar un estado deshabilita
   display:none !important;
 
 }
+
+  #content-buscador {
+   
+    overflow: hidden;
+    transition: top 0.5s ease, opacity 0.5s ease;
+    height: 90px;
+  }
+
+  @media screen and (max-width: 430px) {
+
+    #content-buscador {
+      bottom: -90px;
+  
+    }
+  
+    #content-buscador.open {
+      bottom: 0px;
+    }
+
+  }
+
+
+  @media screen and (min-width: 431px) {
+
+    #content-buscador {
+      top: -90px;
+  
+    }
+  
+    #content-buscador.open {
+      top: 0px;
+    }
+
+  }

@@ -2,16 +2,17 @@ import {
     getCartItems,
     updateSessionStorageCart,
     getOrderData
-} from '../js/utils.js?v=2322243322';
+} from '../js/utils.js?v=232224322222222322';
 
 import {
     checkCartSync,
     fetchPaymentMethod,
     createOrder,
-    resetCart
-} from './api.js?v=232222322334';
+    resetCart,
+    fetchOrderData
+} from './api.js?v=2322223222222223234';
 
-import * as paymentHandlers from './payment-handlers/index.js?v=223332223322';
+import * as paymentHandlers from './payment-handlers/index.js?v=5454322222222222222222323';
 
 const btnContinuePayment = document.getElementById('payment-btn');
 const btnCreateOrder = document.getElementById('create-order');
@@ -80,10 +81,33 @@ export function handleSaveInformation() {
             btnCreateOrder.classList.remove('hidden');
             btnSaveInformation.classList.add('hidden');
             containerSummaryProducts.classList.remove('hidden');
-            
+
         }
     });
 }
+
+function setOrderIdCookie(orderId) {
+    const expires = new Date();
+    expires.setTime(expires.getTime() + 60 * 60 * 1000); // 1 hora
+
+    document.cookie = `orderId=${orderId}; expires=${expires.toUTCString()}; path=/; secure; samesite=strict`;
+}
+
+function getOrderIdCookie() {
+    const name = "orderId=";
+    const decodedCookie = decodeURIComponent(document.cookie);
+    const cookies = decodedCookie.split(';');
+
+    for (let i = 0; i < cookies.length; i++) {
+        let c = cookies[i].trim();
+        if (c.indexOf(name) === 0) {
+            return c.substring(name.length, c.length);
+        }
+    }
+
+    return null;
+}
+
 
 export function handleCreateOrder() {
 
@@ -101,7 +125,17 @@ export function handleCreateOrder() {
 
         if (!methodData) return;
 
-        const order = await createOrder(cartSync.cart);
+        let order;
+        let orderId = getOrderIdCookie();
+
+        if (orderId) {
+
+            order = await fetchOrderData(orderId)
+
+        } else {
+            order = await createOrder(cartSync.cart);
+            setOrderIdCookie(order.orderNumber);
+        }
 
         if (!order) return;
 
@@ -112,7 +146,7 @@ export function handleCreateOrder() {
         } else {
             sessionStorage.removeItem("cart_tem");
             await resetCart();
-            
+
         }
     });
 }

@@ -1,17 +1,26 @@
 <header class="container-fluid  d-flex flex-column justify-content-center relative">
   <div class="logo-header">
     <a href="/">
-    <img style="height: 70px;display: block;margin: auto;margin-top: 10px;object-fit: contain; width: 160px;"
-      src=" <%- GetInfo.logo %>" alt="">
+      <img style="height: 70px;display: block;margin: auto;margin-top: 10px;object-fit: contain; width: 160px;"
+        src=" <%- GetInfo.logo %>" alt="">
     </a>
   </div>
   <div class="tools-elements-header">
     <% if (GetInfo.type_store=="product" ) { %>
-    <div class="shop-cart">
+      <div class="shop-cart flex gap-3">
 
-      <%- include('parts/shop-buttons') %>
 
-    </div>
-    <% } %>
+        <button id="openBuscadorBtn" class="h-[35px] border-[3px] w-[35px] border-3 border-[var(--primary-color)] bg-white text-red-500 rounded-full flex justify-center items-center">
+          <svg class="w-6 h-6 text-[var(--primary-color)]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd"
+              d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
+              clip-rule="evenodd" />
+          </svg>
+        </button>
+
+        <%- include('parts/shop-buttons') %>
+
+      </div>
+      <% } %>
   </div>
 </header>
