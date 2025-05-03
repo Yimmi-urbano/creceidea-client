@@ -11,7 +11,7 @@ export function injectCheckoutPayment(resultMetod) {
     document.head.appendChild(script);
 }
 
-export function activaBtnIzipay(authorization, resultOrder, resultMetod,transaccionId) {
+export function activaBtnIzipay(authorization, resultOrder, resultMetod, transaccionId) {
 
     const { response: { token = undefined } = {} } = authorization;
 
@@ -71,7 +71,7 @@ export function activaBtnIzipay(authorization, resultOrder, resultMetod,transacc
 
             const responseUpdate = await updatePaymentStatus(responseStatus, res.messageUser, resultOrder._id, "credit_card");
 
-            res.code === "00" ? redirectSuccess(resultOrder.orderNumber,resultMetod.nameId) : alert(res.messageUser);
+            res.code === "00" ? redirectSuccess(resultOrder.orderNumber, resultMetod.nameId) : alert(res.messageUser);
 
             console.log(res, responseUpdate)
 
@@ -83,7 +83,7 @@ export function activaBtnIzipay(authorization, resultOrder, resultMetod,transacc
 export function injectModalYapeQR(order, methodData) {
     let existingModal = document.getElementById('modalYapeQr');
     if (existingModal) existingModal.remove();
-  
+
     const html = `<div id="modalYapeQr"
       class="modal opacity-0 pointer-events-none fixed w-full h-full z-50 top-0 left-0 flex items-center justify-center transition-opacity duration-300">
       <div class="modal-container fixed w-full h-full z-50 overflow-y-auto p-3 bg-gray-600/30">
@@ -132,63 +132,75 @@ export function injectModalYapeQR(order, methodData) {
           </div>
       </div>
   </div>`;
-  
+
     const container = document.createElement('div');
     container.innerHTML = html;
     document.body.appendChild(container);
-  
+
     const modal = document.getElementById('modalYapeQr');
     const closeButtons = modal.querySelectorAll('.modal-close');
     const confirmButton = modal.querySelector('#btnConfirmYape');
     const label = confirmButton.querySelector('.label');
     const spinner = confirmButton.querySelector('.spinner');
-  
+
     let isLoading = false;
-  
+
     modal.classList.remove('opacity-0', 'pointer-events-none');
     document.body.classList.add('overflow-hidden');
-  
+
     const closeModal = () => {
-      modal.classList.add('opacity-0', 'pointer-events-none');
-      document.body.classList.remove('overflow-hidden');
-      setTimeout(() => modal.remove(), 300);
+        modal.classList.add('opacity-0', 'pointer-events-none');
+        document.body.classList.remove('overflow-hidden');
+        setTimeout(() => modal.remove(), 300);
     };
-  
+
     const handleCancel = async () => {
-      if (isLoading) return; 
-      await updatePaymentStatus("decline", "El usuario cerró el modal sin confirmar", order._id, methodData.nameId);
-      alert('Pago cancelado...')
-      closeModal();
-    };
-  
-    const handleConfirm = async () => {
-      const operationNumber = modal.querySelector('#operationNumber').value.trim();
-  
-      if (!operationNumber) {
-        alert("Por favor, ingresa el número de operación.");
-        return;
-      }
-  
-      isLoading = true;
-  
-      spinner.classList.remove("hidden");
-      label.textContent = "Procesando...";
-      confirmButton.disabled = true;
-      closeButtons.forEach(btn => btn.classList.add("pointer-events-none", "opacity-50"));
-  
-      try {
-       await updatePaymentStatus("pending", `Confirmación enviada - Operación: ${operationNumber}`, order._id, methodData.nameId);
-        redirectSuccess(order.orderNumber,methodData.nameId);
-      } catch (err) {
-        console.error("❌ Error al actualizar estado:", err);
-      } finally {
+        if (isLoading) return;
+        await updatePaymentStatus("decline", "El usuario cerró el modal sin confirmar", order._id, methodData.nameId);
+        alert('Pago cancelado...')
         closeModal();
-      }
     };
-  
+
+    const handleConfirm = async () => {
+        const operationNumber = modal.querySelector('#operationNumber').value.trim();
+
+        if (!operationNumber) {
+            alert("Por favor, ingresa el número de operación.");
+            return;
+        }
+
+        isLoading = true;
+
+        spinner.classList.remove("hidden");
+        label.textContent = "Procesando...";
+        confirmButton.disabled = true;
+        closeButtons.forEach(btn => btn.classList.add("pointer-events-none", "opacity-50"));
+
+        try {
+            await updatePaymentStatus("pending", `Confirmación enviada - Operación: ${operationNumber}`, order._id, methodData.nameId);
+            redirectSuccess(order.orderNumber, methodData.nameId);
+        } catch (err) {
+            console.error("❌ Error al actualizar estado:", err);
+        } finally {
+            closeModal();
+        }
+    };
+
     closeButtons.forEach(btn => btn.addEventListener('click', handleCancel));
 
     confirmButton.addEventListener('click', handleConfirm);
-  
-  }
-  
+
+}
+
+export async function processWhatsApp(order, methodData) {
+
+    try {
+        await updatePaymentStatus("pending", `Pendiente de coordinacion por WhatsApp`, order._id, methodData.nameId);
+        redirectSuccess(order.orderNumber, methodData.nameId);
+    } catch (err) {
+        console.error("❌ Error al actualizar estado:", err);
+    } finally {
+        console.log("Enviado correctamente");
+    }
+
+}

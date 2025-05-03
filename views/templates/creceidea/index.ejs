@@ -81,6 +81,11 @@
     <% if (GetInfo.type_store=="product" ) { %>
       <script type="module" src="/dist/js/functions.js?v=<%-v%>"></script>
       <% } %>
+
+      <% if (contentTemplate=="checkout" ) { %>
+        <script type="module" src="/dist/checkout/init.js?v=<%-v%>"></script>
+      <% } %>
+      
         <script>
           var menu = [];
           jQuery('.swiper-slide').each(function (index) {
@@ -448,7 +453,6 @@
   </a>
 </div>
 
-
 <div class="overlay" id="overlay" onclick="openCartModal()"></div>
 <div class="sidebar" id="sidebar">
   <div class="content-min-cart overflow-hidden" id="content-cart">
@@ -474,43 +478,7 @@
   </div>
 </div>
 
-
-<div class="fixed z-[9999] left-0 pl-4 pr-4 w-full flex items-center gap-2" id="content-buscador">
-  <div
-    class="bg-[#9ca6aa]/50 backdrop-blur-md items-center justify-center w-full flex rounded-full shadow-lg p-2 mb-5  border-solid border border-white/40"
-    style="top: 5px">
-
-    <div>
-
-      <div class="p-2 mr-1 rounded-full cursor-pointer" id="closeIcon">
-
-        <svg class="h-6 w-6 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="#ffffff">
-          <path fill-rule="evenodd"
-            d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z"
-            clip-rule="evenodd" />
-        </svg>
-
-      </div>
-
-    </div>
-    <form action="" id="searchForm" class="flex items-center">
-      <input id="searchInput"
-        class="font-normal  border-0 rounded-full lg:w-[600px] py-2 pl-4 text-gray-700 bg-gray-100 leading-tight focus:outline-1 focus:ring-0 focus:outline-white focus:shadow-outline focus:outline-current lg:text-sm text-xs"
-        type="text" placeholder="Buscar productos...">
-
-      <button type="submit" class="bg-white p-1 hover:bg-white/50 cursor-pointer mx-2 rounded-full" id="searchIcon">
-
-        <svg class="w-6 h-6 text-gray-600" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-          <path fill-rule="evenodd"
-            d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
-            clip-rule="evenodd" />
-        </svg>
-
-      </button>
-    </form>
-
-  </div>
-</div>
+<%- include('parts/buscador') %>
 
 
 <script>
