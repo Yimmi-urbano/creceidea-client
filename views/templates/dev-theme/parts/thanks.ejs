@@ -170,7 +170,7 @@
             const orderData = await fetchOrderData(orderId);
 
             if (orderData) {
-                
+
                 cachedOrderData = orderData;
                 renderOrderData(orderData);
 
@@ -234,7 +234,12 @@
         const phoneNumber = "<%- GetInfo.catalogo.whatsapp['number'] %>";
         const whatsappLink = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
 
-        window.open(whatsappLink, '_blank');
+        const link = document.createElement('a');
+        link.href = whatsappLink;
+        link.target = '_blank';
+        link.rel = 'noopener noreferrer';
+        link.click();
+
     }
 
     async function init() {
@@ -249,7 +254,7 @@
 
         await loadOrder(orderId);
 
-        if (methodPay && methodPay.toLowerCase() === "whatsapp") {
+        if (methodPay && methodPay.toLowerCase() === "coordina_whatsapp") {
             sendWhatsappOrder(orderId);
         }
     }

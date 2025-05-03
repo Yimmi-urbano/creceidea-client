@@ -2,7 +2,7 @@ import {
     getCartItems,
     updateSessionStorageCart,
     getOrderData
-} from '../js/utils.js?v=232224322222222322';
+} from '../js/utils.js?v=555';
 
 import {
     checkCartSync,
@@ -10,9 +10,9 @@ import {
     createOrder,
     resetCart,
     fetchOrderData
-} from './api.js?v=2322223222222223234';
+} from './api.js?v=555';
 
-import * as paymentHandlers from './payment-handlers/index.js?v=5454322222222222222222323';
+import * as paymentHandlers from './payment-handlers/index.js?v=555';
 
 const btnContinuePayment = document.getElementById('payment-btn');
 const btnCreateOrder = document.getElementById('create-order');
