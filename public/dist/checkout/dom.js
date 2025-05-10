@@ -1,7 +1,8 @@
 import {
     getCartItems,
     updateSessionStorageCart,
-    getOrderData
+    getOrderData,
+    loaderProcess
 } from '../js/utils.js?v=555';
 
 import {
@@ -10,7 +11,7 @@ import {
     createOrder,
     resetCart,
     fetchOrderData
-} from './api.js?v=555';
+} from './api.js?v=12356789';
 
 import * as paymentHandlers from './payment-handlers/index.js?v=555';
 
@@ -49,7 +50,13 @@ export function renderCartItemsToDOM() {
 }
 
 export function handleContinuePayment() {
+
+
+
     btnContinuePayment.addEventListener('click', async () => {
+
+        loaderProcess(true);
+
         const cart = getCartItems();
         const result = await checkCartSync(cart);
 
@@ -59,12 +66,17 @@ export function handleContinuePayment() {
             btnContinuePayment.classList.add('hidden');
             methodPayments.classList.add('hidden');
             btnSaveInformation.classList.remove('hidden');
+            loaderProcess(false);
         }
     });
 }
 
 export function handleSaveInformation() {
+
     btnSaveInformation.addEventListener('click', async () => {
+
+        loaderProcess(true);
+
         const cart = getCartItems();
         const result = await checkCartSync(cart);
         const { clientInfo } = await getOrderData();
@@ -81,6 +93,7 @@ export function handleSaveInformation() {
             btnCreateOrder.classList.remove('hidden');
             btnSaveInformation.classList.add('hidden');
             containerSummaryProducts.classList.remove('hidden');
+            loaderProcess(false);
 
         }
     });
@@ -88,8 +101,7 @@ export function handleSaveInformation() {
 
 function setOrderIdCookie(orderId) {
     const expires = new Date();
-    expires.setTime(expires.getTime() + 60 * 60 * 1000); // 1 hora
-
+    expires.setTime(expires.getTime() + 60 * 60 * 1000);
     document.cookie = `orderId=${orderId}; expires=${expires.toUTCString()}; path=/; secure; samesite=strict`;
 }
 
@@ -112,17 +124,12 @@ function getOrderIdCookie() {
 export function handleCreateOrder() {
 
     btnCreateOrder.addEventListener('click', async () => {
-
+        loaderProcess(true);
         const cart = getCartItems();
-
         const cartSync = await checkCartSync(cart);
-
         if (!cartSync) return;
-
         const methodId = obtenerMetodoDePagoSeleccionado();
-
         const methodData = await fetchPaymentMethod(methodId);
-
         if (!methodData) return;
 
         let order;
@@ -143,10 +150,12 @@ export function handleCreateOrder() {
 
         if (handler) {
             await handler(order, methodData);
+            sessionStorage.removeItem("cart_tem");
+            await resetCart();
+            loaderProcess(false);
         } else {
             sessionStorage.removeItem("cart_tem");
             await resetCart();
-
         }
     });
 }

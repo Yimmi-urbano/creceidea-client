@@ -23,6 +23,10 @@
         height: 100%;
 
     }
+
+    .whatsapp_float {
+        display: none;
+    }
 </style>
 
 <main class="page-content global-content-payment pb-16 mb-4">
@@ -36,12 +40,12 @@
             <div class="flex justify-between items-start">
                 <div class="flex gap-1">
                     <a href="/">
-                    <svg width="25px" height="25px" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
-                        <polygon fill="var(--ci-primary-color, #000000)"
-                            points="497.333 239.999 80.092 239.999 176.087 144.004 153.46 121.377 18.837 256 153.46 390.623 176.087 367.996 80.09 271.999 497.333 271.999 497.333 239.999"
-                            class="ci-primary" />
-                    </svg>
-                </a>
+                        <svg width="25px" height="25px" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+                            <polygon fill="var(--ci-primary-color, #000000)"
+                                points="497.333 239.999 80.092 239.999 176.087 144.004 153.46 121.377 18.837 256 153.46 390.623 176.087 367.996 80.09 271.999 497.333 271.999 497.333 239.999"
+                                class="ci-primary" />
+                        </svg>
+                    </a>
                 </div>
                 <button id="toggleVisibility" class="text-gray-600">
                     <div class="">
@@ -65,7 +69,7 @@
                             stroke="#000000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                     </svg>
                 </span>
-                Metodo de pago
+                Método de pago
             </div>
 
             <div class="flex flex-col items-center text-xs text-gray-700 cursor-pointer">
@@ -81,7 +85,7 @@
                             fill="" />
                     </svg>
                 </span>
-                Informacion de contacto
+                Datos de contacto
             </div>
             <div class="flex flex-col items-center text-xs text-gray-700 cursor-pointer">
                 <span class="text-xl mb-1">
@@ -92,7 +96,7 @@
                             stroke-linecap="round" stroke-linejoin="round" />
                     </svg>
                 </span>
-                Gracias
+                Resumen
             </div>
         </div>
     </div>
@@ -277,7 +281,7 @@
         </div>
     </div>
 
-    <div class="w-full max-w-[600px]  mx-auto rounded-3xl bg-white overflow-hidden shadow-md mt-2 hidden"
+    <div class="w-full max-w-[600px] relative z-2  mx-auto rounded-3xl bg-white overflow-hidden shadow-md mt-2 hidden"
         id="summary-products">
         <div
             class="relative overflow-hidden p-6 m-2 rounded-2xl z-0 before:content-[''] before:opacity-[.08] before:absolute before:inset-0 before:bg-gray-600 before:z-[-1]">

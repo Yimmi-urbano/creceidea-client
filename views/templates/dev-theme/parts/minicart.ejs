@@ -1,0 +1,140 @@
+<div class="w-full max-w-md bg-white p-2 h-full flex flex-col justify-between relative">
+    <!-- Encabezado -->
+    <div class="flex justify-between items-center h-[10%]">
+        <h2 class="text-xl font-semibold">Tu carrito</h2>
+        <button  id="cancel-btn" class="text-gray-400 hover:text-gray-600 text-2xl closedMiniCart">&times;</button>
+    </div>
+
+    <div class="w-full mx-auto bg-white rounded-xl border border-gray-200 space-y-4 overflow-auto mb-2 h-[100%]">
+        <!-- Alerta de envío gratis -->
+        <div class="bg-gray-100 text-center text-sm py-3 rounded mb-2 hidden font-medium">
+            ¡Buenas noticias! Eres elegible para envío gratis.
+        </div>
+
+        <!-- Barra de progreso -->
+        <div class="px-3 border-b border-gray-200 progress-shipping hidden">
+            <div class="text-sm mb-2">¡Gasta $39.00 más para obtener envío gratis!</div>
+            <div class="w-full h-2 bg-gray-200 rounded mb-2">
+                <div class="bg-black h-2 rounded w-1/4"></div>
+            </div>
+        </div>
+
+        <!-- Artículos del carrito -->
+        <div class="space-y-4 px-3 overflow-auto">
+            <div class="mx-auto divide-y divide-gray-200" id="product-list"></div>
+        </div>
+
+        <!-- Sugerencias -->
+        <div class="bg-gray-100 products-suggestions rounded mt-6 p-2 hidden">
+            <div class="max-w-md mx-auto">
+                <h2 class="text-base font-semibold text-black mb-3">También te puede interesar</h2>
+
+                <div class="flex overflow-x-auto space-x-4 pb-2 scrollbar-hide">
+
+                    <!-- Tarjeta de producto -->
+                    <div class="flex flex-col w-64 bg-white rounded-xl shadow-sm overflow-hidden flex-shrink-0">
+                        <div class="flex items-start p-3 gap-3">
+                            <img src="https://media-static.creceidea.pe/inversionesvargas/images/products/paleta-de-clores-1739467138666.webp"
+                                alt="Producto" class="w-20 h-20 object-cover rounded-md">
+                            <div class="flex-1">
+                                <p class="text-sm font-medium text-gray-800">Camiseta (manga larga)</p>
+                                <div class="flex items-center gap-2 text-sm mt-1">
+                                    <span class="line-through text-gray-400">$20.00</span>
+                                    <span class="text-gray-900 font-semibold">$18.00</span>
+                                    <span class="text-gray-400 text-xs">incluye IVA</span>
+                                </div>
+                            </div>
+                        </div>
+                        <button
+                            class="bg-black text-white text-sm font-semibold py-2 w-full hover:bg-gray-800 transition">
+                            Agregar al carrito
+                        </button>
+                    </div>
+
+                    <!-- Otra tarjeta (opcional) -->
+                    <div class="flex flex-col w-64 bg-white rounded-xl shadow-sm overflow-hidden flex-shrink-0">
+                        <div class="flex items-start p-3 gap-3">
+                            <img src="https://media-static.creceidea.pe/inversionesvargas/images/products/filtro-peces-1739467869104.webp"
+                                alt="Producto" class="w-20 h-20 object-cover rounded-md">
+                            <div class="flex-1">
+                                <p class="text-sm font-medium text-gray-800">Pantalones de yoga</p>
+                                <div class="flex items-center gap-2 text-sm mt-1">
+                                    <span class="line-through text-gray-400">$25.00</span>
+                                    <span class="text-gray-900 font-semibold">$21.00</span>
+                                    <span class="text-gray-400 text-xs">incluye IVA</span>
+                                </div>
+                            </div>
+                        </div>
+                        <button
+                            class="bg-black text-white text-sm font-semibold py-2 w-full hover:bg-gray-800 transition">
+                            Agregar al carrito
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="w-full mx-auto bg-white p-3 sticky bottom-0 rounded-xl border border-gray-200 space-y-4 h-fit">
+
+        <!-- Sección de cupones -->
+        <div class="coupons-section hidden">
+            <h2 class="text-sm font-semibold text-black mb-2">Cupones</h2>
+            <div class="flex gap-2">
+                <input type="text" placeholder="Código de cupón"
+                    class="flex-1 border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-black" />
+                <button class="bg-black text-white text-sm font-medium rounded-md px-4 py-2">
+                    Aplicar
+                </button>
+            </div>
+        </div>
+
+        <!-- Cupones aplicados -->
+        <div class="block-coupons hidden">
+            <p class="text-sm text-black mb-2">Cupón(es) aplicados</p>
+            <div class="flex flex-wrap gap-2">
+                <span
+                    class="inline-flex items-center gap-1 px-3 py-1 border border-gray-300 rounded-full text-sm text-black">
+                    <svg class="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" stroke-width="2"
+                        viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 13l-3-3m0 0l3-3m-3 3h12"></path>
+                    </svg>
+                    FRST50
+                    <button class="ml-1 text-gray-500 hover:text-red-500">
+                        ×
+                    </button>
+                </span>
+                <span
+                    class="inline-flex items-center gap-1 px-3 py-1 border border-gray-300 rounded-full text-sm text-black">
+                    <svg class="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" stroke-width="2"
+                        viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 13l-3-3m0 0l3-3m-3 3h12"></path>
+                    </svg>
+                    FRST50
+                    <button class="ml-1 text-gray-500 hover:text-red-500">
+                        ×
+                    </button>
+                </span>
+            </div>
+        </div>
+
+        <!-- Resumen del pedido -->
+        <div class="border-t-0 border-gray-200 pt-0 space-y-2">
+            <h3 class="text-sm font-semibold text-black">Resumen del pedido</h3>
+            <div id="cart-summary"></div>
+        </div>
+
+        <!-- Acciones -->
+        <div class="grid grid-cols-2 gap-2 pt-2">
+            <button  id="modal-cancel-btn"
+                class="border closedMiniCart border-[var(--primary-color)] text-[var(--primary-color)] text-sm font-medium rounded-md py-2">
+                Seguir comprando
+            </button>
+            <a href="/checkout"
+                class="bg-[var(--primary-color)] text-white text-center text-sm font-medium rounded-md py-2">
+                Ir a pagar
+            </a>
+        </div>
+    </div>
+</div>

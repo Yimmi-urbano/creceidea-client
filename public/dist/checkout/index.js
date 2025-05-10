@@ -452,9 +452,7 @@ btnCreateOrder.addEventListener('click', async function () {
         try {
 
             const resultOrder = await createOrder(result.cart);
-
             const authorization = await generateIzipayToken(resultOrder);
-
             activaBtnIzipay(authorization, resultOrder, resultMetod);
 
 

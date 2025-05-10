@@ -113,7 +113,7 @@ router.get('/search', async (req, res, next) => {
     renderPage(res, 'catalog', {
       dataProducts: results,
       subcategories: res.locals.navbar,
-      pageTitle: `Resultados de búsqueda: ${query}`
+      pageTitle: `Resultados de búsqueda de:<br><b>${query}</b>`
     });
   } catch (error) {
     next(error);

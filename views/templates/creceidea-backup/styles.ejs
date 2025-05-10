@@ -1,9 +1,10 @@
-@import url("https://fonts.googleapis.com/css2?family=Inter&display=swap");
+@import
+url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
 body {
 font-feature-settings: "cv03", "cv04", "cv11";
 margin: 0;
-font-family: "Inter", sans-serif;
+font-family: "Poppins", serif;
 font-optical-sizing: auto;
 background-color: #eff3f5 !important;
 }
@@ -41,12 +42,10 @@ height: 100%;
 }
 
 .banner-catalog h2 {
-    color: #fff;
-    font-size: 1.2rem;
-    margin: 0px;
-    padding: 0px;
-    text-align: center;
-    line-height: 25px;
+color: #fff;
+font-size: 32px;
+margin: 0px;
+padding: 0px;
 }
 
 .banner-catalog {
@@ -689,6 +688,7 @@ background-color: var(--primary-color);
 padding-left: 5px;
 padding-right: 5px;
 line-height: 13px;
+
 }
 
 #categories-multiple-slides .item-cat a{
@@ -1007,6 +1007,8 @@ opacity: 1;
 display: block;
 }
 
+
+
 .floating_btn {
 position: fixed;
 bottom: 10px;
@@ -1081,14 +1083,16 @@ display: block;
 
 .sidebar {
 width: 440px;
-height: 100%;
+height: 100vh;
 position: fixed;
 top: 0;
 right: -460px;
 transition: right 0.3s ease;
 box-sizing: border-box;
+padding: 10px;
 opacity: 0;
 z-index:99999;
+
 }
 
 .sidebar.active {
@@ -1121,7 +1125,9 @@ border-radius: 5px;
 }
 
 .content-min-cart {
-height:100%;
+background-color: #ffffff;
+border-radius: 20px;
+height: 100%;
 box-sizing: border-box;
 }
 
