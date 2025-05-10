@@ -25,12 +25,6 @@
 
     gtag('config', 'G-3S40H8Q0BG');
   </script>
-  <script>
-    (function(w,d,u){
-            var s=d.createElement('script');s.async=true;s.src=u+'?'+(Date.now()/60000|0);
-            var h=d.getElementsByTagName('script')[0];h.parentNode.insertBefore(s,h);
-    })(window,document,'https://cdn.bitrix24.es/b33205519/crm/site_button/loader_1_l4d94v.js');
-</script>
   <style>
     :root {
       --primary-color: <%- GetInfo.colors[0] %>;
@@ -66,47 +60,26 @@
 </head>
 
 <body class="<%- contentTemplate %>">
-
   <div class="page">
-
     <div class="page-wrapper">
       <div class="page-body mt-3">
-        <div class="px-2 mb-3 container-fluid">
-          <a target="_blank" href="https://wa.me/+51913087551?text=Hola,%20quiero%20más%20registrarme%20en%20CreceIdea">
-
-            <div class="adds-creceidea-pe rounded-2xl">
-              Crea tu catálogo en CRECEIDEA.PE
-              <svg width="800px" height="800px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path
-                  d="M12 8.25L15.75 12M15.75 12L12 15.75M15.75 12H8.25M21.75 12C21.75 17.3848 17.3848 21.75 12 21.75C6.61522 21.75 2.25 17.3848 2.25 12C2.25 6.61522 6.61522 2.25 12 2.25C17.3848 2.25 21.75 6.61522 21.75 12Z"
-                  stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-              </svg>
-
-            </div>
-          </a>
-        </div>
         <div class="ml-3  mr-3"> <%- include('header') %></div>
-
         <section class="container-fluid">
           <%- include('parts/' + contentTemplate) %>
         </section>
-
-
-
         <%- include('footer') %>
       </div>
     </div>
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-
+    <link href="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
     <script src="/dist/js/swiper.min.js"></script>
     <% if (GetInfo.type_store=="product" ) { %>
       <script type="module" src="/dist/js/functions.js?v=<%-v%>"></script>
       <% } %>
         <% if (contentTemplate=="checkout" ) { %>
           <script type="module" src="/dist/checkout/init.js?v=<%-v%>"></script>
-        <% } %>
-
+          <% } %>
             <script>
               var menu = [];
               jQuery('.swiper-slide').each(function (index) {
@@ -256,186 +229,6 @@
             </script>
 
 </body>
-
-
-<div id="form-shopping" class="hidden fixed inset-0 z-[9999]" aria-labelledby="modal-title" role="dialog"
-  aria-modal="true">
-  <div class="fixed inset-0 bg-[#e5edef] backdrop-blur bg-opacity-85 transition-opacity"></div>
-  <div class="fixed inset-0 z-10 overflow-y-auto">
-
-    <div class="flex min-h-full items-start  justify-center p-4 text-center sm:items-center sm:p-0">
-      <div class="modal-content relative transform w-full  transition-all sm:my-8 sm:w-full sm:max-w-3xl">
-
-        <div class="sm:flex sm:items-start">
-          <div
-            class="icon-container mx-auto d-none hidden flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full sm:mx-0 sm:h-10 sm:w-10">
-          </div>
-          <div class="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left w-full">
-            <h3 class="modal-title text-xl font-semibold text-gray-900" id="modal-title"></h3>
-            <div class="modal-body mt-2 text-sm ">
-
-              <div
-                class="px-4 pb-4 pt-5 sm:p-6 sm:pb-4 rounded-lg bg-gradient-to-r from-orange-600 to-sky-900 text-left shadow-sm overflow-hidden mb-3">
-                <div class="summary-checkout flex text-xl justify-between">
-                  <div class="subtotal text-white"></div>
-                  <div class="cant-items text-white"></div>
-                </div>
-              </div>
-
-              <div class="rounded-lg bg-white text-left shadow-xl px-4 pb-4  pt-5 overflow-hidden">
-                <div id="orderFormBK" class="form">
-
-                  <label class="block mb-3">
-                    <span
-                      class="after:content-['*'] after:ml-0.5 after:text-red-500 block text-sm font-medium text-slate-700">
-                      D.N.I
-                    </span>
-                    <input type="text" name="doc"
-                      class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1"
-                      placeholder="Documento DNI" />
-                  </label>
-
-                  <label class="block  mb-3">
-                    <span
-                      class="after:content-['*'] after:ml-0.5 after:text-red-500 block text-sm font-medium text-slate-700">
-                      Nombres y Apellidos
-                    </span>
-                    <input type="text" name="nom"
-                      class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1"
-                      placeholder="Nombres y apellidos" />
-                  </label>
-
-                  <label class="block mb-3">
-                    <span
-                      class="after:content-['*'] after:ml-0.5 after:text-red-500 block text-sm font-medium text-slate-700">
-                      Email
-                    </span>
-                    <input type="email" name="email"
-                      class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1"
-                      placeholder="tucorreo@gmail.com" />
-                  </label>
-
-                  <label class="block  mb-3">
-                    <span
-                      class="after:content-['*'] after:ml-0.5 after:text-red-500 block text-sm font-medium text-slate-700">
-                      Celular
-                    </span>
-                    <input type="text" name="celular"
-                      class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1"
-                      placeholder="999 888 777" />
-                  </label>
-
-
-
-                </div>
-
-                <div class="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
-                  <button id="send-order-end" disabled type="button"
-                    class="inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto">
-                    Enviar Pedido</button>
-                </div>
-
-              </div>
-
-            </div>
-          </div>
-        </div>
-
-
-      </div>
-    </div>
-
-  </div>
-</div>
-
-<div id="form-payment" class="hidden fixed inset-0 z-[9999]" aria-labelledby="modal-title" role="dialog"
-  aria-modal="true">
-
-  <div class="fixed inset-0 bg-[#e5edef] backdrop-blur bg-opacity-85  transition-opacity"></div>
-  <div class="fixed inset-0 z-10 overflow-y-auto">
-    <div class="flex min-h-full items-start  justify-center p-4 text-center sm:items-center sm:p-0">
-      <div class="modal-content relative transform w-full transition-all sm:my-8 sm:w-full sm:max-w-3xl">
-
-        <div class="w-full">
-          <h3 class="modal-title text-base font-semibold hidden text-gray-900" id="modal-title">Selecciona un Método de
-            Pago
-          </h3>
-
-          <div class="modal-body mt-2 text-sm ">
-            <div
-              class="px-4 pb-4 pt-5 sm:p-6 sm:pb-4 rounded-lg bg-gradient-to-r from-orange-600 to-sky-900 text-left shadow-sm overflow-hidden mb-3">
-              <div class="summary-checkout flex text-xl justify-between">
-                <div class="subtotal text-white"></div>
-                <div class="cant-items text-white"></div>
-              </div>
-            </div>
-            <div class="w-full rounded-lg text-left bg-white shadow-xl overflow-hidden px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
-
-
-              <div class="space-y-4 mb-6">
-
-                <!-- Opción de Pago con WhatsApp -->
-                <label
-                  class="flex items-center space-x-3 p-4 border border-gray-200 rounded-lg shadow-md cursor-pointer hover:bg-gray-50">
-                  <input type="radio" name="paymentMethod" value="whatsapp"
-                    class="form-radio text-green-500 focus:ring-green-400" />
-
-
-                  <svg width="800px" class="w-6 h-6" height="800px" viewBox="0 0 24 24" version="1.1"
-                    xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-
-                    <g id="-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                      <g id="Brand" transform="translate(-864.000000, -48.000000)">
-                        <g id="whatsapp_fill" transform="translate(864.000000, 48.000000)">
-                          <path
-                            d="M24,0 L24,24 L0,24 L0,0 L24,0 Z M12.5934901,23.257841 L12.5819402,23.2595131 L12.5108777,23.2950439 L12.4918791,23.2987469 L12.4918791,23.2987469 L12.4767152,23.2950439 L12.4056548,23.2595131 C12.3958229,23.2563662 12.3870493,23.2590235 12.3821421,23.2649074 L12.3780323,23.275831 L12.360941,23.7031097 L12.3658947,23.7234994 L12.3769048,23.7357139 L12.4804777,23.8096931 L12.4953491,23.8136134 L12.4953491,23.8136134 L12.5071152,23.8096931 L12.6106902,23.7357139 L12.6232938,23.7196733 L12.6232938,23.7196733 L12.6266527,23.7031097 L12.609561,23.275831 C12.6075724,23.2657013 12.6010112,23.2592993 12.5934901,23.257841 L12.5934901,23.257841 Z M12.8583906,23.1452862 L12.8445485,23.1473072 L12.6598443,23.2396597 L12.6498822,23.2499052 L12.6498822,23.2499052 L12.6471943,23.2611114 L12.6650943,23.6906389 L12.6699349,23.7034178 L12.6699349,23.7034178 L12.678386,23.7104931 L12.8793402,23.8032389 C12.8914285,23.8068999 12.9022333,23.8029875 12.9078286,23.7952264 L12.9118235,23.7811639 L12.8776777,23.1665331 C12.8752882,23.1545897 12.8674102,23.1470016 12.8583906,23.1452862 L12.8583906,23.1452862 Z M12.1430473,23.1473072 C12.1332178,23.1423925 12.1221763,23.1452606 12.1156365,23.1525954 L12.1099173,23.1665331 L12.0757714,23.7811639 C12.0751323,23.7926639 12.0828099,23.8018602 12.0926481,23.8045676 L12.108256,23.8032389 L12.3092106,23.7104931 L12.3186497,23.7024347 L12.3186497,23.7024347 L12.3225043,23.6906389 L12.340401,23.2611114 L12.337245,23.2485176 L12.337245,23.2485176 L12.3277531,23.2396597 L12.1430473,23.1473072 Z"
-                            id="MingCute" fill-rule="nonzero">
-
-                          </path>
-                          <path
-                            d="M12,2 C6.47715,2 2,6.47715 2,12 C2,13.8896 2.52505,15.6594 3.43756,17.1683 L2.54581,20.2002 C2.32023,20.9672 3.03284,21.6798 3.79975,21.4542 L6.83171,20.5624 C8.34058,21.475 10.1104,22 12,22 C17.5228,22 22,17.5228 22,12 C22,6.47715 17.5228,2 12,2 Z M9.73821,14.2627 C11.7607,16.2852 13.692,16.5518 14.3739,16.5769 C15.4111,16.6151 16.421,15.823 16.8147,14.9042 C16.9112,14.6792 16.8871,14.4085 16.7255,14.2014 C16.1782,13.5005 15.4373,12.9983 14.7134,12.4984 C14.4006,12.282 13.9705,12.349 13.7401,12.6555 L13.1394,13.5706 C13.0727,13.6721 12.9402,13.707 12.8348,13.6467 C12.4283,13.4143 11.8356,13.018 11.4092,12.5916 C10.9833,12.1657 10.6111,11.5998 10.4022,11.2195 C10.3473,11.1195 10.3777,10.996 10.4692,10.928 L11.3927,10.2422 C11.6681,10.0038 11.7165,9.59887 11.5138,9.30228 C11.065,8.64569 10.5422,7.8112 9.7855,7.25926 C9.57883,7.1085 9.3174,7.09158 9.10155,7.18408 C8.1817,7.5783 7.38574,8.58789 7.42398,9.62695 C7.44908,10.3089 7.71572,12.2402 9.73821,14.2627 Z"
-                            id="形状" fill="#09244B">
-
-                          </path>
-                        </g>
-                      </g>
-                    </g>
-                  </svg>
-
-                  <span class="text-gray-900 font-medium">Coordinar pago por WhatsApp</span>
-                </label>
-
-                <!-- Opción de Pago con Tarjeta de Crédito -->
-                <label style="display: none !important;"
-                  class="flex items-center none d-none  space-x-3 p-4 border border-gray-200 rounded-lg shadow-md cursor-pointer hover:bg-gray-50">
-                  <input type="radio" name="paymentMethod" value="creditCard"
-                    class="form-radio text-blue-500 focus:ring-blue-400" />
-                  <img src="https://upload.wikimedia.org/wikipedia/commons/4/41/Visa_Logo.png" alt="Visa"
-                    class="w-6 h-6">
-                  <span class="text-gray-900 font-medium">Pagar con Tarjeta de Crédito</span>
-                </label>
-
-                <!-- Agregar más métodos de pago aquí si es necesario -->
-
-              </div>
-
-              <button type="button" disabled id="payment-process"
-                class="w-full px-4 py-2 text-white bg-green-500 rounded-lg shadow-md hover:bg-green-600 transition duration-150 ease-in-out">
-                Pagar
-              </button>
-            </div>
-
-          </div>
-        </div>
-
-      </div>
-
-    </div>
-
-  </div>
-
-</div>
-
 <div id="loader" class="hidden fixed inset-0 z-[99999]" aria-labelledby="modal-title" role="dialog" aria-modal="true">
   <div class="fixed inset-0 bg-[#e5edef] backdrop-blur bg-opacity-85  transition-opacity"></div>
   <div class="fixed inset-0 z-10 overflow-y-auto">
@@ -463,7 +256,7 @@
   </button>
 </div>
 
-<div class="floating_btn <%- GetInfo.whatsapp_home['isActive'] ? 'block' : 'hidden' %>">
+<div class="floating_btn whatsapp_float <%- GetInfo.whatsapp_home['isActive'] ? 'block' : 'hidden' %>">
   <a target="_blank"
     href="https://wa.me/<%- GetInfo.whatsapp_home['number'] %>?text=<%- GetInfo.whatsapp_home['message_custom'] %>">
     <div class="contact_icon">
@@ -476,91 +269,39 @@
   </a>
 </div>
 
-<div class="overlay" id="overlay" onclick="openCartModal()"></div>
+<div class="overlay closedMiniCart" id="overlay"></div>
 <div class="sidebar" id="sidebar">
-  <div class="content-min-cart overflow-hidden" id="content-cart">
-    <div class="header-minicart h-[7%] flex border-b-1 border-zinc-200 justify-center items-center">
-      Mi carrito
-    </div>
-
-    <div class="body-sidebar-minicar h-[70%] bg-[#eff3f5] overflow-y-auto">
-      <div id="product-list" class="product-list w-full p-4"></div>
-    </div>
-
-    <div class="h-[23%] flex flex-col justify-around items-center">
-      <div id="cart-summary" class="cart-summary text-black w-full text-md w-[80%]"></div>
-      <div class="gap-3 flex-col flex w-[90%]">
-        <a href="/checkout"
-          class="inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:w-auto">Confirmar
-          compra</a>
-        <button id="modal-cancel-btn" type="button"
-          class="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto">Seguir
-          comprando</button>
-      </div>
-    </div>
+  <div class="content-min-cart overflow-auto" id="content-cart">
+    <%- include('parts/minicart') %>
   </div>
 </div>
-<div class="fixed z-[9999] left-0 pl-3 pr-3 w-full flex items-center gap-2" id="content-buscador">
-  <div
-    class="bg-white/90 backdrop-blur-md items-center shadow-md  justify-center w-full flex lg:rounded-b-2xl rounded-t-2xl  p-2 mb-5  border-solid border border-gray-300" style="top: 5px">
+<%- include('parts/buscador') %>
+  <script>
 
-    <div>
+    const contentBuscador = document.getElementById('content-buscador');
+    const openBuscadorBtn = document.getElementById('openBuscadorBtn');
+    const closeIcon = document.getElementById('closeIcon');
+    const searchForm = document.getElementById('searchForm');
+    const searchInput = document.getElementById('searchInput');
 
-      <div class="p-2 mr-1 rounded-full cursor-pointer" id="closeIcon">
+    openBuscadorBtn.addEventListener('click', () => {
+      contentBuscador.classList.add('open');
 
-        <svg class="h-6 w-6 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="#333333">
-          <path fill-rule="evenodd"
-            d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z"
-            clip-rule="evenodd" />
-        </svg>
+      searchInput.focus();
+    });
 
-      </div>
+    closeIcon.addEventListener('click', () => {
+      contentBuscador.classList.remove('open');
+    });
 
-    </div>
-    <form action="" id="searchForm" class="flex items-center">
-      <input id="searchInput"
-        class="font-normal rounded-full lg:w-[800px] w-[65vw] border border-1 border-[#333333] placeholder:text-gray-500 placeholder:italic py-2 pl-4 text-gray-700 bg-white leading-tight focus:outline-1 focus:ring-0 focus:outline-[#333333] focus:shadow-outline focus:outline-current lg:text-sm text-md"
-        type="text" placeholder="Buscar productos...">
+    searchForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const query = searchInput.value.trim();
+      if (query) {
+        window.location.href = `/search?query=${encodeURIComponent(query)}`;
+      }
+    });
 
-      <button type="submit" class="bg-[#333333] p-1 hover:bg-white/50 cursor-pointer mx-2 rounded-full" id="searchIcon">
-
-        <svg class="w-6 h-6 text-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-          <path fill-rule="evenodd"
-            d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
-            clip-rule="evenodd" />
-        </svg>
-
-      </button>
-    </form>
-
-  </div>
-</div>
-<script>
-
-  const contentBuscador = document.getElementById('content-buscador');
-  const openBuscadorBtn = document.getElementById('openBuscadorBtn');
-  const closeIcon = document.getElementById('closeIcon');
-  const searchForm = document.getElementById('searchForm');
-  const searchInput = document.getElementById('searchInput');
-
-  openBuscadorBtn.addEventListener('click', () => {
-    contentBuscador.classList.add('open');
-
-    searchInput.focus();
-  });
-
-  closeIcon.addEventListener('click', () => {
-    contentBuscador.classList.remove('open');
-  });
-
-  searchForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const query = searchInput.value.trim();
-    if (query) {
-      window.location.href = `/search?query=${encodeURIComponent(query)}`;
-    }
-  });
-
-</script>
+  </script>
 
 </html>
