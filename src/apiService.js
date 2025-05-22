@@ -76,7 +76,7 @@ async function getProductsByTitle(domain, page, query) {
   hostname = domain;
   
   try {
-    const response = await axios.get(`${API_PRODUCTS}/products/search?page=${page}&query=${query}`, {
+    const response = await axios.get(`${API_PRODUCTS}/api/products/search?page=${page}&query=${query}`, {
       headers: {
         'domain': hostname
       }
@@ -104,7 +104,7 @@ async function getPageByCategory(domain, nameCategory, page) {
 async function getPageByIdProduct(domain, slug) {
   hostname = domain;
   try {
-    const response = await axios.get(`${API_PRODUCTS}/api/client/products/` + slug, {
+    const response = await axios.get(`${API_PRODUCTS}/api/products/client/` + slug, {
       headers: {
         'domain': hostname
       }

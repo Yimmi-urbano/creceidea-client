@@ -2010,6 +2010,10 @@ input:checked + .toggle-bg {
   height: 100%;
 }
 
+.h-auto {
+  height: auto;
+}
+
 .min-h-\[200px\] {
   min-height: 200px;
 }
