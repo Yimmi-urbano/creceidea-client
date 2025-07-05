@@ -1,12 +1,12 @@
 <header
   class="z-0 mb-4 before:content-[''] overflow-hidden before:opacity-[.10] before:absolute before:inset-0 before:bg-[var(--primary-color)] before:z-[-1] container-fluid p-2 items-center content-center flex flex-column justify-between relative bg-white rounded-b-[var(--border-radius)]">
   <div class="logo-header flex items-center gap-2">
-    <a href="/" class="flex justify-center items-center border-2 border-white  max-w-[120px] h-[80px] bg-white rounded-[var(--border-radius)]">
-      <img class="w-full max-h-[80px] object-contain" src="<%- GetInfo.logo %>" alt="">
+    <a href="/" class="flex justify-center items-center overflow-hidden border-2 border-white  max-w-[120px] h-[80px] bg-white rounded-[var(--border-radius)]">
+      <img class="w-full max-h-[80px] object-cover" src="<%- GetInfo.logo %>" alt="">
     </a>
     <div>
       <div class="font-bold text-sm"><%- GetInfo.title %></div>
-      <div class="pt-1 font-normal text-xs hidden">Av. Javier Prado 560, San Isidro</div>
+      <div class="pt-1 font-normal text-xs"><%- GetInfo.slogan %></div>
       <div class="pt-1">
         <div class="flex gap-0.5">
           <svg class="h-4 w-4 shrink-0 fill-amber-400" viewBox="0 0 256 256">
