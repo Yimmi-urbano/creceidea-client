@@ -172,7 +172,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function initWhatsAppButtons() {
-    const buttons = document.querySelectorAll('.btn-actions-whatsapp'); // Usar una clase es más flexible
+    const buttons = document.querySelectorAll('#btn-actions-whatsapp'); // Usar una clase es más flexible
     buttons.forEach(button => {
       button.addEventListener('click', () => {
         const { phone, title, price, messageTemplate } = button.dataset;
