@@ -1,0 +1,17 @@
+<footer class="footer mt-5 d-print-none">
+
+  <div class="container-fluid rounded-2xl min-h-[200px] py-5 text-center flex justify-center items-center bg-[#ffffff]">
+    <div>
+      <a href="/">
+        <img style="height: 70px;display: block;margin: auto; object-fit: contain;width: 160px;"
+          src=" <%- GetInfo.logo %>" alt="">
+      </a>
+      <p class="py-3 container text-sm"> <%- GetInfo.meta_description %></p>
+      <hr class="border-[var(--primary-color)] m-2">
+      <div class="social-links flex gap-3 justify-center mt-3">
+        <%- include('./parts/social', {socialLinks: GetInfo.social_links}) %>
+      </div>
+    </div>
+  </div>
+
+</footer>

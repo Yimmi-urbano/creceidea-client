@@ -3,7 +3,7 @@ import {
     handleSaveInformation,
     handleCreateOrder,
     renderCartItemsToDOM
-} from './dom.js?v=9090';
+} from './dom.js?v=12342232';
 
 document.addEventListener('DOMContentLoaded', () => {
     renderCartItemsToDOM();

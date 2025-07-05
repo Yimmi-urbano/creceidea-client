@@ -226,11 +226,11 @@ export function loaderProcess(status) {
         showModalLoader.classList.add("hidden");
 
     }
+}
 
-   
+
 
 
     
-}
 
-export { toggleMiniCart, removeFromCart, getDataAttributes, addToCart, getCartItemCount, getCartItems, incrementQty, decrementQty, updateSessionStorageCart, calculateCartSummary };
+export {toggleMiniCart, removeFromCart, getDataAttributes, addToCart, getCartItemCount, getCartItems, incrementQty, decrementQty, updateSessionStorageCart, calculateCartSummary };

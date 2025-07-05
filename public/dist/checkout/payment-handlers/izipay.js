@@ -1,11 +1,11 @@
 import {
     activaBtnIzipay,
     injectCheckoutPayment
-} from '../payment.js?v=232222222222223';
+} from '../payment.js?v=23222222222222232323';
 
 import {
     generateIzipayToken,
-} from '../api.js?v=23222322222222';
+} from '../api.js?v=23222322222222333222222';
 
 export default async function izipayHandler(order, methodData) {
     const transaccionId = Math.floor(100000 + Math.random() * 900000);

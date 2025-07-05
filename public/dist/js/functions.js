@@ -7,7 +7,6 @@ import {
     decrementQty,
     calculateCartSummary,
     updateSessionStorageCart,
-    showNotification,
     removeFromCart,
     toggleMiniCart
 
@@ -31,13 +30,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const buttons = document.querySelectorAll('.add_to_cart');
     const quantityInput = document.querySelector('#quantity');
+    const btnCartToolBar = document.getElementById('openCart');
 
     buttons.forEach(button => {
         button.addEventListener('click', () => {
             const data = getDataAttributes(button);
             const quantity = quantityInput ? parseInt(quantityInput.value) : 1;
             addToCart(data, quantity);
-            showNotification(data.title, data.image);
+            btnCartToolBar.classList.add('animar-pulso');
+
+            setTimeout(() => {
+                btnCartToolBar.classList.remove('animar-pulso');
+            }, 900);
+
             updateCartItemCount();
         });
     });
