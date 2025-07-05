@@ -2006,6 +2006,10 @@ input:checked + .toggle-bg {
   height: 100%;
 }
 
+.h-\[80px\] {
+  height: 80px;
+}
+
 .max-h-\[80px\] {
   max-height: 80px;
 }
