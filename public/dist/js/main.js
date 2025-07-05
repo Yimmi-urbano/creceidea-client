@@ -175,11 +175,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const buttons = document.querySelectorAll('#btn-actions-whatsapp'); // Usar una clase es más flexible
     buttons.forEach(button => {
       button.addEventListener('click', () => {
-        const { phone, title, price, messageTemplate } = button.dataset;
+        const { number, title, price, messageTemplate } = button.dataset;
 
-        if (phone && title && price && messageTemplate) {
-          const message = messageTemplate.replace('{title}', title).replace('{price}', price);
-          const whatsappLink = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+        console.log({ number, title, price, messageTemplate })
+
+        if (number && title && price) {
+         // const message = messageTemplate.replace('{title}', title).replace('{price}', price);
+          const message = `Hola, quiero comprar este producto: ${title} - ${price} `;
+          const whatsappLink = `https://wa.me/${number}?text=${encodeURIComponent(message)}`;
           window.open(whatsappLink, '_blank');
         } else {
           console.error('Faltan atributos de datos para el botón de WhatsApp.');
