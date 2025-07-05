@@ -1,8 +1,9 @@
 <style>
     header,
     footer,
-    .adds-creceidea-pe {
-        display: none;
+    .adds-creceidea-pe,
+    #call-toolbar {
+        display: none !important;
     }
 
     .page-body {
@@ -34,41 +35,36 @@
         color: var(--primary-color);
         font-weight: bold;
     }
-</style>
-<style>
-        /* --- ESTILOS PARA EL EFECTO BLUR TIPO iOS --- */
+
+    .ios-backdrop {
+        background-color: rgba(0, 0, 0, 0.1);
+        transition: background-color 0.3s ease-in-out;
+    }
+
+    .dark .ios-backdrop {
+
+        background-color: rgba(28, 28, 30, 0.55);
+    }
+
+    .dark #product-list-modal .font-medium {
+        color: #ffffff !important;
+    }
+
+    @supports not (backdrop-filter: none) {
         .ios-backdrop {
-            /* Propiedad clave para el efecto de desenfoque */
-            -webkit-backdrop-filter: blur(3px); /* Para Safari */
-            backdrop-filter: blur(3px);
-
-            /* Color de fondo para el MODO DÍA (semi-transparente claro) */
-            background-color: rgba(248, 248, 248, 0);
-            transition: background-color 0.3s ease-in-out;
+            background-color: rgba(255, 255, 255, 0.55);
         }
 
-        /* Estilos para el MODO NOCHE cuando la etiqueta <html> tiene la clase .dark */
         .dark .ios-backdrop {
-            /* Color de fondo para el MODO NOCHE (semi-transparente oscuro) */
-            background-color: rgba(28, 28, 30, 0.55);
+            background-color: rgba(0, 0, 0, 0.5);
         }
+    }
 
-        /* * Fallback para navegadores que NO soportan backdrop-filter.
-         * Muestra un fondo más opaco para mantener la legibilidad.
-        */
-        @supports not (backdrop-filter: none) {
-            .ios-backdrop {
-                background-color: rgba(255, 255, 255, 0.55);
-            }
-            .dark .ios-backdrop {
-                background-color: rgba(0, 0, 0, 0.5);
-            }
-        }
-        
-        .no-select {
-            -webkit-user-select: none; user-select: none;
-        }
-    </style>
+    .no-select {
+        -webkit-user-select: none;
+        user-select: none;
+    }
+</style>
 
 <main class="page-content global-content-payment pb-16 mb-4">
 
@@ -97,7 +93,26 @@
             <p class="text-sm text-gray-700 mt-1  text-center">Total a pagar</p>
             <h1 id="balance" class="text-3xl font-bold text-black mt-1  text-center"> S/ <span id="totalAmount"></span>
             </h1>
-            <p class="text-green-600 font-medium mt-1  text-center" id="openModalBtn">items <span id="totalItems"></span></p>
+            <p class="text-green-600 font-medium text-sm mt-1 gap-1 cursor-pointer flex justify-center items-center text-center"
+                id="openModalBtn">
+                <svg class="h-5 w-5" version="1.1" id="Icons" xmlns="http://www.w3.org/2000/svg"
+                    xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" xml:space="preserve">
+                    <style type="text/css">
+                        .st0 {
+                            fill: none;
+                            stroke-width: 2;
+                            stroke-linecap: round;
+                            stroke-linejoin: round;
+                            stroke-miterlimit: 10;
+                        }
+                    </style>
+                    <path class="st0" stroke="currentColor"
+                        d="M29,16c0,0-5.8,8-13,8S3,16,3,16s5.8-8,13-8S29,16,29,16z" />
+                    <circle stroke="currentColor" class="st0" cx="16" cy="16" r="4" />
+                </svg>
+
+                <span id="totalItems"></span> producto(s)
+            </p>
         </div>
 
         <!-- Actions -->
@@ -156,12 +171,12 @@
 
         <div class="border-b border-gray-900/10 mx-auto p-6  hidden form" id="orderForm">
             <h2 class="text-base/7 font-semibold text-[var(--primary-color)]">Información de contacto</h2>
-            <p class="mt-1 text-sm/6 text-gray-600">Ingrese sus datos personales para el contacto.</p>
+            <p class="mt-1 text-sm/6 text-gray-600">Ingrese sus datos para completar el pedido.</p>
 
             <div class="mt-4 grid grid-cols-1 gap-x-3 gap-y-2 sm:grid-cols-6">
 
                 <div class="sm:col-span-6 mb-2">
-                    <label for="email" class="block text-sm font-bold text-gray-900">Correo</label>
+                    <label for="email" class="block text-sm font-bold text-gray-900">Correo *</label>
                     <div class="mt-2">
                         <input id="email" name="email" type="email" autocomplete="email"
                             class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6">
@@ -171,7 +186,7 @@
 
 
                 <div class="sm:col-span-3 mb-2">
-                    <label for="first-name" class="block text-sm font-bold text-gray-900">Nombres completos</label>
+                    <label for="first-name" class="block text-sm font-bold text-gray-900">Nombres completos *</label>
                     <div class="mt-2">
                         <input type="text" name="first_name" id="first_name" autocomplete="given-name"
                             class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6">
@@ -180,7 +195,7 @@
                 </div>
 
                 <div class="sm:col-span-3 mb-2">
-                    <label for="last-name" class="block text-sm font-bold text-gray-900">Apellidos completos</label>
+                    <label for="last-name" class="block text-sm font-bold text-gray-900">Apellidos completos *</label>
                     <div class="mt-2">
                         <input type="text" name="last_name" id="last_name" autocomplete="family-name"
                             class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6">
@@ -238,7 +253,7 @@
 
                 <div class="col-span-full mb-2">
                     <label for="street-address"
-                        class="block text-sm font-bold text-gray-900">Direccion(opcional)</label>
+                        class="block text-sm font-bold text-gray-900">Dirección(opcional)</label>
                     <div class="mt-2">
                         <input type="text" name="street_address" id="street_address" autocomplete="street_address"
                             class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6">
@@ -290,28 +305,63 @@
 
     </div>
 
-    <div class="fixed bottom-0 w-full z-10">
+    <div class="fixed bottom-0 w-full right-0 left-0 container z-10">
         <div class="w-full max-w-[600px] mx-auto rounded-t-3xl bg-white/80 overflow-hidden shadow-md mt-2">
             <div class="mx-auto p-2">
-                <button id="payment-btn" type="button"
-                    class="transition-colors disabled:opacity-75  payment-btn duration-300 bg-[var(--primary-color)] w-full justify-center hover:brightness-90 focus:ring-4 focus:outline-none font-medium rounded-3xl text-md px-5 py-2.5 text-center inline-flex items-center me-2">
-                    <svg class="w-3.5 h-3.5 me-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                        fill="currentColor" viewBox="0 0 18 21">
-                        <path
-                            d="M15 12a1 1 0 0 0 .962-.726l2-7A1 1 0 0 0 17 3H3.77L3.175.745A1 1 0 0 0 2.208 0H1a1 1 0 0 0 0 2h.438l.6 2.255v.019l2 7 .746 2.986A3 3 0 1 0 9 17a2.966 2.966 0 0 0-.184-1h2.368c-.118.32-.18.659-.184 1a3 3 0 1 0 3-3H6.78l-.5-2H15Z" />
-                    </svg>
+                <button id="payment-btn" disabled="true" type="button"
+                    class="transition-colors disabled:opacity-75   payment-btn duration-300 bg-[var(--primary-color)] w-full justify-center hover:brightness-90 focus:ring-4  gap-3 focus:outline-none font-medium rounded-3xl text-md px-5 py-2.5 text-center inline-flex items-center me-2">
+
                     Continuar
+
+                    <svg class="w-3.5 h-3.5 me-2" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg"
+                        xmlns:xlink="http://www.w3.org/1999/xlink">
+
+                        <title>arrow_right [#349]</title>
+                        <desc>Created with Sketch.</desc>
+                        <defs>
+
+                        </defs>
+                        <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                            <g id="Dribbble-Light-Preview" transform="translate(-180.000000, -6639.000000)"
+                                fill="currentColor">
+                                <g id="icons" transform="translate(56.000000, 160.000000)">
+                                    <path
+                                        d="M134,6479 L132.565,6480.393 L140.172,6488 L124,6488 L124,6490 L140.172,6490 L132.586,6497.586 L134,6499 C137.661,6495.339 140.496,6492.504 144,6489 L134,6479"
+                                        id="arrow_right-[#349]">
+
+                                    </path>
+                                </g>
+                            </g>
+                        </g>
+                    </svg>
                 </button>
 
 
                 <button id="save-information" disabled type="button"
                     class="transition-colors hidden disabled:bg-gray-300  payment-btn duration-300 bg-[var(--primary-color)] w-full justify-center hover:brightness-90 focus:ring-4 focus:outline-none font-medium rounded-3xl text-md px-5 py-2.5 text-center inline-flex items-center me-2">
-                    <svg class="w-3.5 h-3.5 me-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                        fill="currentColor" viewBox="0 0 18 21">
-                        <path
-                            d="M15 12a1 1 0 0 0 .962-.726l2-7A1 1 0 0 0 17 3H3.77L3.175.745A1 1 0 0 0 2.208 0H1a1 1 0 0 0 0 2h.438l.6 2.255v.019l2 7 .746 2.986A3 3 0 1 0 9 17a2.966 2.966 0 0 0-.184-1h2.368c-.118.32-.18.659-.184 1a3 3 0 1 0 3-3H6.78l-.5-2H15Z" />
-                    </svg>
+
                     Continuar
+                    <svg class="w-3.5 h-3.5 me-2" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg"
+                        xmlns:xlink="http://www.w3.org/1999/xlink">
+
+                        <title>arrow_right [#349]</title>
+                        <desc>Created with Sketch.</desc>
+                        <defs>
+
+                        </defs>
+                        <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                            <g id="Dribbble-Light-Preview" transform="translate(-180.000000, -6639.000000)"
+                                fill="currentColor">
+                                <g id="icons" transform="translate(56.000000, 160.000000)">
+                                    <path
+                                        d="M134,6479 L132.565,6480.393 L140.172,6488 L124,6488 L124,6490 L140.172,6490 L132.586,6497.586 L134,6499 C137.661,6495.339 140.496,6492.504 144,6489 L134,6479"
+                                        id="arrow_right-[#349]">
+
+                                    </path>
+                                </g>
+                            </g>
+                        </g>
+                    </svg>
                 </button>
 
 
@@ -333,7 +383,7 @@
     <div class="w-full max-w-[600px] relative z-2  mx-auto rounded-3xl bg-white overflow-hidden shadow-md mt-2 hidden"
         id="summary-products">
         <div
-            class="relative overflow-hidden p-6 m-2 rounded-2xl z-0 before:content-[''] before:opacity-[.08] before:absolute before:inset-0 before:bg-gray-600 before:z-[-1]">
+            class="relative overflow-hidden p-6 m-2 rounded-2xl z-0 before:content-[''] before:opacity-[.08] before:absolute before:inset-0 before:bg-gray-200 before:z-[-1]">
             <div class="relative h-60">
                 <div id="top-shadow"
                     class="absolute top-0 left-0 right-0 h-8 pointer-events-none z-10 opacity-0 transition-opacity duration-300 bg-[radial-gradient(ellipse_at_top,rgba(0,0,0,0.08),transparent_70%)]">
@@ -348,36 +398,41 @@
         </div>
     </div>
 
-
-  
-
-
 </main>
 
-    <button id="theme-toggle" class="p-2 rounded-full hidden bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 shadow-lg">
-            <svg id="theme-icon-light" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
-            <svg id="theme-icon-dark" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
-        </button>
+<button id="theme-toggle"
+    class="p-2 rounded-full hidden bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 shadow-lg">
+    <svg id="theme-icon-light" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z">
+        </path>
+    </svg>
+    <svg id="theme-icon-dark" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
+    </svg>
+</button>
 
-<div id="modal-backdrop" class="fixed z-50 inset-0 ios-backdrop flex items-end md:items-center justify-center hidden transition-opacity duration-300 ease-in-out opacity-0">
-        <div id="modal-content" class="bg-white/80 dark:bg-gray-800/80 w-full md:max-w-md rounded-2xl m-2 md:rounded-lg shadow-xl transform transition-transform duration-300 ease-in-out translate-y-full no-select">
-            <div class="w-full flex justify-center pt-3 cursor-grab">
-                <div class="w-10 h-1.5 bg-gray-300 dark:bg-gray-500 rounded-full"></div>
-            </div>
-            <div class="p-4 pt-2 text-left border-b border-gray-200 dark:border-gray-700">
-                <h3 class="text-md font-semibold text-gray-900 dark:text-white">Lista de productos</h3>
-            </div>
-            <div class="p-4">
-                <div id="product-list-modal" class="text-gray-800 dark:text-gray-300">
-                    <p>Contenido de la lista de productos aparecerá aquí.</p>
-                </div>
-       
-                <button id="cancelBtn" class="w-full hidden mt-4 bg-gray-200 dark:bg-gray-600 text-gray-800 dark:text-gray-200 font-bold py-3 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-500 transition duration-300">
-                    Cerrar
-                </button>
-            </div>
+<div id="modal-backdrop"
+    class="fixed z-50 inset-0 ios-backdrop flex items-end md:items-center justify-center hidden transition-opacity duration-300 ease-in-out opacity-0">
+    <div id="modal-content"
+        class="bg-white dark:bg-gray-800/80 w-full md:max-w-md rounded-2xl m-2 md:rounded-lg shadow-xl transform transition-transform duration-300 ease-in-out translate-y-full no-select">
+        <div class="w-full flex justify-center pt-3 cursor-grab">
+            <div class="w-10 h-1.5 bg-gray-300 dark:bg-gray-500 rounded-full"></div>
+        </div>
+        <div class="p-4 pt-2 text-left border-b border-gray-200 dark:border-gray-700">
+            <h3 class="text-md font-semibold text-gray-900 dark:text-white">Lista de productos</h3>
+        </div>
+        <div class="p-4">
+            <div id="product-list-modal" class="text-gray-800 dark:text-gray-300"> </div>
+
+            <button id="cancelBtn"
+                class="w-full hidden mt-4 bg-gray-200 dark:bg-gray-600 text-gray-800 dark:text-gray-200 font-bold py-3 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-500 transition duration-300">
+                Cerrar
+            </button>
         </div>
     </div>
+</div>
 
 <script>
     const list = document.getElementById('product-list');
@@ -437,132 +492,132 @@
     });
 
 
-       // --- 1. SELECCIÓN DE ELEMENTOS DEL DOM ---
-        // --- 1. SELECCIÓN DE ELEMENTOS DEL DOM ---
-        const htmlEl = document.documentElement;
-        const body = document.body;
-        const openModalBtn = document.getElementById('openModalBtn');
-        const cancelBtn = document.getElementById('cancelBtn');
-        const modalBackdrop = document.getElementById('modal-backdrop');
-        const modalContent = document.getElementById('modal-content');
-        // Nuevos elementos para el tema
-        const themeToggle = document.getElementById('theme-toggle');
-        const lightIcon = document.getElementById('theme-icon-light');
-        const darkIcon = document.getElementById('theme-icon-dark');
+    // --- 1. SELECCIÓN DE ELEMENTOS DEL DOM ---
+    // --- 1. SELECCIÓN DE ELEMENTOS DEL DOM ---
+    const htmlEl = document.documentElement;
+    const body = document.body;
+    const openModalBtn = document.getElementById('openModalBtn');
+    const cancelBtn = document.getElementById('cancelBtn');
+    const modalBackdrop = document.getElementById('modal-backdrop');
+    const modalContent = document.getElementById('modal-content');
+    // Nuevos elementos para el tema
+    const themeToggle = document.getElementById('theme-toggle');
+    const lightIcon = document.getElementById('theme-icon-light');
+    const darkIcon = document.getElementById('theme-icon-dark');
 
-        // --- MANEJO DE ESTADO ---
-        let isModalOpen = false;
-        let isDragging = false;
-        let startY = 0;
-        let currentTranslateY = 0;
+    // --- MANEJO DE ESTADO ---
+    let isModalOpen = false;
+    let isDragging = false;
+    let startY = 0;
+    let currentTranslateY = 0;
 
-        // --- FUNCIONES CONTROLADORAS ---
-        function openModal() {
-            if (isModalOpen) return;
-            isModalOpen = true;
-            body.classList.add('overflow-hidden');
-            render();
+    // --- FUNCIONES CONTROLADORAS ---
+    function openModal() {
+        if (isModalOpen) return;
+        isModalOpen = true;
+        body.classList.add('overflow-hidden');
+        render();
+    }
+
+    function closeModal() {
+        if (!isModalOpen) return;
+        isModalOpen = false;
+        body.classList.remove('overflow-hidden');
+        render();
+    }
+
+    function render() {
+        modalContent.style.transform = '';
+        modalContent.style.transition = '';
+        if (isModalOpen) {
+            modalBackdrop.classList.remove('hidden');
+            setTimeout(() => {
+                modalBackdrop.classList.remove('opacity-0');
+                modalContent.classList.remove('translate-y-full');
+            }, 10);
+        } else {
+            modalBackdrop.classList.add('opacity-0');
+            modalContent.classList.add('translate-y-full');
+            setTimeout(() => modalBackdrop.classList.add('hidden'), 300);
         }
+    }
 
-        function closeModal() {
-            if (!isModalOpen) return;
-            isModalOpen = false;
-            body.classList.remove('overflow-hidden');
-            render();
+    // --- LÓGICA PARA CAMBIAR DE TEMA ---
+    themeToggle.addEventListener('click', () => {
+        htmlEl.classList.toggle('dark');
+        const isDark = htmlEl.classList.contains('dark');
+        lightIcon.classList.toggle('hidden', isDark);
+        darkIcon.classList.toggle('hidden', !isDark);
+    });
+
+    // --- EVENT LISTENERS ---
+    openModalBtn.addEventListener('click', openModal);
+    cancelBtn.addEventListener('click', closeModal);
+    modalBackdrop.addEventListener('click', (e) => e.target === modalBackdrop && closeModal());
+    document.addEventListener('keydown', (e) => e.key === 'Escape' && isModalOpen && closeModal());
+
+    // --- 6. EVENT LISTENERS PARA EL ARRASTRE TÁCTIL (SIN CAMBIOS) ---
+    const handleTouchStart = (event) => {
+        if (!isModalOpen) return;
+        isDragging = true;
+        startY = event.touches[0].clientY;
+        modalContent.style.transition = 'none';
+    };
+
+    const handleTouchMove = (event) => {
+        if (!isDragging || !isModalOpen) return;
+        event.preventDefault();
+        const currentY = event.touches[0].clientY;
+        const deltaY = currentY - startY;
+        if (deltaY > 0) {
+            currentTranslateY = deltaY;
+            modalContent.style.transform = `translateY(${currentTranslateY}px)`;
         }
+    };
 
-        function render() {
-            modalContent.style.transform = '';
-            modalContent.style.transition = '';
-            if (isModalOpen) {
-                modalBackdrop.classList.remove('hidden');
-                setTimeout(() => {
-                    modalBackdrop.classList.remove('opacity-0');
-                    modalContent.classList.remove('translate-y-full');
-                }, 10);
-            } else {
-                modalBackdrop.classList.add('opacity-0');
-                modalContent.classList.add('translate-y-full');
-                setTimeout(() => modalBackdrop.classList.add('hidden'), 300);
-            }
+    const handleTouchEnd = () => {
+        if (!isDragging || !isModalOpen) return;
+        isDragging = false;
+        modalContent.style.transition = 'transform 0.3s ease-in-out';
+        const closeThreshold = modalContent.offsetHeight / 3;
+        if (currentTranslateY > closeThreshold) {
+            closeModal();
+        } else {
+            modalContent.style.transform = 'translateY(0)';
         }
-        
-        // --- LÓGICA PARA CAMBIAR DE TEMA ---
-        themeToggle.addEventListener('click', () => {
-            htmlEl.classList.toggle('dark');
-            const isDark = htmlEl.classList.contains('dark');
-            lightIcon.classList.toggle('hidden', isDark);
-            darkIcon.classList.toggle('hidden', !isDark);
-        });
+        currentTranslateY = 0;
+    };
 
-        // --- EVENT LISTENERS ---
-        openModalBtn.addEventListener('click', openModal);
-        cancelBtn.addEventListener('click', closeModal);
-        modalBackdrop.addEventListener('click', (e) => e.target === modalBackdrop && closeModal());
-        document.addEventListener('keydown', (e) => e.key === 'Escape' && isModalOpen && closeModal());
+    // Copiamos la lógica de arrastre de la respuesta anterior
+    modalContent.addEventListener('touchstart', (e) => {
+        if (!isModalOpen) return;
+        isDragging = true;
+        startY = e.touches[0].clientY;
+        modalContent.style.transition = 'none';
+    }, { passive: true });
 
-        // --- 6. EVENT LISTENERS PARA EL ARRASTRE TÁCTIL (SIN CAMBIOS) ---
-        const handleTouchStart = (event) => {
-            if (!isModalOpen) return;
-            isDragging = true;
-            startY = event.touches[0].clientY;
-            modalContent.style.transition = 'none';
-        };
+    modalContent.addEventListener('touchmove', (e) => {
+        if (!isDragging || !isModalOpen) return;
+        e.preventDefault();
+        const deltaY = e.touches[0].clientY - startY;
+        if (deltaY > 0) {
+            currentTranslateY = deltaY;
+            modalContent.style.transform = `translateY(${deltaY}px)`;
+        }
+    }, { passive: false });
 
-        const handleTouchMove = (event) => {
-            if (!isDragging || !isModalOpen) return;
-            event.preventDefault();
-            const currentY = event.touches[0].clientY;
-            const deltaY = currentY - startY;
-            if (deltaY > 0) {
-                currentTranslateY = deltaY;
-                modalContent.style.transform = `translateY(${currentTranslateY}px)`;
-            }
-        };
-
-        const handleTouchEnd = () => {
-            if (!isDragging || !isModalOpen) return;
-            isDragging = false;
-            modalContent.style.transition = 'transform 0.3s ease-in-out';
-            const closeThreshold = modalContent.offsetHeight / 3;
-            if (currentTranslateY > closeThreshold) {
-                closeModal();
-            } else {
-                modalContent.style.transform = 'translateY(0)';
-            }
-            currentTranslateY = 0;
-        };
-
-      // Copiamos la lógica de arrastre de la respuesta anterior
-        modalContent.addEventListener('touchstart', (e) => {
-            if (!isModalOpen) return;
-            isDragging = true;
-            startY = e.touches[0].clientY;
-            modalContent.style.transition = 'none';
-        }, { passive: true });
-
-        modalContent.addEventListener('touchmove', (e) => {
-            if (!isDragging || !isModalOpen) return;
-            e.preventDefault();
-            const deltaY = e.touches[0].clientY - startY;
-            if (deltaY > 0) {
-                currentTranslateY = deltaY;
-                modalContent.style.transform = `translateY(${deltaY}px)`;
-            }
-        }, { passive: false });
-
-        const onTouchEnd = () => {
-            if (!isDragging || !isModalOpen) return;
-            isDragging = false;
-            modalContent.style.transition = 'transform 0.3s ease-in-out';
-            if (currentTranslateY > modalContent.offsetHeight / 3) {
-                closeModal();
-            } else {
-                modalContent.style.transform = 'translateY(0)';
-            }
-            currentTranslateY = 0;
-        };
-        modalContent.addEventListener('touchend', onTouchEnd);
-        modalContent.addEventListener('touchcancel', onTouchEnd);
+    const onTouchEnd = () => {
+        if (!isDragging || !isModalOpen) return;
+        isDragging = false;
+        modalContent.style.transition = 'transform 0.3s ease-in-out';
+        if (currentTranslateY > modalContent.offsetHeight / 3) {
+            closeModal();
+        } else {
+            modalContent.style.transform = 'translateY(0)';
+        }
+        currentTranslateY = 0;
+    };
+    modalContent.addEventListener('touchend', onTouchEnd);
+    modalContent.addEventListener('touchcancel', onTouchEnd);
 
 </script>

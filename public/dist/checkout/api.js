@@ -83,6 +83,7 @@ export async function generateIzipayToken(order, transaccionId) {
 
 export async function resetCart() {
     const sessionid = getCookie("sessionid");
+    const domainContent = getMetaDom("domain");
     try {
         const myHeaders = new Headers();
         myHeaders.append("domain", domainContent);
