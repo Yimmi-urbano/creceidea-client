@@ -58,7 +58,6 @@ const fetchDataMiddleware = async (req, res, next) => {
 const fetchDataRoutes = ['/', '/catalog', '/:slug'];
 router.use(fetchDataRoutes, fetchDataMiddleware);
 
-// Utilidad para renderizar
 const renderPage = (res, contentTemplate, extraData = {}) => {
   res.render('index', {
     v: res.locals.version,
