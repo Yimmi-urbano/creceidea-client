@@ -43,7 +43,9 @@ app.use(async (req, res, next) => {
     if (isValid) {
       next();
     } else {
-      res.status(403).send('Acceso no autorizado: ' + subdomain);
+      // res.status(403).send('Acceso no autorizado: ' + subdomain);
+      res.status(403).render(path.join(__dirname, '../views', 'error_page'));
+
     }
   } catch (error) {
     logger.error('Error al validar el subdominio:', error);
@@ -59,7 +61,7 @@ const themeMiddleware = async (req, res, next) => {
     if (res.locals.theme && res.locals.domain === domain) {
       const currentTime = Date.now();
       if (currentTime - res.locals.themeTimestamp < cacheExpirationTime) {
-        return next(); 
+        return next();
       }
     }
 
@@ -68,7 +70,7 @@ const themeMiddleware = async (req, res, next) => {
 
     res.locals.theme = theme;
     res.locals.domain = domain;
-    res.locals.themeTimestamp = Date.now(); 
+    res.locals.themeTimestamp = Date.now();
 
     req.themePath = path.join(__dirname, '..', 'views', 'templates', theme);
     next();
@@ -82,7 +84,7 @@ app.use(themeMiddleware);
 
 app.use((req, res, next) => {
   const originalRender = res.render;
-  res.render = function(view, options, callback) {
+  res.render = function (view, options, callback) {
     const viewPath = path.join(req.themePath, view);
     return originalRender.call(this, viewPath, options, callback);
   };
