@@ -37,6 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const data = getDataAttributes(button);
             const quantity = quantityInput ? parseInt(quantityInput.value) : 1;
             addToCart(data, quantity);
+            
             btnCartToolBar.classList.add('animar-pulso');
 
             setTimeout(() => {
