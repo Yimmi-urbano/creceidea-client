@@ -12,9 +12,14 @@
         <%- include('./parts/social', {socialLinks: GetInfo.social_links}) %>
       </div>
       <div class="mt-5">
-        <a href="/customer/claimbook">
-          <img class="w-48 m-auto" src="/dist/images/libro_reclamaciones.jpg" alt="">
-        </a>
+         <% if (!GetInfo.catalogo.book_claim || GetInfo.catalogo.book_claim.isActive) { %>
+          <div class="text-center">
+            <a href="/customer/claimbook">
+              <img class="w-48 m-auto hover:scale-105 transition-transform duration-300"
+                src="/dist/images/libro_reclamaciones.jpg" alt="Libro de Reclamaciones">
+            </a>
+          </div>
+          <% } %>
       </div>
     </div>
   </div>
