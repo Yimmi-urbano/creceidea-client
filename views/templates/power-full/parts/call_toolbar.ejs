@@ -92,6 +92,7 @@
                 </svg>
             </span>
         </button>
+     <% if (!GetInfo.catalogo.book_claim || GetInfo.catalogo.book_claim.isActive) { %>
 
         <button type="button" title="Libro de reclamaciones"
             class="w-10 h-10 flex items-center justify-center bg-white/10 rounded-full hover:bg-white/20 transition-transform duration-150 ease-out active:scale-90 focus:outline-none focus:ring-2 focus:ring-white/50">
@@ -108,6 +109,7 @@
                 </svg>
             </a>
         </button>
+          <% } %>
     </div>
 </div>
 
