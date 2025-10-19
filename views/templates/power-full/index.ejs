@@ -1,59 +1,66 @@
 <!doctype html>
-<html lang="es">
-
+<html lang="es" class="dark">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title><%- GetInfo.title %> | <%- GetInfo.slogan %></title>
 
-  <title> <%- GetInfo.title %> | <%- GetInfo.slogan %> </title>
+  <!-- SEO -->
   <meta name="description" content="<%- GetInfo.meta_description %>">
   <meta name="keywords" content="<%- GetInfo.meta_keyword %>">
   <meta name="author" content="<%- GetInfo.title %>">
   <meta name="robots" content="index, follow">
   <meta name="referrer" content="no-referrer-when-downgrade">
 
+  <!-- Configuración dinámica -->
   <meta name="theme" content="<%- GetInfo.theme %>">
   <meta name="domain" content="<%- GetInfo.domain %>">
 
-  <link rel="stylesheet" href="/styles?v=<%-v%>12" />
-  <link rel="stylesheet" href="/css/style.css?v=<%-v%>12">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.0.7/css/swiper.min.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
+  <!-- Preconexiones (optimiza fuentes y CDN) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
+  <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+
+  <!-- CSS local -->
+  <link rel="stylesheet" href="/styles?v=<%-v%>" />
+  <link rel="stylesheet" href="/css/style.css?v=<%-v%>">
+
+  <!-- Librerías externas -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.0.7/css/swiper.min.css"  crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link href="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.css" rel="stylesheet" />
 
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-3S40H8Q0BG"></script>
+  <!-- Fuentes -->
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;700;900&family=Space+Grotesk:wght@400;500;700&display=swap" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;700;900&family=Space+Grotesk:wght@400;500;700&display=swap" media="print" onload="this.media='all'">
+
+  <!-- Google Analytics (async + defer) -->
+  <script async defer src="https://www.googletagmanager.com/gtag/js?id=G-3S40H8Q0BG"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
-    function gtag() { dataLayer.push(arguments); }
+    function gtag(){ dataLayer.push(arguments); }
     gtag('js', new Date());
     gtag('config', 'G-3S40H8Q0BG');
   </script>
 
+  <!-- Variables de tema -->
   <style>
     :root {
       --primary-color: <%- GetInfo.colors[0] %>;
       --secondary-color: <%- GetInfo.colors[1] %>;
       --accent-color: <%- GetInfo.colors[2] %>;
       --border-radius: 15px;
-
       --primary-chat: #f16808;
       --second-chat: #f16808;
       --accent-chat: #ffffff;
     }
 
-
-    .social-links svg {
-      width: 25px;
-    }
-
-    .product_detail .icon-cart-mini svg {
-      fill: var(--primary-color);
-    }
-
-    .product_detail .icon-cart-mini {
-      background-color: transparent;
-    }
+    .social-links svg { width: 25px; }
+    .product_detail .icon-cart-mini svg { fill: var(--primary-color); }
+    .product_detail .icon-cart-mini { background-color: transparent; }
 
     #chatContainer img {
       width: 70px;
@@ -66,45 +73,55 @@
 </head>
 
 <body class="<%- contentTemplate %>">
-  <img id="background-image" src="" alt="Fondo dinámico"
-    class="fixed blur-xl opacity-35 inset-0 w-full h-full object-cover -z-10 transition-opacity duration-300 ease-in-out">
+  <!-- Fondo dinámico optimizado -->
+  <img id="background-image"
+       src=""
+       alt="Fondo dinámico"
+       class="fixed inset-0 w-full h-full object-cover blur-xl opacity-35 -z-10 transition-opacity duration-300 ease-in-out"
+       decoding="async"
+       loading="lazy">
 
   <div class="page">
     <div class="page-wrapper">
       <div class="page-body container m-auto">
         <%- include('header') %>
-          <section class="container-fluid">
-            <%- include('parts/' + contentTemplate) %>
-          </section>
-          <%- include('footer') %>
+        <section class="container-fluid">
+          <%- include('parts/' + contentTemplate) %>
+        </section>
+        <%- include('footer') %>
       </div>
     </div>
   </div>
 
-  <div class="overlay closedMiniCart" id="overlay"></div>
-  <div class="sidebar" id="sidebar">
-    <div class="content-min-cart overflow-auto" id="content-cart">
+  <!-- Elementos globales -->
+  <div id="overlay" class="overlay closedMiniCart"></div>
+  <div id="sidebar" class="sidebar">
+    <div id="content-cart" class="content-min-cart overflow-auto">
       <%- include('parts/minicart') %>
     </div>
   </div>
 
   <%- include('parts/buscador') %>
-    <%- include('parts/call_toolbar') %>
-      <%- include('parts/notifications') %>
-        <%- include('parts/loader') %>
-          <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-          <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js" defer></script>
-          <script src="/dist/js/swiper.min.js" defer></script>
+  <%- include('parts/call_toolbar') %>
+  <%- include('parts/notifications') %>
+  <%- include('parts/loader') %>
 
-          <% if (GetInfo.type_store=="product" ) { %>
-            <script type="module" src="/dist/js/functions.js?v=<%-v%>" defer></script>
-            <% } %>
-              <% if (contentTemplate=="checkout" ) { %>
-                <script type="module" src="/dist/checkout/init.js?v=<%-v%>" defer></script>
-                <% } %>
+  <!-- Scripts -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
+<script defer src="/dist/js/swiper.min.js"></script>
 
-                    <script src="/dist/js/main.js?v=<%-v%>" defer></script>
-                   
+<% if (GetInfo.type_store === "product") { %>
+  <script type="module" defer src="/dist/js/functions.js?v=<%-v%>"></script>
+<% } %>
+
+<% if (contentTemplate === "checkout") { %>
+  <script type="module" defer src="/dist/checkout/init.js?v=<%-v%>"></script>
+<% } %>
+
+<script defer src="/dist/js/main.js?v=<%-v%>"></script>
+
+<script type="module" defer src="/dist/js/chatbot.js?v=<%-v%>"></script>
+
 </body>
-
 </html>

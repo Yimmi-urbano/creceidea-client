@@ -1,10 +1,9 @@
 <footer class="footer mt-5 d-print-none">
-
   <div class="container-fluid rounded-2xl min-h-[200px] py-5 text-center flex justify-center items-center bg-[#ffffff]">
     <div>
       <a href="/">
         <img style="height: 70px;display: block;margin: auto; object-fit: contain;width: 160px;"
-          src=" <%- GetInfo.logo %>" alt="">
+          src="<%- GetInfo.logo %>" alt="">
       </a>
       <p class="py-3 container text-sm"> <%- GetInfo.meta_description %></p>
       <hr class="border-[var(--primary-color)] m-2">
@@ -12,7 +11,7 @@
         <%- include('./parts/social', {socialLinks: GetInfo.social_links}) %>
       </div>
       <div class="mt-5">
-         <% if (!GetInfo.catalogo.book_claim || GetInfo.catalogo.book_claim.isActive) { %>
+        <% if (!GetInfo.catalogo.book_claim || GetInfo.catalogo.book_claim.isActive) { %>
           <div class="text-center">
             <a href="/customer/claimbook">
               <img class="w-48 m-auto hover:scale-105 transition-transform duration-300"
@@ -23,5 +22,4 @@
       </div>
     </div>
   </div>
-
 </footer>

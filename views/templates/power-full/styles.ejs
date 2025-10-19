@@ -1,5 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter&display=swap");
 
+
 body {
 font-feature-settings: "cv03", "cv04", "cv11";
 margin: 0;
@@ -1143,4 +1144,279 @@ display:flex;
 
 #openCart.animar-pulso {
 animation: pulso-carrito 0.5s ease-in-out 2;
+}
+
+
+.background {
+background-color: rgb(52, 20, 235);
+border-radius: 50%;
+box-shadow: 0 2.1px 1.3px rgba(0, 0, 0, 0.044),
+0 5.9px 4.2px rgba(0, 0, 0, 0.054), 0 12.6px 9.5px rgba(0, 0, 0, 0.061),
+0 25px 20px rgba(0, 0, 0, 0.1);
+height: 80px;
+left: 10px;
+position: absolute;
+top: 10px;
+width: 80px;
+}
+
+.chat-bubble {
+cursor: pointer;
+position: relative;
+}
+
+.bubble {
+transform-origin: 50%;
+transition: transform 500ms cubic-bezier(0.17, 0.61, 0.54, 0.9);
+}
+
+.line {
+fill: none;
+stroke: rgb(255, 255, 255);
+stroke-width: 2.75;
+stroke-linecap: round;
+transition: stroke-dashoffset 500ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.line1 {
+stroke-dasharray: 60 90;
+stroke-dashoffset: -20;
+}
+
+.line2 {
+stroke-dasharray: 67 87;
+stroke-dashoffset: -18;
+}
+
+.circle {
+fill: rgb(255, 255, 255);
+stroke: none;
+transform-origin: 50%;
+transition: transform 500ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.active .bubble {
+transform: translateX(24px) translateY(4px) rotate(45deg);
+}
+
+.active .line1 {
+stroke-dashoffset: 21;
+}
+
+.active .line2 {
+stroke-dashoffset: 30;
+}
+
+.active .circle {
+transform: scale(0);
+}
+
+:root {
+--color-one: #aa96f9;
+--color-two: #54b6ca;
+--color-three: #474ed7;
+--color-four: #00ee6e;
+--color-wrapper: #0c75e6;
+--icon-color: #fff;
+--size: 45px;
+}
+
+.animated {
+display: flex;
+align-items: center;
+justify-content: center;
+height: 100vh;
+}
+
+.wrapper {
+border: 1px solid #ffffff2b;
+width: var(--size);
+height: var(--size);
+background: var(--color-wrapper);
+position: relative;
+overflow: hidden;
+border-radius: 50%;
+box-sizing: content-box;
+}
+
+.animated .icon{
+position: absolute;
+z-index: 3;
+top: -7px;
+right: -8px;
+border-radius: initial;
+-webkit-filter: initial;
+}
+
+.wrapper div {
+position: absolute;
+filter: blur(4px);
+-webkit-filter: blur(4px);
+opacity: 0.9;
+border-radius: 100%;
+animation: move linear infinite;
+}
+
+.animated .one {
+width: 130%;
+height: 130%;
+background-color: var(--color-one);
+left: -12%;
+top: -75%;
+z-index: 1;
+animation-duration: 10s;
+}
+
+.animated .two {
+width: 125%;
+height: 125%;
+background-color: var(--color-two);
+bottom: -7%;
+left: -20%;
+animation-duration: 12s; /* Duración única */
+animation-direction: reverse; /* Se mueve en sentido contrario */
+}
+
+.animated .three {
+width: 112%;
+height: 112%;
+bottom: -20%;
+right: -25%;
+background-color: var(--color-three);
+animation-duration: 9s; /* Duración única */
+}
+
+.animated .four {
+width: 90%;
+height: 90%;
+margin: auto;
+bottom: 0;
+right: 0;
+background-color: var(--color-four);
+animation-duration: 15s; /* Duración única */
+animation-direction: reverse; /* Se mueve en sentido contrario */
+}
+
+/* Keyframe unificado para un bucle perfecto */
+@keyframes move {
+0% {
+transform: translate(0, 0) rotate(0deg);
+}
+25% {
+transform: translate(40px, -30px) rotate(90deg);
+}
+50% {
+transform: translate(-50px, 45px) rotate(180deg);
+}
+75% {
+transform: translate(30px, 20px) rotate(270deg);
+}
+100% {
+transform: translate(0, 0) rotate(360deg); /* Regresa exactamente al inicio */
+}
+}
+
+#chat-window{
+font-family: "Space Grotesk", "Noto Sans", sans-serif;
+}
+
+:root {
+--pulse-scale: 1;
+--bass-intensity: 0; /* Valor de 0 a 1 */
+}
+
+@keyframes loading-dots {
+0%, 20% { content: '.'; }
+40% { content: '..'; }
+60%, 100% { content: '...'; }
+}
+
+#chat-bubble {
+border-radius: 50%;
+z-index: 99;
+display: flex;
+justify-content: center;
+align-items: center;
+cursor: pointer;
+transition: transform 0.1s ease-out;
+transform: scale(var(--pulse-scale));
+}
+
+.waves-container {
+position: absolute;
+top: 0; left: 0; right: 0; bottom: 0;
+}
+
+.wave {
+position: absolute;
+top: 50%;
+left: 50%;
+width: 100%;
+height: 100%;
+border-radius: 50%;
+border-style: solid;
+/* El color y el grosor cambian dinámicamente con la intensidad */
+border-width: calc(1px + var(--bass-intensity) * 3px);
+border-color: hsla(calc(210 - var(--bass-intensity) * 50), 100%, 65%, 0); /* Inicia invisible */
+transform: translate(-50%, -50%) scale(1);
+pointer-events: none;
+}
+
+.wave.animate {
+animation: ripple 1.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+@keyframes ripple {
+0% {
+transform: translate(-50%, -50%) scale(1);
+border-color: hsla(calc(210 - var(--bass-intensity) * 50), 100%, 65%, 0.8);
+opacity: 1;
+}
+100% {
+transform: translate(-50%, -50%) scale(2);
+border-color: hsla(calc(210 - var(--bass-intensity) * 50), 100%, 65%, 0);
+opacity: 0;
+}
+}
+
+/* Estilo adicional para el efecto de la etiqueta flotante */
+.floating-label-container {
+position: relative;
+}
+.floating-label-input:focus ~ .floating-label,
+.floating-label-input:not(:placeholder-shown) ~ .floating-label {
+transform: translateY(-1.75rem) scale(0.75);
+color: #3b82f6; /* text-blue-500 */
+}
+
+.buble-header {
+  /* Fallback sólido (por si el navegador no soporta gradientes) */
+  background-color: #7d88f4;
+
+  /* Gradiente diagonal con prefijos para compatibilidad */
+  background-image: -webkit-linear-gradient(45deg, #7d88f4 33%, #4097ca 50%, #04c48e 100%);
+  background-image: -moz-linear-gradient(45deg, #7d88f4 33%, #4097ca 50%, #04c48e 100%);
+  background-image: -o-linear-gradient(45deg, #7d88f4 33%, #4097ca 50%, #04c48e 100%);
+ background-image: linear-gradient(45deg, #7d88f4 33%, #4097ca 50%, #04c48e 100%);
+}
+
+.gradient-bg-sam {
+  background-color: #085878;
+  background-image: -webkit-linear-gradient(-45deg, #085878 70%, #46818b 90%, #04c48e 100%);
+  background-image: -moz-linear-gradient(-45deg, #085878 70%, #46818b 90%, #04c48e 100%);
+  background-image: -o-linear-gradient(-45deg, #085878 70%, #46818b 90%, #04c48e 100%);
+  background-image: linear-gradient(-45deg, #085878 70%, #46818b 90%, #04c48e 100%);
+  border: 1px solid #0a5b7c;
+}
+
+.gradient-bg-user {
+  background-color: #6a77be;
+  background-image: -webkit-linear-gradient(45deg, #6a77be 70%, #46818b 90%, #04c48e 100%);
+  background-image: -moz-linear-gradient(45deg, #6a77be 70%, #46818b 90%, #04c48e 100%);
+  background-image: -o-linear-gradient(45deg, #6a77be 70%, #46818b 90%, #04c48e 100%);
+  background-image: linear-gradient(45deg, #6a77be 70%, #46818b 90%, #04c48e 100%);
+}
+
+.footer-chatbot{
+  opacity:0.8;
 }
