@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const data =
         {
             "price_regular": action.price_regular,
-            "price_sale": action.price_sale,
+            "price_sale": action.price_sale ?? action.price_regular,
             "title": action.title,
             "image": action.image,
             "id": action.productId,
