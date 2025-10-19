@@ -112,7 +112,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   }
 
-
   function initSearch() {
     const contentBuscador = document.getElementById('content-buscador');
     const openBuscadorBtn = document.getElementById('openBuscadorBtn');
@@ -180,7 +179,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // --- INICIALIZACIÓN DE TODAS LAS FUNCIONES ---
   initSwiperSliders();
   initSearch();
   initToolbarVisibility();

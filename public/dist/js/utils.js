@@ -228,9 +228,4 @@ export function loaderProcess(status) {
     }
 }
 
-
-
-
-    
-
 export {toggleMiniCart, removeFromCart, getDataAttributes, addToCart, getCartItemCount, getCartItems, incrementQty, decrementQty, updateSessionStorageCart, calculateCartSummary };

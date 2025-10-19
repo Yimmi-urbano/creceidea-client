@@ -3,6 +3,7 @@
 
     <div
         class="flex items-center text-white justify-between space-x-5 bg-black/50 backdrop-blur-[10px] lg:max-w-md w-[90%] rounded-full p-2">
+
         <button type="button" title="WhatsApp"
             class="w-10 h-10 flex items-center text-white justify-center bg-white/10 rounded-full hover:bg-white/20 transition-transform duration-150 ease-out active:scale-90 focus:outline-none focus:ring-2 focus:ring-white/50">
             <a class="w-10 h-10 flex items-center text-white justify-center" target="_blank"
@@ -70,46 +71,68 @@
                 </svg>
             </span>
         </button>
+       <% if (GetInfo.config_sam && GetInfo.config_sam.sam_status) { %>
+            <button type="button" title="Sam" id="chat-bubble"
+                class="w-10 h-10 flex items-center justify-center relative bg-white/10 rounded-full hover:bg-white/20 transition-transform duration-150 ease-out active:scale-90 focus:outline-none focus:ring-2 focus:ring-white/50">
+                <div class="waves-container"></div>
+                <span>
+                    <div class="animated">
+                        <div class="wrapper">
+                            <div class="one"></div>
+                            <div class="two"></div>
+                            <div class="three"></div>
+                            <div class="four"></div>
+                            <div class="icon">
+                                <svg class="chat-bubble" width="60" height="60" viewBox="0 0 100 100">
+                                    <g class="bubble">
+                                        <path class="line line1" d="M 30.7873,85.113394 30.7873,46.556405 C 30.7873,41.101961
+36.826342,35.342 40.898074,35.342 H 59.113981 C 63.73287,35.342
+69.29995,40.103201 69.29995,46.784744" />
+                                        <path class="line line2" d="M 13.461999,65.039335 H 58.028684 C
+63.483128,65.039335
+69.243089,59.000293 69.243089,54.928561 V 45.605853 C
+69.243089,40.986964 65.02087,35.419884 58.339327,35.419884" />
+                                    </g>
+                                    <circle class="circle circle1" r="1.9" cy="50.7" cx="42.5" />
+                                    <circle class="circle circle2" cx="49.9" cy="50.7" r="1.9" />
+                                    <circle class="circle circle3" r="1.9" cy="50.7" cx="57.3" />
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                </span>
+            </button>
+            <% } %>
+                <button type="button" id="openBuscadorBtn" title="Search"
+                    class="w-10 h-10 flex items-center justify-center bg-white/10 rounded-full hover:bg-white/20 transition-transform duration-150 ease-out active:scale-90 focus:outline-none focus:ring-2 focus:ring-white/50">
+                    <span>
+                        <svg class="w-7 h-7 text-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+                            fill="currentColor">
+                            <path fill-rule="evenodd"
+                                d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
+                                clip-rule="evenodd" />
+                        </svg>
+                    </span>
+                </button>
 
-        <button type="button" id="openCart" title="Cart"
-            class="w-10 h-10 flex items-center justify-center bg-red-600 rounded-full hover:bg-red-700 transition-transform duration-150 ease-out active:scale-90 focus:outline-none focus:ring-2 focus:ring-red-400">
+                <button type="button" id="openCart" title="Cart"
+                    class="w-10 h-10 flex items-center justify-center bg-red-600 rounded-full hover:bg-red-700 transition-transform duration-150 ease-out active:scale-90 focus:outline-none focus:ring-2 focus:ring-red-400">
 
-            <% if (GetInfo.type_store=="product" ) { %>
-                <div class="shop-cart flex gap-3 text-white">
-                    <%- include('./shop-buttons') %>
-                </div>
-                <% } %>
-        </button>
+                    <% if (GetInfo.type_store=="product" ) { %>
+                        <div class="shop-cart flex gap-3 text-white">
+                            <%- include('./shop-buttons') %>
+                        </div>
+                        <% } %>
+                </button>
 
-        <button type="button" id="openBuscadorBtn" title="Search"
-            class="w-10 h-10 flex items-center justify-center bg-white/10 rounded-full hover:bg-white/20 transition-transform duration-150 ease-out active:scale-90 focus:outline-none focus:ring-2 focus:ring-white/50">
-            <span>
-                <svg class="w-7 h-7 text-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
-                    fill="currentColor">
-                    <path fill-rule="evenodd"
-                        d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
-                        clip-rule="evenodd" />
-                </svg>
-            </span>
-        </button>
-
-        <button type="button" title="Libro de reclamaciones"
-            class="w-10 h-10 flex items-center justify-center bg-white/10 rounded-full hover:bg-white/20 transition-transform duration-150 ease-out active:scale-90 focus:outline-none focus:ring-2 focus:ring-white/50">
-            <a href="/customer/claimbook">
-                <svg class="w-7 h-7" viewBox="0 0 60 60" id="Layer_1" data-name="Layer 1"
-                    xmlns="http://www.w3.org/2000/svg">
-                    <polyline points="50.83 18.04 55.47 18.04 55.47 51.97 8.53 51.97 8.53 18.04 13.05 18.04" fill="none"
-                        stroke="#ffffff" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" />
-                    <path
-                        d="M49.83,47V12c-13.57.44-17.89,6-17.89,6s-5.44-6.23-17.88-6V47a44.38,44.38,0,0,1,17.88,5S41.8,47.33,49.83,47Z"
-                        fill="none" stroke="#ffffff" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" />
-                    <line x1="31.94" y1="18.04" x2="31.94" y2="51.97" fill="none" stroke="#ffffff"
-                        stroke-linecap="round" stroke-linejoin="round" stroke-width="3" />
-                </svg>
-            </a>
-        </button>
     </div>
+
+    <div class="fixed bottom-20 items-center justify-center flex">
+        <%- include('../parts/chat_bot') %>
+    </div>
+
 </div>
+
 
 <script>
     document.getElementById('shareBtn').addEventListener('click', async () => {
@@ -120,8 +143,8 @@
 
         try {
             await navigator.share({
-                title: "<%= GetInfo.title %>",
-                text: "<%= GetInfo.meta_description %>",
+                title: `<%= GetInfo.title %>`,
+                text: `<%= GetInfo.meta_description %>`,
                 url: window.location.href,
             });
             console.log('Contenido compartido exitosamente');
