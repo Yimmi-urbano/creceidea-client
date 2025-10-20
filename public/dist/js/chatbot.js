@@ -540,13 +540,15 @@ document.addEventListener('DOMContentLoaded', () => {
         formContainer.classList.add('hidden');
         spinnerContainer.classList.remove('hidden');
         statusMessage.textContent = '';
+        const domain = getMetaDom("domain");
 
         const formData = new FormData(form);
         const data = {
             email: formData.get('email'),
             name: formData.get('name'),
             source: "chatbot",
-            terms_conditions: true
+            terms_conditions: true,
+            domain: domain
         };
 
         fetch('https://api-clients.creceidea.pe/api/v1/subscriptions', {
