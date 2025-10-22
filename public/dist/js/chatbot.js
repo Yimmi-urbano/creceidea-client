@@ -109,6 +109,7 @@ document.addEventListener('DOMContentLoaded', () => {
         };
 
         micButton.addEventListener('click', () => {
+
             if (isListening) {
                 recognition.stop();
                 console.log('hola...')
@@ -120,9 +121,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
     } else {
         console.warn("La API de reconocimiento de voz no está disponible.");
-        micButton.disabled = true;
+        micButton.disabled = false;
         chatInput.placeholder = 'Escribe tu mensaje.';
     }
+
+    micButton.addEventListener('click', () => {
+
+        handleSendMessage(chatInput.value.trim());
+
+    });
 
     chatBubble.addEventListener('click', () => {
         chatWindow.classList.toggle('hidden');
