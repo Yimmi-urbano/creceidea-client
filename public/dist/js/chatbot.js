@@ -65,7 +65,7 @@ document.addEventListener('DOMContentLoaded', () => {
         localStorage.setItem('chatHistory', JSON.stringify(chatHistory));
     };
 
-    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    const SpeechRecognition = false; //window.SpeechRecognition || window.webkitSpeechRecognition;
     let recognition;
 
     if (SpeechRecognition) {
