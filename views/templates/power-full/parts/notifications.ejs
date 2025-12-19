@@ -1,3 +1,4 @@
+<!-- Notificación tradicional (mantenida para compatibilidad) -->
 <div id="notification"
   class="fixed bottom-4 right-3 hidden p-4 z-[9999] max-w-md bg-green-600/80 backdrop-blur-sm text-white rounded-lg shadow-lg flex items-center space-x-4 transition-transform transform translate-y-20 opacity-0">
   <img id="notification-image" src="" alt="Producto" class="w-[50px] h-[50px] border-2 rounded-full object-cover">
@@ -9,4 +10,34 @@
     class="bg-green-800 hover:bg-green-700 text-white font-semibold py-1 px-3 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
     Ver carrito
   </button>
+</div>
+
+<!-- Notificación compacta superior (para chatbot) -->
+<div id="compact-product-notification"
+  class="fixed top-5 right-5 hidden z-[10000] max-w-sm pointer-events-none transform translate-y-[-10px] opacity-0 transition-all duration-300 ease-out">
+  <div class="bg-gray-800/50 backdrop-blur-md text-white rounded-xl shadow-2xl flex items-center space-x-3 min-w-[280px] p-3 border border-white/20">
+    <!-- Icono de éxito -->
+    <div class="flex-shrink-0">
+      <div class="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center">
+        <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+          <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+        </svg>
+      </div>
+    </div>
+    
+    <!-- Imagen del producto -->
+    <img id="compact-notification-image" src="" alt="Producto" class="w-10 h-10 rounded-lg object-cover border border-white/30">
+    
+    <!-- Contenido -->
+    <div class="flex-1 min-w-0">
+      <p class="text-sm font-semibold text-white truncate" id="compact-notification-message">Producto agregado</p>
+      <p class="text-xs text-white/80">¡Agregado al carrito!</p>
+    </div>
+    
+    <!-- Botón Ver carrito -->
+    <button id="compact-open-cart-btn"
+      class="bg-white/20 hover:bg-white/30 text-white text-xs font-medium py-1.5 px-3 rounded-lg transition-all duration-200 hover:scale-105 active:scale-95 focus:outline-none focus:ring-2 focus:ring-white/30">
+      Ver carrito
+    </button>
+  </div>
 </div>

@@ -151,14 +151,27 @@ router.get('/customer/claimbook', (req, res, next) => {
   }
 });
 
+function findCategoryBySlug(items, slug) {
+  for (const item of items) {
+    if (item.slug === slug) return item;
+    if (item.children?.length) {
+      const found = findCategoryBySlug(item.children, slug);
+      if (found) return found;
+    }
+  }
+  return null;
+}
+
 router.get('/category/:category', async (req, res, next) => {
+
   try {
     const domain = res.locals.domain;
     const { category: slug } = req.params;
     const { navbar } = res.locals;
     const page = req.query.page;
 
-    let category = navbar.find(cat => cat.slug === slug);
+    let category = findCategoryBySlug(navbar, slug);
+
     let subcategory = null;
 
     if (!category) {
@@ -188,6 +201,7 @@ router.get('/category/:category', async (req, res, next) => {
     next(error);
   }
 });
+
 
 /*
 // Si luego quieres usar páginas por slug, descomenta esto

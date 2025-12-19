@@ -43,7 +43,6 @@ app.use(async (req, res, next) => {
     if (isValid) {
       next();
     } else {
-      // res.status(403).send('Acceso no autorizado: ' + subdomain);
       res.status(403).render(path.join(__dirname, '../views', 'error_page'));
 
     }

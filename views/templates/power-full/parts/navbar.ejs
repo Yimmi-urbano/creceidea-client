@@ -1,5 +1,5 @@
-<section class="container-xxl p-4 d-flex flex-column justify-content-center">
-    <div class="block-categories">
+<section class="container-xxl py-4 d-flex flex-column justify-content-center">
+    <div class="block-categories position-relative">
       <div class="list-cat-aviable swiper" style="overflow: hidden;" id="categories-multiple-slides">
         <div class="swiper-wrapper">
             <% navbar.forEach(item=> { %>
@@ -7,5 +7,64 @@
           <% }) %>
         </div>
       </div>
+      <!-- Flecha animada para móvil indicando más categorías -->
+      <div class="categories-scroll-indicator d-md-none">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="scroll-arrow">
+          <path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <!-- Gradiente fade a la derecha en móvil -->
+      <div class="categories-fade-gradient d-md-none"></div>
     </div>
+    <style>
+      .block-categories {
+        position: relative;
+      }
+      
+      .categories-scroll-indicator {
+        position: absolute;
+        right: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 10;
+        pointer-events: none;
+        padding-right: 8px;
+      }
+      
+      .categories-scroll-indicator svg {
+        color: #3B82F6;
+        filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+        animation: scroll-indicator 1.5s ease-in-out infinite;
+      }
+      
+      @keyframes scroll-indicator {
+        0%, 100% {
+          transform: translateX(0);
+          opacity: 0.7;
+        }
+        50% {
+          transform: translateX(4px);
+          opacity: 1;
+        }
+      }
+      
+      .categories-fade-gradient {
+        display: none;
+      }
+      
+      /* Ocultar en desktop */
+      @media (min-width: 768px) {
+        .categories-scroll-indicator,
+        .categories-fade-gradient {
+          display: none !important;
+        }
+      }
+      
+      /* Asegurar que el contenedor tenga overflow visible en móvil para ver la flecha */
+      @media (max-width: 767px) {
+        .block-categories {
+          padding-right: 40px;
+        }
+      }
+    </style>
   </section>
