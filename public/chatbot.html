@@ -1,0 +1,896 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nexus AI Chatbot</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Google Fonts -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        :root {
+            --bg-body: #f0f2f5;
+            --bg-card: #ffffff;
+            --text-main: #1f2937;
+            --text-sub: #6b7280;
+            --border-color: #e5e7eb;
+            --msg-user-bg: #4f46e5;
+            --msg-user-text: #ffffff;
+            --msg-bot-bg: #ffffff;
+            --msg-bot-text: #374151;
+            --input-bg: #f3f4f6;
+            --btn-disabled: #e5e7eb;
+        }
+
+        #app-card.dark-mode {
+            --bg-body: #0f172a;
+            --bg-card: #1e293b;
+            --text-main: #f8fafc;
+            --text-sub: #94a3b8;
+            --border-color: #334155;
+            --msg-user-bg: #6366f1;
+            --msg-user-text: #ffffff;
+            --msg-bot-bg: #334155;
+            --msg-bot-text: #e2e8f0;
+            --input-bg: #334155;
+            --btn-disabled: #334155;
+        }
+
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background-color: #f0f2f5; 
+            transition: all 0.3s ease; 
+        }
+        
+        /* --- ANIMACIONES DEL ORBE --- */
+        @keyframes fluid-spin-1 {
+            0% { transform: rotate(0deg) scale(1.4); }
+            33% { transform: rotate(120deg) scale(1.6); }
+            66% { transform: rotate(240deg) scale(1.4); }
+            100% { transform: rotate(360deg) scale(1.4); }
+        }
+        
+        @keyframes fluid-spin-2 {
+            0% { transform: rotate(360deg) scale(1.4) translate(0, 0); }
+            50% { transform: rotate(180deg) scale(1.6) translate(10%, 10%); }
+            100% { transform: rotate(0deg) scale(1.4) translate(0, 0); }
+        }
+
+        @keyframes blob-orbit {
+            0% { transform: rotate(0deg) translateX(25%) rotate(0deg); }
+            100% { transform: rotate(360deg) translateX(25%) rotate(-360deg); }
+        }
+
+        @keyframes breathe-core {
+            0%, 100% { transform: scale(0.9); opacity: 0.8; }
+            50% { transform: scale(1.1); opacity: 1; }
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* --- CLASES DEL ORBE --- */
+        #ai-orb-container {
+            transition: top 1s cubic-bezier(0.34, 1.56, 0.64, 1), 
+                        left 1s cubic-bezier(0.34, 1.56, 0.64, 1), 
+                        width 1s ease, 
+                        height 1s ease, 
+                        transform 1s ease,
+                        scale 1s ease,
+                        filter 1s ease;
+        }
+
+        .orb-loading {
+            transform: scale(1.25);
+            filter: brightness(1.1);
+        }
+
+        .layer-1 { filter: blur(15px); }
+        .layer-2 { filter: blur(18px); }
+        .layer-spot-1 { filter: blur(12px); }
+        .layer-spot-2 { filter: blur(10px); }
+        .layer-core { filter: blur(8px); }
+
+        .orb-minimized .layer-1 { 
+            filter: blur(4px) !important; 
+            opacity: 1 !important;
+        }
+        .orb-minimized .layer-2 { 
+            filter: blur(5px) !important; 
+            opacity: 0.95 !important;
+        }
+        .orb-minimized .layer-spot-1 { 
+            filter: blur(3px) !important; 
+            opacity: 1 !important;
+        }
+
+        /* --- ESTILOS DEL FORMULARIO DE LOGIN --- */
+        #login-form input {
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        
+        #login-form input::placeholder {
+            color: #9ca3af;
+            opacity: 1;
+        }
+        
+        #login-form label {
+            font-weight: 600;
+            letter-spacing: -0.01em;
+        }
+        
+        #login-form .group:focus-within {
+            border-color: #3b82f6 !important;
+        }
+        
+        #login-form button {
+            font-weight: 600;
+            letter-spacing: -0.01em;
+        }
+        
+        #login-form svg[data-lucide] {
+            display: block;
+        }
+        .orb-minimized .layer-spot-2 { 
+            filter: blur(3px) !important; 
+            opacity: 0.9 !important;
+        }
+        .orb-minimized .layer-core { 
+            filter: blur(2px) !important; 
+            opacity: 0.9 !important;
+        }
+        
+        /* Quitar sombra cuando está minimizado */
+        #ai-orb-inner.orb-minimized #orb-sphere {
+            box-shadow: none !important;
+        }
+        
+        /* Aumentar opacidad del aura cuando está minimizado */
+        #ai-orb-container.orb-minimized #orb-aura {
+            opacity: 0.85 !important;
+        }
+        
+        /* Aumentar velocidad de animación cuando está pensando */
+        #ai-orb-inner.orb-thinking [style*="animation: fluid-spin-1"] {
+            animation: fluid-spin-1 2s linear infinite !important;
+        }
+        #ai-orb-inner.orb-thinking [style*="animation: fluid-spin-2"] {
+            animation: fluid-spin-2 3s ease-in-out infinite !important;
+        }
+        #ai-orb-inner.orb-thinking [style*="animation: blob-orbit 2s"] {
+            animation: blob-orbit 1s linear infinite !important;
+        }
+        #ai-orb-inner.orb-thinking [style*="animation: blob-orbit 3s"] {
+            animation: blob-orbit 1.5s linear infinite reverse !important;
+        }
+        #ai-orb-inner.orb-thinking [style*="animation: spin 2.5s"] {
+            animation: spin 1.25s linear infinite !important;
+        }
+        
+        /* Reducir blur inline de las manchas cuando está minimizado */
+        #ai-orb-inner.orb-minimized [style*="blur(12px)"] {
+            filter: blur(3px) !important;
+        }
+        #ai-orb-inner.orb-minimized [style*="blur(10px)"] {
+            filter: blur(3px) !important;
+        }
+        #ai-orb-inner.orb-minimized [style*="blur(8px)"] {
+            filter: blur(2px) !important;
+        }
+        #ai-orb-inner.orb-minimized [style*="blur(4px)"] {
+            filter: blur(1px) !important;
+        }
+
+        /* Scrollbar */
+        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { 
+            background-color: rgba(156, 163, 175, 0.3); 
+            border-radius: 10px; 
+        }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { 
+            -ms-overflow-style: none; 
+            scrollbar-width: none; 
+        }
+        .mask-gradient { 
+            mask-image: linear-gradient(to right, black 85%, transparent 100%); 
+            -webkit-mask-image: linear-gradient(to right, black 85%, transparent 100%); 
+        }
+
+        /* Animaciones de entrada */
+        @keyframes fade-in {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slide-in-from-bottom-2 {
+            from { transform: translateY(8px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        @keyframes slide-in-from-bottom-4 {
+            from { transform: translateY(16px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .animate-in {
+            animation: fade-in 0.3s ease-out;
+        }
+
+        .fade-in {
+            animation: fade-in 0.3s ease-out;
+        }
+
+        .slide-in-from-bottom-2 {
+            animation: slide-in-from-bottom-2 0.3s ease-out;
+        }
+
+        .slide-in-from-bottom-4 {
+            animation: slide-in-from-bottom-4 0.5s ease-out;
+        }
+
+        .delay-150 {
+            animation-delay: 150ms;
+        }
+
+        .delay-300 {
+            animation-delay: 300ms;
+        }
+    </style>
+</head>
+<body id="main-body" class="flex items-center justify-center min-h-screen p-4">
+
+    <!-- CONTENEDOR APP -->
+    <div id="app-card" class="w-full max-w-[380px] h-[720px] max-h-[90vh] flex flex-col rounded-2xl overflow-hidden shadow-2xl relative transition-all duration-300 border-2 border-white shadow-xl" style="background-color: var(--bg-card);">
+
+        <!-- === ORBE NEXUS === -->
+        <div id="ai-orb-container" class="absolute z-[100] flex items-center justify-center top-[20%]  left-1/2 -translate-x-1/2 -translate-y-1/2 w-20 h-20">
+            
+            <!-- AURA AMBIENTAL -->
+            <div id="orb-aura" class="absolute top-[5%] left-[5%] w-[90%] h-[90%] rounded-full opacity-50 blur-[15px] transition-opacity duration-1000" style="background: radial-gradient(circle, #54b6ca, #474ed7); transform: translateY(10%);"></div>
+            
+            <div id="ai-orb-inner" class="relative w-full h-full flex items-center justify-center">
+                <!-- Esfera Sólida -->
+                <div id="orb-sphere" class="absolute inset-0 rounded-full overflow-hidden shadow-xl transform-gpu z-10 ring-1 ring-white/20 transition-all duration-1000">
+                    
+                    <!-- CAPA 1: Fondo Profundo (Azul y Verde) -->
+                    <div class="absolute inset-[-100%] top-[-100%] left-[-100%] w-[300%] h-[300%]">
+                        <div class="absolute inset-0 w-full h-full opacity-90 layer-1 transition-all duration-1000" 
+                             style="background: conic-gradient(from 0deg, #474ed7, #00ee6e, #474ed7, #00ee6e, #474ed7); animation: fluid-spin-1 4s linear infinite;"></div>
+                    </div>
+
+                    <!-- CAPA 2: Luz y Cian -->
+                    <div class="absolute inset-[-100%] top-[-100%] left-[-100%] w-[300%] h-[300%] mix-blend-hard-light">
+                        <div class="absolute inset-0 w-full h-full opacity-80 layer-2 transition-all duration-1000" 
+                             style="background: conic-gradient(from 180deg, #54b6ca, transparent, #aa96f9, transparent, #54b6ca); animation: fluid-spin-2 6s ease-in-out infinite;"></div>
+                    </div>
+
+                    <!-- CAPA 3: Manchas Orbitales -->
+                    <div class="absolute inset-0" style="animation: spin 2.5s linear infinite;">
+                        <!-- Lavanda -->
+                        <div class="absolute top-[20%] left-[50%] w-[60%] h-[60%] rounded-full bg-[#aa96f9] blur-[12px] opacity-80 mix-blend-multiply layer-spot-1 transition-all duration-1000" 
+                             style="transform-origin: 0% 100%; animation: blob-orbit 2s linear infinite;"></div>
+                        <!-- Verde -->
+                        <div class="absolute bottom-[20%] right-[50%] w-[50%] h-[50%] rounded-full bg-[#00ee6e] blur-[10px] opacity-70 mix-blend-color-burn layer-spot-2 transition-all duration-1000" 
+                             style="transform-origin: 100% 0%; animation: blob-orbit 3s linear infinite reverse;"></div>
+                    </div>
+
+                    <!-- Núcleo Blanco Pulsante -->
+                    <div class="absolute inset-[20%] rounded-full bg-white blur-[8px] opacity-70 mix-blend-overlay layer-core transition-all duration-1000" 
+                         style="animation: breathe-core 1.5s ease-in-out infinite;"></div>
+                    
+                    <!-- Brillos de Cristal -->
+                    <div class="absolute top-[-10%] left-[20%] w-[60%] h-[40%] bg-gradient-to-b from-white/90 to-transparent opacity-60 blur-[4px] rounded-full pointer-events-none"></div>
+                    <div class="absolute inset-0 rounded-full shadow-[inset_0_-15px_30px_rgba(71,78,215,0.6)] pointer-events-none"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- === VISTA 1: LOGIN === -->
+        <div id="view-login" class="absolute inset-0 z-50 flex flex-col p-8 transition-all duration-700 ease-in-out" style="background-color: var(--bg-card);">
+            <div class="flex-1 flex flex-col justify-center items-center text-center relative">
+                <div class="w-28 h-28 mb-6 shrink-0"></div>
+                
+                <div id="login-form-container" class="transition-all duration-500 w-full">
+                    <h1 class="text-2xl font-bold mb-2 tracking-tight" style="color: var(--text-main);">Hola, soy SAM
+                    </h1>
+                    <p class="text-sm mb-8 leading-relaxed" style="color: var(--text-sub);">
+                        Tu asistente virtual.
+
+                    </p>
+                    
+                    <form id="login-form" class="w-full space-y-6">
+                        <div>
+
+                            <div class="group flex items-center px-4 py-2.5 rounded-xl border-2 transition-all duration-200 focus-within:border-blue-500 focus-within:shadow-sm" style="background-color: #ffffff; border-color: #d1d5db;">
+                                <svg data-lucide="user" class="w-5 h-5 flex-shrink-0 text-gray-500 mr-3 group-focus-within:text-blue-500 transition-colors" stroke-width="2" fill="none" stroke="currentColor"></svg>
+                                <input type="text" id="input-name" placeholder="Nombres completos" required class="bg-transparent outline-none w-full text-sm placeholder-gray-400 flex-1" style="color: #1f2937;">
+                            </div>
+                        </div>
+                        <div>
+
+                            <div class="group flex items-center px-4 py-2.5 rounded-xl border-2 transition-all duration-200 focus-within:border-blue-500 focus-within:shadow-sm" style="background-color: #ffffff; border-color: #d1d5db;">
+                                <svg data-lucide="mail" class="w-5 h-5 flex-shrink-0 text-gray-500 mr-3 group-focus-within:text-blue-500 transition-colors" stroke-width="2" fill="none" stroke="currentColor"></svg>
+                                <input type="email" id="input-email" placeholder="Correo electrónico" required class="bg-transparent outline-none w-full text-sm placeholder-gray-400 flex-1" style="color: #1f2937;">
+                            </div>
+                        </div>
+                        <button type="submit" class="w-full bg-blue-500 hover:bg-blue-600 active:bg-blue-700 text-white font-semibold text-sm py-2.5 rounded-xl shadow-sm flex items-center justify-center gap-2.5 transition-all duration-200 transform active:scale-[0.98] mt-2">
+                            <span>Acceder</span>
+                            <svg data-lucide="arrow-right" class="w-5 h-5" stroke-width="2.5" fill="none" stroke="currentColor"></svg>
+                        </button>
+                    </form>
+                    
+                    <!-- Logo Agencsi en Login -->
+                    <div class="flex items-center justify-center gap-2 mt-6 pt-4 border-t" style="border-color: var(--border-color);">
+                        <span class="text-[10px] font-medium" style="color: var(--text-sub);">Desarrollado por</span>
+                        <img id="agencsi-logo-login" src="https://agencsi.com/logos/logo-agencsi_blanco.png" alt="Agencsi" class="h-4 opacity-80 hover:opacity-100 transition-opacity">
+                    </div>
+                </div>
+
+                <div id="login-loader" class="absolute top-[65%] w-full flex flex-col items-center transition-all duration-500 delay-100 opacity-0 translate-y-8 pointer-events-none">
+                    <p class="text-sm font-medium animate-pulse" style="color: var(--text-main);">Conectando Neuralink...</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- === VISTA 2: CHAT === -->
+        <div id="view-chat" class="absolute inset-0 z-0 flex flex-col opacity-0 translate-y-full transition-all duration-700">
+            
+            <!-- Fondo con overlay -->
+            <div id="chat-bg" class="absolute inset-0 z-0 transition-all duration-700" style="background-size: cover; background-position: center;">
+                <div id="chat-bg-overlay" class="absolute inset-0 backdrop-blur-[2px] transition-colors duration-500"></div>
+            </div>
+
+            <!-- Header -->
+            <div id="chat-header" class="fixed top-0 left-0 right-0 z-20 px-5 py-0 flex justify-between items-center transition-all duration-700 -translate-y-full opacity-0" style="width: 100%; max-width: 380px; margin: 0 auto;height: 80px;">
+                <div id="chat-header-gradient" style="position: absolute; top: 0; left: 0; right: 0; bottom: -100px; background: linear-gradient(to top, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.15) 25%, rgba(255, 255, 255, 0.4) 50%, rgba(255, 255, 255, 0.7) 70%, rgba(255, 255, 255, 0.9) 85%, rgba(255, 255, 255, 1) 100%); pointer-events: none; z-index: -1;"></div>
+                <div class="flex items-center gap-3 pl-14 relative z-10">
+                    <div class="animate-in fade-in slide-in-from-left-2 duration-700 delay-500">
+                        <h3 id="bot-title" class="font-bold text-sm tracking-wide" style="color: var(--text-main);">Soy Sam</h3>
+                        <p id="bot-status" class="text-[10px] font-medium" style="color: var(--text-sub);">Sistema Operativo</p>
+                    </div>
+                </div>
+                <div class="flex gap-1 relative z-10">
+                    <button onclick="toggleTheme()" class="p-2 rounded-full hover:bg-gray-100 transition-colors" style="color: #374151;">
+                        <i data-lucide="moon" id="theme-icon" class="w-[18px] h-[18px]"></i>
+                    </button>
+                    <button onclick="changeBackground()" class="p-2 rounded-full hover:bg-gray-100 transition-colors" style="color: #374151;">
+                        <i data-lucide="image" class="w-[18px] h-[18px]"></i>
+                    </button>
+                    <button onclick="closeChat()" class="p-2 rounded-full hover:bg-gray-100 transition-colors" style="color: #374151;">
+                        <i data-lucide="x" class="w-[18px] h-[18px]"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Área Mensajes -->
+            <div id="messages-container" class="flex-1 overflow-y-auto p-3 pt-24 z-10 custom-scrollbar flex flex-col gap-3 relative transition-opacity duration-700 delay-200 opacity-0">
+                <div class="flex justify-center my-2 opacity-60">
+                    <span class="text-[10px] flex items-center gap-1 bg-black/5 px-2 py-1 rounded-md backdrop-blur-sm" style="color: var(--text-sub);">
+                        <span class="w-1.5 h-1.5 bg-green-500 rounded-full"></span> Conexión Segura SSL
+                    </span>
+                </div>
+            </div>
+
+             <!-- Footer: Tags & Input -->
+             <div id="chat-footer" class="relative z-30 flex flex-col transition-all duration-700 translate-y-full">
+                 <div id="tags-container" class="px-3 pb-2 flex gap-2 overflow-x-auto no-scrollbar mask-gradient"></div>
+                 
+                 <div class="p-2.5 pt-2 backdrop-blur-xl border-t" style="border-color: #d1d5db; background-color: var(--bg-card);">
+                     <form id="chat-form" class="flex items-end gap-2">
+                         <div class="flex-1 rounded-xl flex items-center px-3 py-2 transition-all focus-within:ring-1 focus-within:ring-indigo-500/50 border" style="background-color: var(--input-bg); border-color: #d1d5db;">
+                             <input type="text" id="message-input" placeholder="Comando de texto..." class="flex-1 bg-transparent outline-none border-none text-[14px] max-h-24 placeholder-gray-400" style="color: var(--text-main);">
+                             <button type="button" class="ml-2 hover:text-indigo-600 transition-colors" style="color: #374151;">
+                                 <i data-lucide="smile" class="w-4 h-4"></i>
+                             </button>
+                         </div>
+
+                         <button type="submit" id="send-btn" class="p-2.5 rounded-xl shadow-sm transform transition-all duration-300" style="background-color: #e5e7eb; color: #374151;">
+                             <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                         </button>
+                     </form>
+                     
+                     <!-- Logo Agencsi -->
+                     <div class="flex items-center justify-center gap-2 mt-2 pt-2 border-t" style="border-color: var(--border-color);">
+                         <span class="text-[10px] font-medium" style="color: var(--text-sub);">Desarrollado por</span>
+                         <img id="agencsi-logo" src="https://agencsi.com/logos/logo-agencsi_blanco.png" alt="Agencsi" class="h-4 opacity-80 hover:opacity-100 transition-opacity">
+                     </div>
+                 </div>
+             </div>
+        </div>
+    </div>
+
+    <!-- SCRIPT -->
+    <script>
+        // CONFIGURACIÓN
+        const BOT_INFO = {
+            nombre: "Nexus AI",
+            estado: "En línea",
+        };
+
+        const FONDOS = [
+            "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?q=80&w=2070&auto=format&fit=crop", 
+            "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2128&auto=format&fit=crop", 
+            "https://images.unsplash.com/photo-1490682143684-14369e18dce8?q=80&w=2070&auto=format&fit=crop", 
+            "default"
+        ];
+
+        const TAGS_SUGERIDOS = ["Ver Catálogo", "Soporte", "Horarios", "Ubicación"];
+
+        const PRODUCTOS = [
+            { id: 1, nombre: "Auriculares Pro", precio: "$299", img: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500&auto=format&fit=crop&q=60", rating: 4.8 },
+            { id: 2, nombre: "Smartwatch X", precio: "$199", img: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=500&auto=format&fit=crop&q=60", rating: 4.5 },
+            { id: 3, nombre: "Cámara 4K", precio: "$599", img: "https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?w=500&auto=format&fit=crop&q=60", rating: 4.9 },
+        ];
+
+        // ESTADO
+        let paso = 'login';
+        let usuario = { nombre: '', email: '' };
+        let temaOscuro = false;
+        let indiceFondo = 3;
+        let mensajes = [];
+        let escribiendo = false;
+
+        // DOM
+        const orbContainer = document.getElementById('ai-orb-container');
+        const orbInner = document.getElementById('ai-orb-inner');
+        const loginFormContainer = document.getElementById('login-form-container');
+        const loginLoader = document.getElementById('login-loader');
+        const viewLogin = document.getElementById('view-login');
+        const viewChat = document.getElementById('view-chat');
+        const chatHeader = document.getElementById('chat-header');
+        const chatFooter = document.getElementById('chat-footer');
+        const messagesContainer = document.getElementById('messages-container');
+        const messageInput = document.getElementById('message-input');
+        const sendBtn = document.getElementById('send-btn');
+        const botStatus = document.getElementById('bot-status');
+        const botTitle = document.getElementById('bot-title');
+        const chatBg = document.getElementById('chat-bg');
+        const chatBgOverlay = document.getElementById('chat-bg-overlay');
+        const appCard = document.getElementById('app-card');
+        const mainBody = document.getElementById('main-body');
+
+        // INICIALIZACIÓN
+        // Asegurar que los iconos se rendericen correctamente
+        if (typeof lucide !== 'undefined') {
+            lucide.createIcons();
+            // Reinicializar después de un breve delay para asegurar que el DOM esté listo
+            setTimeout(() => {
+                lucide.createIcons();
+            }, 100);
+        }
+        updateBackground();
+        renderTags();
+        
+        // Inicializar logos según tema
+        const agencsiLogo = document.getElementById('agencsi-logo');
+        const agencsiLogoLogin = document.getElementById('agencsi-logo-login');
+        if (agencsiLogo && !temaOscuro) {
+            agencsiLogo.style.filter = 'brightness(0) invert(0.3)';
+        }
+        if (agencsiLogoLogin && !temaOscuro) {
+            agencsiLogoLogin.style.filter = 'brightness(0) invert(0.3)';
+        }
+
+        // EVENTOS
+        document.getElementById('login-form').addEventListener('submit', handleLogin);
+        document.getElementById('chat-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            enviarMensaje();
+        });
+        messageInput.addEventListener('input', updateSendBtn);
+
+        function handleLogin(e) {
+            e.preventDefault();
+            const nombre = document.getElementById('input-name').value;
+            const email = document.getElementById('input-email').value;
+            
+            if (!nombre || !email) return;
+            
+            usuario = { nombre, email };
+            paso = 'cargando';
+            
+            // Animación salida login
+            loginFormContainer.style.opacity = '0';
+            loginFormContainer.style.transform = 'translateY(10px) scale(0.95)';
+            
+            // Aplicar escala al orbe durante carga
+            orbContainer.classList.add('orb-loading');
+            
+            setTimeout(() => {
+                loginFormContainer.classList.add('hidden');
+                loginLoader.classList.remove('opacity-0', 'translate-y-8', 'pointer-events-none');
+                loginLoader.classList.add('opacity-100', 'translate-y-0');
+            }, 300);
+            
+            setTimeout(() => {
+                paso = 'chat';
+                initChatTransition();
+            }, 2000);
+        }
+
+        function initChatTransition() {
+            // Mover esfera al header
+            orbContainer.classList.remove('top-[28%]', 'left-1/2', '-translate-x-1/2', '-translate-y-1/2', 'w-28', 'h-28', 'orb-loading');
+            orbContainer.classList.add('top-[18px]', 'left-[20px]', 'translate-x-0', 'translate-y-0', 'w-12', 'h-12', 'orb-minimized');
+            
+            // Activar clase minimizada
+            orbInner.classList.add('orb-minimized');
+
+            // Cambiar Vistas
+            viewLogin.classList.add('opacity-0', 'pointer-events-none', 'translate-y-[-20px]');
+            viewChat.classList.remove('opacity-0', 'translate-y-full');
+            viewChat.classList.add('opacity-100', 'translate-y-0');
+            
+            // Mostrar header y footer
+            chatHeader.classList.remove('-translate-y-full', 'opacity-0');
+            chatHeader.classList.add('translate-y-0', 'opacity-100');
+            chatFooter.classList.remove('translate-y-full');
+            chatFooter.classList.add('translate-y-0');
+            messagesContainer.classList.remove('opacity-0');
+            messagesContainer.classList.add('opacity-100');
+
+            // Mensajes Iniciales
+            setTimeout(() => agregarMensajeBot(`¡Hola ${usuario.nombre}! 👋 Bienvenido a Nexus.`), 600);
+            setTimeout(() => agregarMensajeBot("Soy tu asistente personal. ¿En qué puedo innovar hoy?", "pregunta"), 1500);
+            
+            // Mostrar tags siempre
+            renderTags();
+        }
+
+        function agregarMensajeBot(texto, tipo = "texto", data = null) {
+            const mensaje = {
+                id: Date.now(),
+                texto,
+                remitente: "bot",
+                tipo,
+                data,
+                hora: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+                estado: "leido"
+            };
+            mensajes.push(mensaje);
+            renderMensaje(mensaje);
+            scrollToBottom();
+        }
+
+        function enviarMensaje(textoEnviado = null) {
+            const textoFinal = textoEnviado || messageInput.value.trim();
+            if (!textoFinal.trim()) return;
+
+            const mensajeUsuario = {
+                id: Date.now(),
+                texto: textoFinal,
+                remitente: "yo",
+                tipo: "texto",
+                hora: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+                estado: "enviado"
+            };
+
+            mensajes.push(mensajeUsuario);
+            renderMensaje(mensajeUsuario);
+            messageInput.value = '';
+            updateSendBtn();
+            scrollToBottom();
+
+            setEscribiendo(true);
+
+            setTimeout(() => {
+                setEscribiendo(false);
+                procesarRespuestaInteligente(textoFinal);
+            }, 1200);
+        }
+
+        function setEscribiendo(valor) {
+            escribiendo = valor;
+            if (valor) {
+                botStatus.innerText = "Pensando...";
+                mostrarTypingIndicator();
+                // Aumentar velocidad de animación
+                orbInner.classList.add('orb-thinking');
+            } else {
+                botStatus.innerText = "Sistema Operativo";
+                ocultarTypingIndicator();
+                // Restaurar velocidad normal
+                orbInner.classList.remove('orb-thinking');
+            }
+        }
+
+        function procesarRespuestaInteligente(input) {
+            const t = input.toLowerCase();
+            if (t.includes("catálogo") || t.includes("producto") || t.includes("precio") || t.includes("oferta") || t.includes("ver")) {
+                agregarMensajeBot("Analizando inventario... Aquí tienes nuestra selección premium: ✨", "productos", PRODUCTOS);
+                return;
+            }
+            if (t.includes("soporte") || t.includes("ayuda")) {
+                agregarMensajeBot("Conectando con un especialista. Recibirás asistencia en " + usuario.email + ".");
+                return;
+            }
+            if (t.includes("hola")) {
+                agregarMensajeBot("Sistemas operativos. ¿Cómo puedo asistirte hoy?");
+                return;
+            }
+            agregarMensajeBot("Procesando solicitud. ¿Necesitas detalles técnicos específicos?");
+        }
+
+        function renderMensaje(msg) {
+            const div = document.createElement('div');
+            const esMio = msg.remitente === "yo";
+            div.className = `flex flex-col w-full ${esMio ? 'items-end' : 'items-start'} animate-in fade-in slide-in-from-bottom-2 duration-300`;
+            
+            if (msg.tipo === 'texto' || msg.tipo === 'pregunta') {
+                div.innerHTML = `
+                    <div class="max-w-[80%] px-3 py-2 rounded-xl shadow-sm text-[14px] leading-snug relative ${esMio ? 'rounded-br-md' : 'rounded-bl-md'} ${!esMio && temaOscuro ? 'border border-slate-700' : (!esMio ? 'border' : '')}"
+                         style="background-color: var(${esMio ? '--msg-user-bg' : '--msg-bot-bg'}); color: var(${esMio ? '--msg-user-text' : '--msg-bot-text'}); ${!esMio ? `border-color: ${temaOscuro ? 'var(--border-color)' : '#d1d5db'};` : ''}">
+                        <p class="mb-0.5">${msg.texto}</p>
+                        <div class="text-[10px] flex items-center justify-end gap-1 opacity-70" style="color: ${esMio ? 'rgba(255,255,255,0.7)' : 'var(--text-sub)'};">
+                            <span>${msg.hora}</span>
+                            ${esMio ? (msg.estado === 'leido' ? '<i data-lucide="check-check" class="w-3 h-3"></i>' : '<i data-lucide="check" class="w-3 h-3"></i>') : ''}
+                        </div>
+                    </div>
+                `;
+            } else if (msg.tipo === 'productos') {
+                div.innerHTML = `
+                    <div class="w-full mt-0.5 mb-1.5">
+                        <p class="text-xs ml-0.5 mb-2" style="color: var(--text-sub);">${msg.texto}</p>
+                        <div class="flex gap-2.5 overflow-x-auto pb-3 px-0.5 no-scrollbar snap-x snap-mandatory slide-in-from-bottom-4">
+                            ${msg.data.map(prod => `
+                                <div class="snap-center shrink-0 w-44 rounded-xl overflow-hidden shadow-sm border transition-transform hover:scale-[1.02]" style="background-color: var(--bg-card); border-color: ${temaOscuro ? 'var(--border-color)' : '#d1d5db'};">
+                                    <div class="h-28 overflow-hidden relative">
+                                        <img src="${prod.img}" alt="${prod.nombre}" class="w-full h-full object-cover">
+                                        <span class="absolute top-2 right-2 bg-black/70 text-white text-[10px] px-1.5 py-0.5 rounded-md backdrop-blur-sm flex items-center">
+                                            <i data-lucide="star" class="w-2 h-2 mr-0.5 text-yellow-400 fill-yellow-400"></i> ${prod.rating}
+                                        </span>
+                                    </div>
+                                    <div class="p-2.5">
+                                        <h4 class="text-sm font-semibold truncate mb-1.5" style="color: var(--text-main);">${prod.nombre}</h4>
+                                        <div class="flex justify-between items-center">
+                                            <span class="text-sm font-semibold ${temaOscuro ? 'text-indigo-400' : 'text-indigo-600'}">${prod.precio}</span>
+                                            <button class="p-1.5 rounded-lg bg-indigo-600 text-white active:scale-90 transition-transform">
+                                                <i data-lucide="shopping-bag" class="w-3.5 h-3.5"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+            }
+            
+            messagesContainer.appendChild(div);
+            lucide.createIcons();
+            scrollToBottom();
+        }
+
+        function mostrarTypingIndicator() {
+            const typingDiv = document.createElement('div');
+            typingDiv.id = 'typing-indicator';
+            typingDiv.className = 'flex w-full justify-start animate-in fade-in';
+            typingDiv.innerHTML = `
+                <div class="px-3 py-2 rounded-xl rounded-bl-md ${temaOscuro ? 'bg-slate-800 border border-slate-700' : 'bg-white shadow-sm border'}" style="border-color: ${temaOscuro ? 'var(--border-color)' : '#d1d5db'};">
+                    <div class="flex gap-1">
+                        <span class="w-1.5 h-1.5 rounded-full bg-indigo-400 animate-bounce"></span>
+                        <span class="w-1.5 h-1.5 rounded-full bg-indigo-400 animate-bounce delay-150"></span>
+                        <span class="w-1.5 h-1.5 rounded-full bg-indigo-400 animate-bounce delay-300"></span>
+                    </div>
+                </div>
+            `;
+            messagesContainer.appendChild(typingDiv);
+            scrollToBottom();
+        }
+
+        function ocultarTypingIndicator() {
+            const typing = document.getElementById('typing-indicator');
+            if (typing) typing.remove();
+        }
+
+        function scrollToBottom() {
+            setTimeout(() => {
+                messagesContainer.scrollTop = messagesContainer.scrollHeight;
+            }, 100);
+        }
+
+        function updateSendBtn() {
+            if(messageInput.value.trim().length > 0) {
+                sendBtn.removeAttribute('disabled');
+                sendBtn.style.backgroundColor = '#374151';
+                sendBtn.style.color = 'white';
+                sendBtn.style.opacity = '1';
+                sendBtn.style.cursor = 'pointer';
+            } else {
+                sendBtn.setAttribute('disabled', 'true');
+                sendBtn.style.backgroundColor = '#e5e7eb';
+                sendBtn.style.color = '#374151';
+                sendBtn.style.opacity = '0.6';
+                sendBtn.style.cursor = 'not-allowed';
+            }
+        }
+
+        function renderTags() {
+            const container = document.getElementById('tags-container');
+            container.innerHTML = '';
+            if (paso !== 'chat') return;
+            
+            TAGS_SUGERIDOS.forEach(tag => {
+                const btn = document.createElement('button');
+                btn.className = "whitespace-nowrap text-xs font-medium px-3 py-1.5 rounded-xl border shadow-sm transition-all active:scale-95";
+                btn.style.backgroundColor = "var(--bg-card)";
+                btn.style.borderColor = temaOscuro ? "var(--border-color)" : "#d1d5db";
+                btn.style.color = temaOscuro ? "#c7d2fe" : "#374151";
+                btn.style.backgroundColor = temaOscuro ? "var(--bg-card)" : "#ffffff";
+                btn.innerText = tag;
+                btn.onclick = () => enviarMensaje(tag);
+                container.appendChild(btn);
+            });
+        }
+
+        function mostrarTags() {
+            if (paso === 'chat') {
+                renderTags();
+            }
+        }
+
+        function ocultarTags() {
+            // Los tags siempre se muestran, no se ocultan
+            renderTags();
+        }
+
+        function updateBackground() {
+            const fondoUrl = FONDOS[indiceFondo];
+            const headerGradient = document.getElementById('chat-header-gradient');
+            
+            if (fondoUrl !== "default") {
+                chatBg.style.backgroundImage = `url(${fondoUrl})`;
+                chatBgOverlay.style.backgroundColor = temaOscuro ? 'rgba(15, 23, 42, 0.8)' : 'rgba(255, 255, 255, 0.6)';
+                if (headerGradient) {
+                    headerGradient.style.background = temaOscuro 
+                        ? 'linear-gradient(to top, rgba(30, 41, 59, 0) 0%, rgba(30, 41, 59, 0.2) 20%, rgba(30, 41, 59, 0.5) 40%, rgba(30, 41, 59, 0.75) 60%, rgba(30, 41, 59, 0.9) 80%, rgba(30, 41, 59, 1) 100%)'
+                        : 'linear-gradient(to top, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.2) 20%, rgba(255, 255, 255, 0.5) 40%, rgba(255, 255, 255, 0.75) 60%, rgba(255, 255, 255, 0.9) 80%, rgba(255, 255, 255, 1) 100%)';
+                }
+            } else {
+                chatBg.style.backgroundImage = 'none';
+                chatBg.style.backgroundColor = temaOscuro ? '#0f172a' : '#e5e5f7';
+                chatBgOverlay.style.backgroundColor = 'transparent';
+                if (headerGradient) {
+                    headerGradient.style.background = temaOscuro 
+                        ? 'linear-gradient(to top, rgba(30, 41, 59, 0) 0%, rgba(30, 41, 59, 0.2) 20%, rgba(30, 41, 59, 0.5) 40%, rgba(30, 41, 59, 0.75) 60%, rgba(30, 41, 59, 0.9) 80%, rgba(30, 41, 59, 1) 100%)'
+                        : 'linear-gradient(to top, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.2) 20%, rgba(255, 255, 255, 0.5) 40%, rgba(255, 255, 255, 0.75) 60%, rgba(255, 255, 255, 0.9) 80%, rgba(255, 255, 255, 1) 100%)';
+                }
+            }
+        }
+
+        window.toggleTheme = function() {
+            temaOscuro = !temaOscuro;
+            const icon = document.getElementById('theme-icon');
+            const headerButtons = document.querySelectorAll('#chat-header button');
+            const smileBtn = document.querySelector('#chat-form button[type="button"]');
+            const messageInputContainer = document.querySelector('#chat-form > div:first-child');
+            const footerBorder = document.querySelector('#chat-footer .border-t');
+            const loginInputs = document.querySelectorAll('#login-form .border');
+            const agencsiLogo = document.getElementById('agencsi-logo');
+            const agencsiLogoLogin = document.getElementById('agencsi-logo-login');
+            
+            if(temaOscuro) {
+                appCard.classList.add('dark-mode');
+                icon.setAttribute('data-lucide', 'sun');
+                appCard.style.borderColor = '#ffffff';
+                // Actualizar colores de botones en modo oscuro
+                headerButtons.forEach(btn => {
+                    btn.style.color = '#94a3b8';
+                    btn.classList.remove('hover:bg-gray-100');
+                    btn.classList.add('hover:bg-white/10');
+                });
+                if (smileBtn) smileBtn.style.color = '#94a3b8';
+                if (messageInputContainer) messageInputContainer.style.borderColor = '#334155';
+                if (footerBorder) footerBorder.style.borderColor = '#334155';
+                loginInputs.forEach(input => input.style.borderColor = '#334155');
+                // Logo blanco para modo oscuro
+                if (agencsiLogo) {
+                    agencsiLogo.style.filter = 'none';
+                }
+                if (agencsiLogoLogin) {
+                    agencsiLogoLogin.style.filter = 'none';
+                }
+            } else {
+                appCard.classList.remove('dark-mode');
+                icon.setAttribute('data-lucide', 'moon');
+                appCard.style.borderColor = '#ffffff';
+                // Actualizar colores de botones en modo claro
+                headerButtons.forEach(btn => {
+                    btn.style.color = '#374151';
+                    btn.classList.remove('hover:bg-white/10');
+                    btn.classList.add('hover:bg-gray-100');
+                });
+                if (smileBtn) smileBtn.style.color = '#374151';
+                if (messageInputContainer) messageInputContainer.style.borderColor = '#d1d5db';
+                if (footerBorder) footerBorder.style.borderColor = '#d1d5db';
+                loginInputs.forEach(input => input.style.borderColor = '#d1d5db');
+                // Logo oscuro para modo claro
+                if (agencsiLogo) {
+                    agencsiLogo.style.filter = 'brightness(0) invert(0.3)';
+                }
+                if (agencsiLogoLogin) {
+                    agencsiLogoLogin.style.filter = 'brightness(0) invert(0.3)';
+                }
+            }
+            
+            updateBackground();
+            lucide.createIcons();
+            
+            // Re-renderizar mensajes con nuevo tema
+            const currentMessages = [...mensajes];
+            messagesContainer.innerHTML = '';
+            mensajes = [];
+            currentMessages.forEach(msg => {
+                mensajes.push(msg);
+                renderMensaje(msg);
+            });
+            renderTags();
+            
+            // Actualizar gradiente del header
+            updateBackground();
+        };
+
+        window.changeBackground = function() {
+            indiceFondo = (indiceFondo + 1) % FONDOS.length;
+            updateBackground();
+        };
+
+        window.closeChat = function() {
+            // Cerrar el chat volviendo al login
+            paso = 'login';
+            usuario = { nombre: '', email: '' };
+            mensajes = [];
+            escribiendo = false;
+            
+            // Resetear vistas
+            viewLogin.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-[-20px]');
+            viewLogin.classList.add('opacity-100', 'translate-y-0');
+            viewChat.classList.remove('opacity-100', 'translate-y-0');
+            viewChat.classList.add('opacity-0', 'translate-y-full');
+            
+            // Resetear orbe
+            orbContainer.classList.remove('top-[18px]', 'left-[20px]', 'translate-x-0', 'translate-y-0', 'w-12', 'h-12', 'orb-minimized');
+            orbContainer.classList.add('top-[20%]', 'left-1/2', '-translate-x-1/2', '-translate-y-1/2', 'w-28', 'h-28');
+            orbInner.classList.remove('orb-minimized');
+            
+            // Resetear header y footer
+            chatHeader.classList.remove('translate-y-0', 'opacity-100');
+            chatHeader.classList.add('-translate-y-full', 'opacity-0');
+            chatFooter.classList.remove('translate-y-0');
+            chatFooter.classList.add('translate-y-full');
+            messagesContainer.classList.remove('opacity-100');
+            messagesContainer.classList.add('opacity-0');
+            
+            // Resetear formulario
+            loginFormContainer.classList.remove('hidden');
+            loginFormContainer.style.opacity = '1';
+            loginFormContainer.style.transform = 'translateY(0) scale(1)';
+            loginLoader.classList.remove('opacity-100', 'translate-y-0');
+            loginLoader.classList.add('opacity-0', 'translate-y-8', 'pointer-events-none');
+            
+            // Limpiar mensajes
+            messagesContainer.innerHTML = '';
+            document.getElementById('input-name').value = '';
+            document.getElementById('input-email').value = '';
+            messageInput.value = '';
+            updateSendBtn();
+            
+            // Reinicializar iconos
+            setTimeout(() => {
+                lucide.createIcons();
+            }, 100);
+        };
+    </script>
+</body>
+</html>
